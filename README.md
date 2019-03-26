@@ -1,6 +1,6 @@
 # AutoTouch Document
 
-`Fit for v4.3.8 and above`
+`Applicable to version 4.3.8 or higher`
 
 > - AutoTouch is a “Macro” tool used to record and playback human touching and pressing on the mobile device.
 > - It simulates touching and keys pressing.
@@ -9,7 +9,67 @@
 > - It needs Jailbreak environment.
 > - It provides a Script Store to sell and buy scripts.
 
-[TOC]
+Table of Contents
+=================
+
+   * [AutoTouch Document](#autotouch-document)
+   * [Usage](#usage)
+      * [How to install?](#how-to-install)
+      * [How to use Activator?](#how-to-use-activator)
+      * [How to record?](#how-to-record)
+      * [How to play script?](#how-to-play-script)
+      * [How to set play settings for script?](#how-to-set-play-settings-for-script)
+      * [How to take screenshot?](#how-to-take-screenshot)
+      * [How to write a script?](#how-to-write-a-script)
+      * [How to use the "Function Helper" while script coding?](#how-to-use-the-function-helper-while-script-coding)
+      * [How to write and manage scripts on the computer?](#how-to-write-and-manage-scripts-on-the-computer)
+      * [How to use Package to orgainize the script project?](#how-to-use-package-to-orgainize-the-script-project)
+      * [How to encrypt the scripts?](#how-to-encrypt-the-scripts)
+      * [How to sell your script in Script Store?](#how-to-sell-your-script-in-script-store)
+      * [How to download and buy scripts from Script Store?](#how-to-download-and-buy-scripts-from-script-store)
+      * [How to buy AutoTouch license?](#how-to-buy-autotouch-license)
+   * [Script](#script)
+      * [Basis](#basis)
+      * [Develop Tool](#develop-tool)
+      * [Coordinate, Size and Orientation System](#coordinate-size-and-orientation-system)
+      * [Extension Functions](#extension-functions)
+         * [touchDown(id, x, y)](#touchdownid-x-y)
+         * [touchMove(id, x, y)](#touchmoveid-x-y)
+         * [touchUp(id, x, y)](#touchupid-x-y)
+         * [keyDown(keyType)](#keydownkeytype)
+         * [keyUp(keyType)](#keyupkeytype)
+         * [getColor(x, y)](#getcolorx-y)
+         * [getColors(locations)](#getcolorslocations)
+         * [findColor(color, count, region)](#findcolorcolor-count-region)
+         * [findColors(colors, count, region)](#findcolorscolors-count-region)
+         * [findImage(imagePath, count, fuzzy, ignoreColors, region)](#findimageimagepath-count-fuzzy-ignorecolors-region)
+         * [screenshot(filePath, region)](#screenshotfilepath-region)
+         * [appRun(appIdentifier)](#apprunappidentifier)
+         * [appKill(appIdentifier)](#appkillappidentifier)
+         * [appState(appIdentifier)](#appstateappidentifier)
+         * [rootDir()](#rootdir)
+         * [usleep(microseconds)](#usleepmicroseconds)
+         * [log(content)](#logcontent)
+         * [alert(message)](#alertmessage)
+         * [toast(message, delay)](#toastmessage-delay)
+         * [vibrate()](#vibrate)
+         * [playAudio(audioFile, times)](#playaudioaudiofile-times)
+         * [stopAudio()](#stopaudio)
+         * [getOrientation()](#getorientation)
+         * [getScreenResolution()](#getscreenresolution)
+         * [getSN()](#getsn)
+         * [getVersion()](#getversion)
+         * [intToRgb(intColor)](#inttorgbintcolor)
+         * [rgbToInt(r, g, b)](#rgbtointr-g-b)
+         * [copyText(text)](#copytexttext)
+         * [clipText()](#cliptext)
+         * [inputText(text)](#inputtexttext)
+         * [dialog(controls, enableRemember)](#dialogcontrols-enableremember)
+         * [clearDialogValues(script)](#cleardialogvaluesscript)
+      * [Constants](#constants)
+         * [Types of physical keys](#types-of-physical-keys)
+         * [Types of dialog controls](#types-of-dialog-controls)
+         * [Types of screen orientations](#types-of-screen-orientations)
 
 # Usage
 
@@ -131,6 +191,7 @@ Extension functions are used to extend Lua language. Thus, the device can simula
 | y     |    Float    |  y-coordinate on the screen  |
 
 `Return`
+
 None
 
 `Examples`
@@ -167,6 +228,7 @@ tap(100, 200);
 | y     |    Float    |  y-coordinate on the screen  |
 
 `Return`
+
 None
 
 `Examples`
@@ -199,6 +261,7 @@ touchMove(2, 350, 450);
 | y     |    Float    |  y-coordinate on the screen  |
 
 `Return`
+
 None
 
 `Examples`
@@ -232,6 +295,7 @@ touchUp(2, 350, 450);
 | keyType     |   Integer   |   Physical key identification. Now you can use [these physical keys](#types-of-physical-keys).   |
 
 `Return`
+
 None
 
 `Examples`
@@ -284,6 +348,7 @@ end
 | keyType     |   Integer   |   Physical key identification. Now you can use [these physical keys](#types-of-physical-keys).   |
 
 `Return`
+
 None
 
 `Examples`
@@ -305,6 +370,7 @@ keyUp(KEY_TYPE.HOME_BUTTON);
 | y     |    Float    |  y-coordinate on the screen  |
 
 `Return`
+
 | Return     | Type   |  Specification  |
 | -------- | :-----:| ----  |
 | color     |   Integer   |   Integer color value of the pixel point   |
@@ -319,8 +385,9 @@ alert(string.format("Pixel color is :%d", color))
 local color
 repeat
    color = getColor(100, 200)
+   usleep(50000) -- Wait a while
 until( color == 123456 )
--- continue to do what's next
+-- Continue to do what's next
 
 ```
 
@@ -334,6 +401,7 @@ until( color == 123456 )
 | locations     |   table   |   A grouo of coordinates, just as { {x1,y1}, {x2,y2}, {x3,y4} }   |
 
 `Return`
+
 | Return     | Type   |  Specification  |
 | -------- | :-----:| ----  |
 | colors     |   table   |   Colors gotten with corresponding order.  |
@@ -357,8 +425,9 @@ end
 | count     |   Integer    | The number refers to how many matched pixel points is found at most. 0 is default setting, which shows all matching points are found. 1 refers to only the first matching pixel point is found. 2 refers to only the first two pixel points are found. The less the number is, the faster the speed is.  |
 | region     |   table    | You only search the result in the specified area. This area is the table type including four values {x, y, width, height}. The four values respectively represent the coordinate x, coordinate y, width, and height of the rectangular area. {100,100,200,200} is an example. If you do not want to specify the area, just input nil.  |
 
-`Return values`
-| Return value     | Type  |  Specification  |
+`Return`
+
+| Return     | Type  |  Specification  |
 | -------- | :-----:| ----  |
 | locations     |   table   |  Coordinates of matched pixel points. For example: { {x1, y1}, {x2, y2}, ... }  |
 
@@ -395,8 +464,9 @@ end
 local locations
 repeat
    local locations = findColor(0x0000ff, 2, nil);
+   usleep(50000) -- Wait a while
 until( tableLength(locations) > 0)
--- Pring the locations if found
+-- Log the locations if found
 for i, v in pairs(locations) do
     log(string.format("Found pixel: x:%f, y:%f", v[1], v[2]));
 end
@@ -423,8 +493,9 @@ end
 | count     |   Integer    | The number refers to how many matched pixel points is found at most. 0 is default setting, which shows all matching points are found. 1 refers to only the first matching pixel point is found. 2 refers to only the first two pixel points are found. The less the number is, the faster the speed is. |
 | region     |   table    | You only search the result in the specified area. This area is the table type including four values {x, y, width, height}. The four values respectively represent the coordinate x, coordinate y, width, and height of the rectangular area. {100,100,200,200} is an example. If you do not want to specify the area, just input nil.  |
 
-`Return values`
-| Return value     | Type  |  Specification  |
+`Return`
+
+| Return     | Type  |  Specification  |
 | -------- | :-----:| ----  |
 | locations     |   table   |  The coordinate of the first color matched in the found rectangular area, including { {x1, y1}, {x2, y2}, ...}  |
 
@@ -465,8 +536,9 @@ end
 | ignoreColors     |   table   | The color value to be ignored in the search is provided by array, such as {0xffffff, 0x2b2b2b}. You can input nil if one. |
 | region     |   table    | You only search the result in the specified area. This area is the table type including four values {x, y, width, height}. The four values respectively represent the coordinate x, coordinate y, width, and height of the rectangular area. {100,100,200,200} is an example. If you do not want to specify the area, just input nil. |
 
-`Return values`
-| Return value     | Type  |  Specification  |
+`Return`
+
+| Return     | Type  |  Specification  |
 | -------- | :-----:| ----  |
 | locations     |   table   |  The array at the coordinate on the top left corner of the matched area: { {x1, y1}, {x2, y2}, ...}  |
 
@@ -516,7 +588,8 @@ end
 | filePath     |   string   | The path of screenshot. From AutoTouch v3.1.1, you only input the location subordinated to AutoTouch file directory, namely, the path of “Local Script”. (you can get the path of the file directory by rootDir function). For example, “images/script.bmp” means “/var/mobile/Library/AutoTouch/Scripts/images/spirit.bmp”. You need not input the complete path. |
 | region     |   table    | You make a screenshot of the specified area. This area is the table type including four values {x, y, width, height}. The four values respectively represent the coordinate x, coordinate y, width, and height of the rectangular area. {100,100,200,200} is an example. If you do not want to specify the area, just input nil. |
 
-`Return values`
+`Return`
+
 None
 
 `Examples`
@@ -537,7 +610,8 @@ screenshot ("images/screenshot2.bmp", {100, 100, 200, 200});
 | -------- | :-----:| ----  |
 | appIdentifier     |   string   |  Application identifier, including "com.apple.mobilesafari". |
 
-`Return values`
+`Return`
+
 None
 
 `Example`
@@ -555,7 +629,8 @@ appRun("com.apple.mobilesafari");
 | -------- | :-----:| ----  |
 | appIdentifier     |   string   |  Application identifier, including "com.apple.mobilesafari". |
 
-`Return values`
+`Return`
+
 None
 
 `Example`
@@ -573,8 +648,9 @@ appKill("com.apple.mobilesafari");
 | -------- | :-----:| ----  |
 | appIdentifier     |   string   |  Application identifier, including "com.apple.mobilesafari". |
 
-`Return values`
-| Return value     | Type  |  Specification  |
+`Return`
+
+| Return     | Type  |  Specification  |
 | -------- | :-----:| ----  |
 | state     |   string   |  State of Character string type: "NOT RUNNING", "ACTIVATED", "DEACTIVATED"。 |
 
@@ -590,10 +666,12 @@ alert(string.format("State of Safari: %s", state));
     Get the default directory address of the saved script. This is the default saving address of scripts and screenshots: "/var/mobile/Library/AutoTouch/Scripts/".
 
 `Parameters`
+
 None
 
-`Return values`
-| Return value     | Type  |  Specification  |
+`Return`
+
+| Return     | Type  |  Specification  |
 | -------- | :-----:| ----  |
 | dir     |   string   |  Default directory address of the saved script. |
 
@@ -613,7 +691,8 @@ alert(dirPath);
 | -------- | :-----:| ----  |
 | microseconds     |   Integer   |  The number of paused microseconds. |
 
-`Return values`
+`Return`
+
 None
 
 `Examples`
@@ -631,7 +710,8 @@ usleep(1000000);
 | -------- | :-----:| ----  |
 | content     |   string   |  The log content to be recorded. |
 
-`Return values`
+`Return`
+
 None
 
 `Examples`
@@ -643,11 +723,13 @@ log("play here...");
     Pop up the dialog box to show specified content.
 
 `Parameters`
+
 | Parameter     | Type   |  Specification  |
 | -------- | :-----:| ----  |
 | message     |   string   |  Content to be showed. |
 
-`Return values`
+`Return`
+
 None
 
 `Examples`
@@ -659,12 +741,14 @@ alert("Hello World!");
     Show messages with Toast style and delay for some seconds.
 
 `Parameters`
+
 | Parameter     | Type   |  Specification  |
 | -------- | :-----:| ----  |
 | message     |   string   |  Content to be showed. |
 | delay     |   integer   |  How long time to keep showing, default is 2 seconds. |
 
-`Return values`
+`Return`
+
 None
 
 `Examples`
@@ -677,9 +761,11 @@ toast("Hello again!"); -- Show message for 2 seconds.
     Vibrate once.。
 
 `Parameters`
+
 None
 
-`Return values`
+`Return`
+
 None
 
 `Examples`
@@ -692,12 +778,14 @@ vibrate();
     Play audio document at specified location.
 
 `Parameters`
+
 | Parameter     | Type   |  Specification  |
 | -------- | :-----:| ----  |
 | audioFile     |   string   |  Absolute path of audio document. |
 | times     |   integer   |  Number of repeated plays. 0 represents infinite repeat. |
 
-`Return values`
+`Return`
+
 None
 
 `Examples`
@@ -710,9 +798,11 @@ playAudio("/var/audio.mp3", 0);
     Stop playing audio.
 
 `Parameters`
+
 None
 
-`Return values`
+`Return`
+
 None
 
 `Examples`
@@ -725,10 +815,12 @@ stopAudio();
     Get orientation of the screen. Return the integer value. Please refer to the “Orientation Type of Screen” for specific correspondence relation.
 
 `Parameters`
+
 None
 
-`Return values`
-| Return value     | Type  |  Specification  |
+`Return`
+
+| Return     | Type  |  Specification  |
 | -------- | :-----:| ----  |
 | orientation     |   Integer   |  Screen orientation may be [these values](#types-of-screen-orientations) |
 
@@ -743,10 +835,12 @@ alert(string.format("Screen orientation is : %d", 0))
     Get screen resolution bese on pixels.
 
 `Parameters`
+
 None
 
-`Return values`
-| Return value     | Type  |  Specification  |
+`Return`
+
+| Return     | Type  |  Specification  |
 | -------- | :-----:| ----  |
 | width     |   Integer   |  Width of screen resolution. |
 | height     |   Integer   |  Height of screen resolution. |
@@ -762,10 +856,12 @@ alert(string.format("Resolution of iPhone 6 Plus: width:%d, height:%d", w, h));
      Get Serial Number of the device.
 
 `Parameters`
+
 None
 
-`Return values`
-| Return value     | Type  |  Specification  |
+`Return`
+
+| Return     | Type  |  Specification  |
 | -------- | :-----:| ----  |
 | SN     |   string   |  Serial Number of the device. |
 
@@ -780,10 +876,12 @@ alert(string.format("SN is : %s", sn));
     Get version of AutoTouch.
 
 `Parameters`
+
 None
 
-`Return values`
-| Return value     | Type  |  Specification  |
+`Return`
+
+| Return     | Type  |  Specification  |
 | -------- | :-----:| ----  |
 | version     |   string   |  Version of AutoTouch. |
 
@@ -798,12 +896,14 @@ alert(string.format("Current version of AutoTouch is : %s", version));
     Transit integer color to independent values of R,G,B.
 
 `Parameters`
+
 | Parameter     | Type   |  Specification  |
 | -------- | :-----:| ----  |
 | intColor   |   Integer   | Integer color value |
 
-`Return values`
-| Return value     | Type  |  Specification  |
+`Return`
+
+| Return     | Type  |  Specification  |
 | -------- | :-----:| ----  |
 | R   |   Integer   | Red color value. |
 | G   |   Integer   | Green color value. |
@@ -819,14 +919,16 @@ alert(string.format("R:%d, G:%d, B:%d", r, g, b));
     Transit values of R,G,B to integer color value.
 
 `Parameters`
+
 | Parameter     | Type   |  Specification  |
 | -------- | :-----:| ----  |
 | R   |   Integer   | Red color value. |
 | G   |   Integer   | Green color value. |
 | B   |   Integer   | Blue color value. |
 
-`Return values`
-| Return value     | Type  |  Specification  |
+`Return`
+
+| Return     | Type  |  Specification  |
 | -------- | :-----:| ----  |
 | intColor   |   Integer   | Integer color value |
 
@@ -840,11 +942,13 @@ alert(string.format("Int type color: %d", intColor));
     Copy specified text to clipboard.
 
 `Parameters`
+
 | Parameter     | Type   |  Specification  |
 | -------- | :-----:| ----  |
 | text     |   string   |  Text to be copied. |
 
-`Return values`
+`Return`
+
 None
 
 `Examples`
@@ -856,10 +960,12 @@ copyText("This is a copied text!");
     Get the text in the clipboard.
 
 `Parameters`
+
 None
 
-`Return values`
-| Return value     | Type  |  Specification  |
+`Return`
+
+| Return     | Type  |  Specification  |
 | -------- | :-----:| ----  |
 | text     |   string   | Text copied in the clipboard. |
 
@@ -874,11 +980,13 @@ alert(text);
     Input text to the input box selected now. You can delete a character backspace by inputText("\b").
 
 `Parameters`
+
 | Parameter     | Type   |  Specification  |
 | -------- | :-----:| ----  |
 | text     |   string   |  Text to be input. |
 
-`Return values`
+`Return`
+
 None
 
 `Examples`
@@ -892,12 +1000,14 @@ inputText("\b\b\b");
     Pop up self-defined dialog box to accept the user input. Please refer to the example for specific usage.
 
 `Parameters`
+
 | Parameter     | Type   |  Specification  |
 | -------- | :-----:| ----  |
 | controls     |   table   | Array of self-defined controls. You can now use [these dialog box controls](#types-of-dialog-controls)  |
 | enableRemember     |   boolean | Whether to use the "remember user's input" function. |
 
-`Return values`
+`Return`
+
 None
 
 `Examples`
@@ -922,11 +1032,13 @@ alert(string.format("name:%s, birthday:%s, gender:%d", nameInput.value, position
     Clear the remembered values of the dialog created by the function dialog.
 
 `Parameters`
+
 | Parameter     | Type   |  Specification  |
 | -------- | :-----:| ----  |
 | script     |   string   | script path. eg. there is a dialog.lua script in the scripts list, use it like this: clearDialogValues("dialog.lua");  |
 
-`Return values`
+`Return`
+
 None
 
 `Examples`
@@ -935,7 +1047,7 @@ None
 clearDialogValues("dialog.lua");
 ```
 
-## Some Constants
+## Constants
 
 <a name="types-of-physical-keys"></a>
 ### Types of physical keys
