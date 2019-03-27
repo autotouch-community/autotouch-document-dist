@@ -1,6 +1,6 @@
 # AutoTouch Document
 
-`Applicable to version 4.3.8 or higher`
+`Applicable to version 5.0.3 or higher`
 
 > - AutoTouch is a “Macro” tool used to record and playback human touching and pressing on the mobile device.
 > - It simulates touching and keys pressing.
@@ -13,6 +13,7 @@ Table of Contents
 =================
 
    * [AutoTouch Document](#autotouch-document)
+   * [Table of Contents](#table-of-contents)
    * [Usage](#usage)
       * [How to install?](#how-to-install)
       * [How to use Activator?](#how-to-use-activator)
@@ -66,6 +67,7 @@ Table of Contents
          * [inputText(text)](#inputtexttext)
          * [dialog(controls, enableRemember)](#dialogcontrols-enableremember)
          * [clearDialogValues(script)](#cleardialogvaluesscript)
+         * [openURL(urlString)](#openurlurlstring)
       * [Constants](#constants)
          * [Types of physical keys](#types-of-physical-keys)
          * [Types of dialog controls](#types-of-dialog-controls)
@@ -180,7 +182,7 @@ Origin point (0, 0) is alwasy at left-top of the **Application Interface**, rega
 Extension functions are used to extend Lua language. Thus, the device can simulate some human abilities of operating the mobile phone. Moreover, extension functions also support functions including: screenshot, color searching, color matching, and picture matching.
 
 ### touchDown(id, x, y)
-    Press the coordinate (x,y) on the screen.
+> Press the coordinate (x,y) on the screen.
 
 `Parameters`
 
@@ -217,7 +219,7 @@ tap(100, 200);
 ```
 
 ### touchMove(id, x, y)
-    Move the finger to coordinate (x,y).
+> Move the finger to coordinate (x,y).
 
 `Parameters`
 
@@ -250,7 +252,7 @@ touchMove(2, 350, 450);
 ```
 
 ### touchUp(id, x, y)
-    Lift the finger from coordinate (x,y)
+> Lift the finger from coordinate (x,y)
 
 `Parameters`
 
@@ -286,7 +288,7 @@ touchUp(2, 350, 450);
 ```
 
 ### keyDown(keyType)
-    Simulate the pressing of physical key.
+> Simulate the pressing of physical key.
 
 `Parameters`
 
@@ -339,7 +341,7 @@ end
 ```
 
 ### keyUp(keyType)
-    Simulate the lifting of physical key.
+> Simulate the lifting of physical key.
 
 `Parameters`
 
@@ -360,7 +362,7 @@ keyUp(KEY_TYPE.HOME_BUTTON);
 ```
 
 ### getColor(x, y)
-    Get the color value of the pixel point of the specified coordinate on current screen.
+> Get the color value of the pixel point of the specified coordinate on current screen.
 
 `Parameters`
 
@@ -392,7 +394,7 @@ until( color == 123456 )
 ```
 
 ### getColors(locations)
-    Get the color values of the pixel points of the specified coordinates on current screen.
+> Get the color values of the pixel points of the specified coordinates on current screen.
 
 `Parameters`
 
@@ -415,7 +417,7 @@ end
 ```
 
 ### findColor(color, count, region)
-    Search the coordinates of the pixel points matching the specified color on current screen.
+> Search the coordinates of the pixel points matching the specified color on current screen.
 
 `Parameters`
 
@@ -480,9 +482,10 @@ end
 ```
 
 ### findColors(colors, count, region)
-    Search all rectangular areas matching “specified color and their corresponding location and return the coordinate of the pixel point matching the first color in the rectangular area. This function has the search efficiency and availability far beyond findImage. For example, you need not match the whole key picture, but only match the anchors’ color and their corresponding location on the key. You can specify the number of the results by count parameter. 0 refers to all, 1 refers to the first one, and 2 refers to the first tow. region parameter can specify the search area, which is the table type {x,y,width, height}. You only input nil if no data is specified. 
-    This function can use the “auxiliary” tool in the “Extension Function” of the script-editing interface to select the anchors’ colors from the screenshot and get their corresponding location to the function’s parameter automatically.
-    The coordinate of the pixel point pointed by the arrow is the coordinate of the return value.
+> Search all rectangular areas matching “specified color and their corresponding location and return the coordinate of the pixel point matching the first color in the rectangular area. This function has the search efficiency and availability far beyond findImage. For example, you need not match the whole key picture, but only match the anchors’ color and their corresponding location on the key. You can specify the number of the results by count parameter. 0 refers to all, 1 refers to the first one, and 2 refers to the first tow. region parameter can specify the search area, which is the table type {x,y,width, height}. You only input nil if no data is specified. 
+> This function can use the “auxiliary” tool in the “Extension Function” of the script-editing interface to select the anchors’ colors from the screenshot and get their corresponding location to the function’s parameter automatically.
+> The coordinate of the pixel point pointed by the arrow is the coordinate of the return value.
+
 ![IMG_0361.PNG-101.9kB](https://i.imgur.com/ODEtwAz.png)
 
 `Parameters`
@@ -524,7 +527,7 @@ end
 ```
 
 ### findImage(imagePath, count, fuzzy, ignoreColors, region)
-    Search the area matched the specified picture on current screen and return the coordinate of the top left corner of all areas by table format.
+> Search the area matched the specified picture on current screen and return the coordinate of the top left corner of all areas by table format.
 
 `Parameters`
 
@@ -579,7 +582,7 @@ end
 ```
 
 ### screenshot(filePath, region)
-    Take a screenshot for the whole screen or specified area and save as BMP format at specified file path.
+> Take a screenshot for the whole screen or specified area and save as BMP format at specified file path.
 
 `Parameters`
 
@@ -602,7 +605,7 @@ screenshot ("images/screenshot2.bmp", {100, 100, 200, 200});
 ```
 
 ### appRun(appIdentifier)
-    Run specified application.
+> Run specified application.
 
 `Parameters`
 
@@ -621,7 +624,7 @@ appRun("com.apple.mobilesafari");
 ```
 
 ### appKill(appIdentifier)
-    Kill specified application.
+> Kill specified application.
 
 `Parameters`
 
@@ -640,7 +643,7 @@ appKill("com.apple.mobilesafari");
 ```
 
 ### appState(appIdentifier)
-    Get the running state of the specified application
+> Get the running state of the specified application
 
 `Parameters`
 
@@ -663,7 +666,7 @@ alert(string.format("State of Safari: %s", state));
 ```
 
 ### rootDir()
-    Get the default directory address of the saved script. This is the default saving address of scripts and screenshots: "/var/mobile/Library/AutoTouch/Scripts/".
+> Get the default directory address of the saved script. This is the default saving address of scripts and screenshots: "/var/mobile/Library/AutoTouch/Scripts/".
 
 `Parameters`
 
@@ -683,7 +686,7 @@ alert(dirPath);
 ```
 
 ### usleep(microseconds)
-    Sleep several microseconds (1/1000000)
+> Sleep several microseconds (1/1000000)
 
 `Parameters`
 
@@ -702,7 +705,7 @@ usleep(1000000);
 ```
 
 ### log(content)
-    Record log, can be seen in the log interface.
+> Record log, can be seen in the log interface.
 
 `Parameters`
 
@@ -720,7 +723,7 @@ log("play here...");
 ```
 
 ### alert(message)
-    Pop up the dialog box to show specified content.
+> Pop up the dialog box to show specified content.
 
 `Parameters`
 
@@ -738,7 +741,7 @@ alert("Hello World!");
 ```
 
 ### toast(message, delay)
-    Show messages with Toast style and delay for some seconds.
+> Show messages with Toast style and delay for some seconds.
 
 `Parameters`
 
@@ -758,7 +761,7 @@ toast("Hello again!"); -- Show message for 2 seconds.
 ```
 
 ### vibrate()
-    Vibrate once.。
+> Vibrate once.。
 
 `Parameters`
 
@@ -775,7 +778,7 @@ vibrate();
 ```
 
 ### playAudio(audioFile, times)
-    Play audio document at specified location.
+> Play audio document at specified location.
 
 `Parameters`
 
@@ -795,7 +798,7 @@ playAudio("/var/audio.mp3", 0);
 ```
 
 ### stopAudio()
-    Stop playing audio.
+> Stop playing audio.
 
 `Parameters`
 
@@ -812,7 +815,7 @@ stopAudio();
 ```
 
 ### getOrientation()
-    Get orientation of the screen. Return the integer value. Please refer to the “Orientation Type of Screen” for specific correspondence relation.
+> Get orientation of the screen. Return the integer value. Please refer to the “Orientation Type of Screen” for specific correspondence relation.
 
 `Parameters`
 
@@ -832,7 +835,7 @@ alert(string.format("Screen orientation is : %d", 0))
 ```
 
 ### getScreenResolution()
-    Get screen resolution bese on pixels.
+> Get screen resolution bese on pixels.
 
 `Parameters`
 
@@ -853,7 +856,7 @@ alert(string.format("Resolution of iPhone 6 Plus: width:%d, height:%d", w, h));
 ```
 
 ### getSN()
-     Get Serial Number of the device.
+> Get Serial Number of the device.
 
 `Parameters`
 
@@ -873,7 +876,7 @@ alert(string.format("SN is : %s", sn));
 ```
 
 ### getVersion()
-    Get version of AutoTouch.
+> Get version of AutoTouch.
 
 `Parameters`
 
@@ -893,7 +896,7 @@ alert(string.format("Current version of AutoTouch is : %s", version));
 ```
 
 ### intToRgb(intColor)
-    Transit integer color to independent values of R,G,B.
+> Transit integer color to independent values of R,G,B.
 
 `Parameters`
 
@@ -916,7 +919,7 @@ alert(string.format("R:%d, G:%d, B:%d", r, g, b));
 ```
 
 ### rgbToInt(r, g, b)
-    Transit values of R,G,B to integer color value.
+> Transit values of R,G,B to integer color value.
 
 `Parameters`
 
@@ -939,7 +942,7 @@ alert(string.format("Int type color: %d", intColor));
 ```
 
 ### copyText(text)
-    Copy specified text to clipboard.
+> Copy specified text to clipboard.
 
 `Parameters`
 
@@ -957,7 +960,7 @@ copyText("This is a copied text!");
 ```
 
 ### clipText()
-    Get the text in the clipboard.
+> Get the text in the clipboard.
 
 `Parameters`
 
@@ -977,7 +980,7 @@ alert(text);
 ```
 
 ### inputText(text)
-    Input text to the input box selected now. You can delete a character backspace by inputText("\b").
+> Input text to the input box selected now. You can delete a character backspace by inputText("\b").
 
 `Parameters`
 
@@ -997,7 +1000,7 @@ inputText("\b\b\b");
 ```
 
 ### dialog(controls, enableRemember)
-    Pop up self-defined dialog box to accept the user input. Please refer to the example for specific usage.
+> Pop up self-defined dialog box to accept the user input. Please refer to the example for specific usage.
 
 `Parameters`
 
@@ -1029,7 +1032,7 @@ alert(string.format("name:%s, birthday:%s, gender:%d", nameInput.value, position
 ![3.png-115.9kB](http://static.zybuluo.com/kentkrantz/8vn5hx58pc63o12no1xhst81/3.png)
 
 ### clearDialogValues(script)
-    Clear the remembered values of the dialog created by the function dialog.
+> Clear the remembered values of the dialog created by the function dialog.
 
 `Parameters`
 
@@ -1045,6 +1048,29 @@ None
 ```lua
 -- There is a dialog.lua script in the scripts list
 clearDialogValues("dialog.lua");
+```
+
+### openURL(urlString)
+> Open url, or open other apps' url scheme. Look at [Always-Updated List of iOS App URL Scheme Names](https://ios.gadgethacks.com/news/always-updated-list-ios-app-url-scheme-names-0184033/) and example: [Google Maps URL Scheme for iOS](https://developers.google.com/maps/documentation/urls/ios-urlscheme)
+
+`Parameters`
+
+| Parameter     | Type   |  Specification  |
+| -------- | :-----:| ----  |
+| urlString     |   string   |  Target to open. |
+
+`Return`
+
+None
+
+`Examples`
+```lua
+openURL("https://autotouch.net")
+openURL("prefs:root=General&path=About")
+openURL("musics://")
+openURL("itms-apps://itunes.apple.com")
+openURL("tel://+1123456")
+openURL("clashofclans://")
 ```
 
 ## Constants
