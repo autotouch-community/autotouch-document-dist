@@ -455,19 +455,12 @@ for i, v in pairs(result) do
 end
 
 -- Example 4:
--- Get how many elements does a table have.
-function tableLength(T)
-  local count = 0
-  for _ in pairs(T) do count = count + 1 end
-  return count
-end
-
 -- Keep finding a speficied color until it's found.
 local locations
 repeat
    local locations = findColor(0x0000ff, 2, nil);
    usleep(50000) -- Wait a while
-until( tableLength(locations) > 0)
+until(#locations > 0)
 -- Log the locations if found
 for i, v in pairs(locations) do
     log(string.format("Found pixel: x:%f, y:%f", v[1], v[2]));
