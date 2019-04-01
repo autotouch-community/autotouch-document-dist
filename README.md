@@ -68,6 +68,7 @@ Table of Contents
          * [dialog(controls, enableRemember)](#dialogcontrols-enableremember)
          * [clearDialogValues(script)](#cleardialogvaluesscript)
          * [openURL(urlString)](#openurlurlstring)
+         * [isLicensed()](#islicensed)
       * [Constants](#constants)
          * [Types of physical keys](#types-of-physical-keys)
          * [Types of dialog controls](#types-of-dialog-controls)
@@ -1064,6 +1065,26 @@ openURL("musics://")
 openURL("itms-apps://itunes.apple.com")
 openURL("tel://+1123456")
 openURL("clashofclans://")
+```
+
+### isLicensed()
+> Check if the current device is running licensed AutoTouch
+
+`Parameters`
+
+None
+
+`Return`
+
+| Return     | Type  |  Specification  |
+| -------- | :-----:| ----  |
+| licensed     |   boolean   | If current device is licensed. |
+
+`Examples`
+```lua
+if isLicensed() then
+    alert("Your device is licensed by AutoTouch!");
+end
 ```
 
 ## Constants
