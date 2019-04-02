@@ -1,6 +1,6 @@
 # AutoTouch Document
 
-`Applicable to version 5.0.3 or higher`
+`Applicable to version 5.0.5 or higher`
 
 > - AutoTouch is a “Macro” tool used to record and playback human touching and pressing on the mobile device.
 > - It simulates touching and keys pressing.
@@ -33,6 +33,8 @@ Table of Contents
       * [Basis](#basis)
       * [Develop Tool](#develop-tool)
       * [Coordinate, Size and Orientation System](#coordinate-size-and-orientation-system)
+      * [Extension Libraries](#extension-libraries)
+         * [LuaSocket](#luasocket)
       * [Extension Functions](#extension-functions)
          * [touchDown(id, x, y)](#touchdownid-x-y)
          * [touchMove(id, x, y)](#touchmoveid-x-y)
@@ -177,6 +179,11 @@ AutoTouch uses pixel based Native Resolution as the coordinate and size system. 
 Origin point (0, 0) is alwasy at left-top of the **Application Interface**, regardless of the device orientation. Consider only the App interface while using these functions: touchDown,touchMove,touchUp,getColors,findColors,findImage.
 
 ![For example](https://i.imgur.com/imDVXXB.png)
+
+## Extension Libraries
+
+### LuaSocket
+> LuaSocket is a Lua extension library which supported [TCP](http://w3.impa.br/~diego/software/luasocket/introduction.html#tcp), [UDP](http://w3.impa.br/~diego/software/luasocket/introduction.html#udp), [SMTP](http://w3.impa.br/~diego/software/luasocket/smtp.html), [HTTP](http://w3.impa.br/~diego/software/luasocket/http.html), [FTP](http://w3.impa.br/~diego/software/luasocket/ftp.html) protocols. Learn how to use it from the [document](http://w3.impa.br/~diego/software/luasocket/introduction.html).
 
 ## Extension Functions
 
