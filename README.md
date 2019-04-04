@@ -34,7 +34,11 @@ Table of Contents
       * [Develop Tool](#develop-tool)
       * [Coordinate, Size and Orientation System](#coordinate-size-and-orientation-system)
       * [Extension Libraries](#extension-libraries)
+         * [LuacURL](#luacurl)
          * [LuaSocket](#luasocket)
+         * [LuaSec](#luasec)
+         * [LuaSqlite3](#luasqlite3)
+         * [LuaFileSystem](#luafilesystem)
       * [Extension Functions](#extension-functions)
          * [touchDown(id, x, y)](#touchdownid-x-y)
          * [touchMove(id, x, y)](#touchmoveid-x-y)
@@ -189,9 +193,82 @@ Origin point (0, 0) is alwasy at left-top of the **Application Interface**, rega
 ![For example](https://i.imgur.com/imDVXXB.png)
 
 ## Extension Libraries
+> AutoTouch has some extension libraries built in, while you can also add extension libraries by yourself, just put `.so` files at `/usr/local/lib/lua/5.3` and `.lua` files at `/var/mobile/Library/AutoTouch/Library/LuaLibraries`.
+
+> **ATTENSION:** **DO NOT** use script filename same as the libraries' name, such as `lcurl`, `lfs`, `lsqlite3`.
+
+### LuacURL
+> curl is used in command lines or scripts to transfer data. It is also used in cars, television sets, routers, printers, audio equipment, mobile phones, tablets, settop boxes, media players and is the internet transfer backbone for thousands of software applications affecting billions of humans daily.
+> It supports DICT, FILE, FTP, FTPS, Gopher, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, POP3, POP3S, RTMP, RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, Telnet and TFTP. curl supports SSL certificates, HTTP POST, HTTP PUT, FTP uploading, HTTP form based upload, proxies, HTTP/2, cookies, user+password authentication (Basic, Plain, Digest, CRAM-MD5, NTLM, Negotiate and Kerberos), file transfer resume, proxy tunneling and more.
+> [Learn More](https://github.com/Lua-cURL/Lua-cURLv3)
+
+`Examples:`
+
+```lua
+-- HTTP Get
+local curl = require('lcurl')
+curl.easy{
+    url = 'http://httpbin.org/get',
+    httpheader = {
+      "X-Test-Header1: Header-Data1",
+      "X-Test-Header2: Header-Data2",
+    },
+    writefunction = alert -- use io.stderr:write()
+  }
+  :perform()
+:close()
+
+-- HTTP Post
+curl.easy()
+  :setopt_url('http://posttestserver.com/post.php')
+  :setopt_writefunction(io.write)
+  :setopt_httppost(curl.form() -- Lua-cURL guarantee that form will be alive
+    :add_content("test_content", "some data", {
+      "MyHeader: SomeValue"
+    })
+    :add_buffer("test_file", "filename", "text data", "text/plain", {
+      "Description: my file description"
+    })
+    :add_file("test_file2", "BuildLog.htm", "application/octet-stream", {
+      "Description: my file description"
+    })
+  )
+  :perform()
+:close()
+```
 
 ### LuaSocket
-> LuaSocket is a Lua extension library which supported [TCP](http://w3.impa.br/~diego/software/luasocket/introduction.html#tcp), [UDP](http://w3.impa.br/~diego/software/luasocket/introduction.html#udp), [SMTP](http://w3.impa.br/~diego/software/luasocket/smtp.html), [HTTP](http://w3.impa.br/~diego/software/luasocket/http.html), [FTP](http://w3.impa.br/~diego/software/luasocket/ftp.html) protocols. Learn how to use it from the [document](http://w3.impa.br/~diego/software/luasocket/introduction.html).
+> LuaSocket is a Lua extension library which supported [TCP](http://w3.impa.br/~diego/software/luasocket/introduction.html#tcp), [UDP](http://w3.impa.br/~diego/software/luasocket/introduction.html#udp), [SMTP](http://w3.impa.br/~diego/software/luasocket/smtp.html), [HTTP](http://w3.impa.br/~diego/software/luasocket/http.html), [FTP](http://w3.impa.br/~diego/software/luasocket/ftp.html) protocols. Learn how to use it from the [Learn More](http://w3.impa.br/~diego/software/luasocket/introduction.html).
+
+### LuaSec
+> LuaSec is a binding for OpenSSL library to provide TLS/SSL communication. It takes an already established TCP connection and creates a secure session between the peers.[Learn More](https://github.com/brunoos/luasec/wiki)
+
+### LuaSqlite3
+> LuaSQLite 3 is a thin wrapper around the public domain SQLite3 database engine. [Learn More](http://lua.sqlite.org/index.cgi/doc/tip/doc/lsqlite3.wiki)
+
+`Examples`
+
+```lua
+local sqlite3 = require("lsqlite3")
+
+local db = sqlite3.open_memory()
+
+db:exec[[
+  CREATE TABLE test (id INTEGER PRIMARY KEY, content);
+
+  INSERT INTO test VALUES (NULL, 'Hello World');
+  INSERT INTO test VALUES (NULL, 'Hello Lua');
+  INSERT INTO test VALUES (NULL, 'Hello Sqlite3')
+]]
+
+for row in db:nrows("SELECT * FROM test") do
+  log(row.content)
+end
+```
+
+### LuaFileSystem
+> LuaFileSystem is a Lua library developed to complement the set of functions related to file systems offered by the standard Lua distribution.
+> LuaFileSystem offers a portable way to access the underlying directory structure and file attributes.[Learn More](https://keplerproject.github.io/luafilesystem/index.html)
 
 ## Extension Functions
 
