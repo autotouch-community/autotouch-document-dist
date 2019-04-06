@@ -1,6 +1,6 @@
 # AutoTouch Document
 
-`Applicable to version 5.0.5 or higher`
+`Applicable to version 5.0.6 or higher`
 
 > - AutoTouch is a “Macro” tool used to record and playback human touching and pressing on the mobile device.
 > - It simulates touching and keys pressing.
@@ -49,7 +49,7 @@ Table of Contents
          * [getColors(locations)](#getcolorslocations)
          * [findColor(color, count, region)](#findcolorcolor-count-region)
          * [findColors(colors, count, region)](#findcolorscolors-count-region)
-         * [findImage(imagePath, count, fuzzy, ignoreColors, region)](#findimageimagepath-count-fuzzy-ignorecolors-region)
+         * [findImage(targetImagePath, count, threshold, region, debug)](#findimagetargetimagepath-count-threshold-region-debug)
          * [screenshot(filePath, region)](#screenshotfilepath-region)
          * [appRun(appIdentifier)](#apprunappidentifier)
          * [appKill(appIdentifier)](#appkillappidentifier)
@@ -612,53 +612,54 @@ for i, v in pairs(result) do
 end
 ```
 
-### findImage(imagePath, count, fuzzy, ignoreColors, region)
-> Search the area matched the specified picture on current screen and return the coordinate of the top left corner of all areas by table format.
+### findImage(targetImagePath, count, threshold, region, debug)
+> Search areas matching the specified image on current screen and return the center coordinates. It supports any format of target images. It also provides a debug mode which will produce an image marked the matching areas.
+
+![Imgur](https://i.imgur.com/9eyFOu7.png)
 
 `Parameters`
 
-| Parameter     | Type   |  Specification  |
-| -------- | :-----:| ----  |
-| imagePath     |   String   |  The path of picture to be searched. From AutoTouch v3.1.1, you need not input complete path here, but only input the location subordinated to AutoTouch file directory, namely, the path of “Local Script”. (you can get the path of the file directory by rootDir function). For example, “images/script.bmp” means “/var/mobile/Library/AutoTouch/Scripts/images/spirit.bmp”. You need not input the complete path.  |
-| count     |   Integer    | The number refers to how many matched pixel points is found at most. 0 is default setting, which shows all matching points are found. 1 refers to only the first matching pixel point is found. 2 refers to only the first two pixel points are found. The less the number is, the faster the speed is. |
-| fuzzy     |   float    | The floating degree of the search. 1 is default setting and refers to complete matching. 0.5 refers to 50%v of matching. |
-| ignoreColors     |   table   | The color value to be ignored in the search is provided by array, such as {0xffffff, 0x2b2b2b}. You can input nil if one. |
-| region     |   table    | You only search the result in the specified area. This area is the table type including four values {x, y, width, height}. The four values respectively represent the coordinate x, coordinate y, width, and height of the rectangular area. {100,100,200,200} is an example. If you do not want to specify the area, just input nil. |
+| Parameter     | Type   |  Specification  | Optional | Default |
+| -------- | :-----:| ----  | :----:  | :----:  |
+| targetImagePath     |   String   |  Relative path of the target image to match, for example: "Screenshots/gold.PNG". Any valid foramt of images are supported.  | NO | |
+| count     |  integer    | How many areas to find. Pass 0 or nil if you don't want to speficy the count. | YES | 0 |
+| threshold |  float    | Searching precision, maximum value is 1 means totally the same, minimum value is 0.2 default is 0.9, usually 0.99 is good. Pass nil if you just want to use the default value. | YES | 0.9 |
+| region    |  table    | Do searching in which region. Pass nil if you just want to use the default value. | YES | Whole screen |
+| debug    |  boolean  | If pass debug=true, it will produce a image ends with "-Debug.PNG" marked the matching areas. | YES | false |
 
 `Return`
 
 | Return     | Type  |  Specification  |
 | -------- | :-----:| ----  |
-| locations     |   table   |  The array at the coordinate on the top left corner of the matched area: { {x1, y1}, {x2, y2}, ...}  |
+| center locations     |   table   |  Center coordinates of the matching areas.  |
 
 `Examples`
 ```lua
 -- Example 1:
-local result = findImage("images/spirit.bmp", 5, 1, nil, nil);
+local result = findImage("Screenshots/Gold.PNG", 5, 0.99, nil, true)
 for i, v in pairs(result) do
     log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
 end
 
 -- Example 2:
-local result = findImage("images/spirit.bmp", 0, 0.6, nil, nil};
+local result = findImage("Screenshots/Gold.PNG", nil, nil, nil, true)
 for i, v in pairs(result) do
     log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
 end
 
 -- Example 3:
-local result = findImage("images/spirit.bmp", 0, {0xffffff, 0x2b2b2b}, nil};
+local result = findImage("Screenshots/Gold.PNG", 3)
 for i, v in pairs(result) do
     log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
 end
 
 -- Example 4:
-local imagePath = "images/spirit.bmp";
-local region = {100, 50, 200, 200};
-local ignoreColors = {0xffffff, 0x2b2b2b};
-local result = findImage(imagePath, 1, 0.9, ignoreColors, region};
+local imagePath = "images/spirit.PNG";
+local region = {100, 100, 300, 300};
+local result = findImage(imagePath, 2, 0.98, region, true)
 for i, v in pairs(result) do
     local x = v[1], y = v[2];
-    
+
     log(string.format("Found rect at: x:%f, y:%f", x, y));
     
     -- Click the found location once.
@@ -1461,7 +1462,6 @@ HTTP GET http://192.168.1.99:8080/file/rename?path=/oldFilePath&newPath=newFileP
 
 ## Constants
 
-<a name="types-of-physical-keys"></a>
 ### Types of physical keys
 
 | Value     |  Specification  |
@@ -1471,7 +1471,6 @@ HTTP GET http://192.168.1.99:8080/file/rename?path=/oldFilePath&newPath=newFileP
 | KEY_TYPE.VOLUME_UP_BUTTON | Volume + Button |
 | KEY_TYPE.POWER_BUTTON | Power Button |
 
-<a name="types-of-dialog-controls"></a>
 ### Types of dialog controls
 
 | Value     |  Specification  |
@@ -1481,7 +1480,6 @@ HTTP GET http://192.168.1.99:8080/file/rename?path=/oldFilePath&newPath=newFileP
 | CONTROLLER_TYPE.PICKER | Picker |
 | CONTROLLER_TYPE.SWITCH | Switch |
 
-<a name="types-of-screen-orientations"></a>
 ### Types of screen orientations
 
 | Value     |  Specification  |
