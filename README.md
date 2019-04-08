@@ -1,6 +1,6 @@
 # AutoTouch Document
 
-`Applicable to version 5.0.6 or higher`
+`Applicable to version 5.0.7 or higher`
 
 > - AutoTouch is a “Macro” tool used to record and playback human touching and pressing on the mobile device.
 > - It simulates touching and keys pressing.
@@ -34,11 +34,15 @@ Table of Contents
       * [Develop Tool](#develop-tool)
       * [Coordinate, Size and Orientation System](#coordinate-size-and-orientation-system)
       * [Extension Libraries](#extension-libraries)
-         * [LuacURL](#luacurl)
+         * [LuaCURL](#luacurl)
          * [LuaSocket](#luasocket)
          * [LuaSec](#luasec)
          * [LuaSqlite3](#luasqlite3)
+         * [json.lua](#jsonlua)
+         * [Plist](#plist)
+         * [Penlight](#penlight)
          * [LuaFileSystem](#luafilesystem)
+         * [WebSocket](#websocket)
       * [Extension Functions](#extension-functions)
          * [touchDown(id, x, y)](#touchdownid-x-y)
          * [touchMove(id, x, y)](#touchmoveid-x-y)
@@ -197,7 +201,7 @@ Origin point (0, 0) is alwasy at left-top of the **Application Interface**, rega
 
 > **ATTENSION:** **DO NOT** use script filename same as the libraries' name, such as `lcurl`, `lfs`, `lsqlite3`.
 
-### LuacURL
+### LuaCURL
 > curl is used in command lines or scripts to transfer data. It is also used in cars, television sets, routers, printers, audio equipment, mobile phones, tablets, settop boxes, media players and is the internet transfer backbone for thousands of software applications affecting billions of humans daily.
 > It supports DICT, FILE, FTP, FTPS, Gopher, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, POP3, POP3S, RTMP, RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, Telnet and TFTP. curl supports SSL certificates, HTTP POST, HTTP PUT, FTP uploading, HTTP form based upload, proxies, HTTP/2, cookies, user+password authentication (Basic, Plain, Digest, CRAM-MD5, NTLM, Negotiate and Kerberos), file transfer resume, proxy tunneling and more.
 > [Learn More](https://github.com/Lua-cURL/Lua-cURLv3)
@@ -246,29 +250,128 @@ curl.easy()
 ### LuaSqlite3
 > LuaSQLite 3 is a thin wrapper around the public domain SQLite3 database engine. [Learn More](http://lua.sqlite.org/index.cgi/doc/tip/doc/lsqlite3.wiki)
 
-`Examples`
+### json.lua
+> json.lua provides operation methods on json.
+[GitHub](https://github.com/rxi/json.lua) 
+[LICENSE](https://github.com/rxi/json.lua/blob/master/LICENSE)
 
+`Usage`
 ```lua
-local sqlite3 = require("lsqlite3")
-
-local db = sqlite3.open_memory()
-
-db:exec[[
-  CREATE TABLE test (id INTEGER PRIMARY KEY, content);
-
-  INSERT INTO test VALUES (NULL, 'Hello World');
-  INSERT INTO test VALUES (NULL, 'Hello Lua');
-  INSERT INTO test VALUES (NULL, 'Hello Sqlite3')
-]]
-
-for row in db:nrows("SELECT * FROM test") do
-  log(row.content)
-end
+local json = require "json"
+local jsonString =json.encode({ 1, 2, 3, { x = 10 } }) -- Returns '[1,2,3,{"x":10}]'
+local luaTable = json.decode('[1,2,3,{"x":10}]') -- Returns { 1, 2, 3, { x = 10 } }
 ```
+
+### Plist
+> Plist library provides a batch of methods to operate on plist files.
+
+`Usage`
+```lua
+local plist = require("plist")
+
+-- Read a plist file, return it as a lua table, return nil if failed.
+local luaTable = plist.read(plistFilePath);
+
+-- Write a lua table as a plist into a file, the foramt parameter specifis "xml", "binary" you want to write with.
+local done = plist.write(luaTable, plistFilePath, format);
+
+-- Load a plist string to lua table.
+local luaTable = plist.load(plistString);
+
+-- Dump a lua table to plist data with format "xml" or "binary"
+local plistData = plist.dump(luaTable, format);
+```
+
+### Penlight
+> A set of pure Lua libraries focusing on input data handling (such as reading configuration files), functional programming (such as map, reduce, placeholder expressions,etc), and OS path management. 
+[GitHub](https://github.com/stevedonovan/Penlight)
+[Document](http://stevedonovan.github.io/Penlight/api/index.html)
+[LICENSE](https://github.com/stevedonovan/Penlight/blob/master/LICENSE.md)
+
+It has plenty of modules:
+
+Paths, Files and Directories
+
+  * `path`: queries like `isdir`,`isfile`,`exists`, splitting paths like `dirname` and `basename`
+  * `dir`: listing files in directories (`getfiles`,`getallfiles`) and creating/removing directory paths
+  * `file`: `copy`,`move`; read/write contents with `read` and `write`
+
+Application Support
+
+  * `app`: `require_here` to rebase `require` to work with main script path; simple argument parsing `parse_args`
+  * `lapp`: sophisticated usage-text-driven argument parsing for applications
+  * `config`: flexibly read Unix config files and Windows INI files
+  * `strict`: check for undefined global variables - can use `strict.module` for modules
+  * `utils`,`compat`: Penlight support for unified Lua 5.1/5.2 codebases
+  * `types`: predicates like `is_callable` and `is_integer`; extended `type` function.
+
+Extra String Operations
+
+  * `utils`: can split a string with a delimiter using `utils.split`
+  * `stringx`: extended string functions covering the Python `string` type
+  * `stringio`:  open strings for reading, and creating strings using standard Lua IO methods
+  * `lexer`:  lexical scanner for splitting text into tokens; special cases for Lua and C
+  * `text`:  indenting and dedenting text, wrapping paragraphs; optionally make `%` work as in Python
+  * `template`:  small but powerful template expansion engine
+  * `sip`:  Simple Input Patterns - higher-level string patterns for parsing text
+
+Extra Table Operations
+
+  * `tablex`: copying, comparing and mapping over
+  * `pretty`: pretty-printing Lua tables, and various safe ways to load Lua as data
+  * `List`: implementation of Python 'list' type - slices, concatenation and partitioning
+  * `Map`, `Set`, `OrderedMap`: classes for specialized kinds of tables
+  * `data`: reading tabular data into 2D arrays and efficient queries
+  * `array2d`: operations on 2D arrays
+  * `permute`: generate permutations
+
+Iterators, OOP and Functional
+
+   * `seq`:  working with iterator pipelines; collecting iterators as tables
+   * `class`: a simple reusable class framework
+   * `func`: symbolic manipulation of expressions and lambda expressions
+   * `utils`: `utils.string_lambda` converts short strings like `|x| x^2` into functions
+   * `comprehension`: list comprehensions: `C'x for x=1,4'()=={1,2,3,4}`
 
 ### LuaFileSystem
 > LuaFileSystem is a Lua library developed to complement the set of functions related to file systems offered by the standard Lua distribution.
 > LuaFileSystem offers a portable way to access the underlying directory structure and file attributes.[Learn More](https://keplerproject.github.io/luafilesystem/index.html)
+
+### WebSocket
+> This module provides Lua modules for [Websocket Version 13](http://tools.ietf.org/html/rfc6455) conformant clients and servers.
+[GitHub](https://github.com/lipp/lua-websockets)
+[LICENSE](https://github.com/lipp/lua-websockets/blob/master/COPYRIGHT)
+[Examples](https://github.com/lipp/lua-websockets/tree/master/examples)
+
+`Usage`
+```lua
+-- Client
+-- connects to a echo websocket server running a localhost:8080
+-- sends a strong every second and prints the echoed messages
+-- to stdout
+
+local ev = require'ev'
+local ws_client = require('websocket.client').ev()
+
+ws_client:on_open(function()
+    print('connected')
+  end)
+
+ws_client:connect('ws://echo.websocket.org','echo')
+
+ws_client:on_message(function(ws, msg)
+    print('received',msg)
+  end)
+
+local i = 0
+
+ev.Timer.new(function()
+    i = i + 1
+    ws_client:send('hello '..i)
+end,1,1):start(ev.Loop.default)
+
+ev.Loop.default:loop()
+```
 
 ## Extension Functions
 
@@ -623,7 +726,7 @@ end
 | -------- | :-----:| ----  | :----:  | :----:  |
 | targetImagePath     |   String   |  Relative path of the target image to match, for example: "Screenshots/gold.PNG". Any valid foramt of images are supported.  | NO | |
 | count     |  integer    | How many areas to find. Pass 0 or nil if you don't want to speficy the count. | YES | 0 |
-| threshold |  float    | Searching precision, maximum value is 1 means totally the same, minimum value is 0.2 default is 0.9, usually 0.99 is good. Pass nil if you just want to use the default value. | YES | 0.9 |
+| threshold |  float    | Searching precision, maximum value is 1 means totally the same, minimum value is -1 means non same, default is 0.9, usually 0.99 is good. Pass nil if you just want to use the default value. | YES | 0.9 |
 | region    |  table    | Do searching in which region. Pass nil if you just want to use the default value. | YES | Whole screen |
 | debug    |  boolean  | If pass debug=true, it will produce a image ends with "-Debug.PNG" marked the matching areas. | YES | false |
 
