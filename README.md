@@ -51,8 +51,8 @@ Table of Contents
          * [keyUp(keyType)](#keyupkeytype)
          * [getColor(x, y)](#getcolorx-y)
          * [getColors(locations)](#getcolorslocations)
-         * [findColor(color, count, region)](#findcolorcolor-count-region)
-         * [findColors(colors, count, region)](#findcolorscolors-count-region)
+         * [findColor(color, count, region, debug)](#findcolorcolor-count-region-debug)
+         * [findColors(colors, count, region, debug)](#findcolorscolors-count-region-debug)
          * [findImage(targetImagePath, count, threshold, region, debug)](#findimagetargetimagepath-count-threshold-region-debug)
          * [screenshot(filePath, region)](#screenshotfilepath-region)
          * [appRun(appIdentifier)](#apprunappidentifier)
@@ -128,8 +128,8 @@ Table of Contents
 > - Set "play diretly" to skip the play settings dialog while playing.
 
 ## How to take screenshot?
-> - Press “Snap” button on the control panel to take screenshot.
-> - The screenshot will be saved as BMP image which might be used to speficy parameters of getColors, findColors or findImage.
+> - Press "Snap" button on the control panel to take screenshot, or just use iOS's screenshot method with which you are able to edit it directly.
+> - The screenshot will be saved as PNG image into "AutoTouch" album of iOS Photo Library, then it might be used to speficy parameters of getColors, findColors or findImage.
 
 ## How to write a script?
 > - Press "+" button on top right of the local script list, choose “Create a script” to open the script editor.
@@ -203,7 +203,9 @@ Origin point (0, 0) is alwasy at left-top of the **Application Interface**, rega
 
 ### LuaCURL
 > curl is used in command lines or scripts to transfer data. It is also used in cars, television sets, routers, printers, audio equipment, mobile phones, tablets, settop boxes, media players and is the internet transfer backbone for thousands of software applications affecting billions of humans daily.
+
 > It supports DICT, FILE, FTP, FTPS, Gopher, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, POP3, POP3S, RTMP, RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, Telnet and TFTP. curl supports SSL certificates, HTTP POST, HTTP PUT, FTP uploading, HTTP form based upload, proxies, HTTP/2, cookies, user+password authentication (Basic, Plain, Digest, CRAM-MD5, NTLM, Negotiate and Kerberos), file transfer resume, proxy tunneling and more.
+
 > [Learn More](https://github.com/Lua-cURL/Lua-cURLv3)
 
 `Examples:`
@@ -335,10 +337,12 @@ Iterators, OOP and Functional
 
 ### LuaFileSystem
 > LuaFileSystem is a Lua library developed to complement the set of functions related to file systems offered by the standard Lua distribution.
+
 > LuaFileSystem offers a portable way to access the underlying directory structure and file attributes.[Learn More](https://keplerproject.github.io/luafilesystem/index.html)
 
 ### WebSocket
 > This module provides Lua modules for [Websocket Version 13](http://tools.ietf.org/html/rfc6455) conformant clients and servers.
+
 [GitHub](https://github.com/lipp/lua-websockets)
 [LICENSE](https://github.com/lipp/lua-websockets/blob/master/COPYRIGHT)
 [Examples](https://github.com/lipp/lua-websockets/tree/master/examples)
@@ -612,16 +616,17 @@ for i, v in pairs(result) do
 end
 ```
 
-### findColor(color, count, region)
+### findColor(color, count, region, debug)
 > Search the coordinates of the pixel points matching the specified color on current screen.
 
 `Parameters`
 
-| Parameter     | Type   |  Specification  |
-| -------- | :-----:| ----  |
-| color     |   Integer   |   Matched color value.   |
-| count     |   Integer    | The number refers to how many matched pixel points is found at most. 0 is default setting, which shows all matching points are found. 1 refers to only the first matching pixel point is found. 2 refers to only the first two pixel points are found. The less the number is, the faster the speed is.  |
-| region     |   table    | You only search the result in the specified area. This area is the table type including four values {x, y, width, height}. The four values respectively represent the coordinate x, coordinate y, width, and height of the rectangular area. {100,100,200,200} is an example. If you do not want to specify the area, just input nil.  |
+| Parameter     | Type   |  Specification  | Optional | Default |
+| -------- | :-----:| ----  | :----:  | :----:  |
+| color     |   Integer   |   Matched color value.   | NO | |
+| count     |   Integer    | The number refers to how many matched pixel points is found at most. 0 is default setting, which shows all matching points are found. 1 refers to only the first matching pixel point is found. 2 refers to only the first two pixel points are found. The less the number is, the faster the speed is.  | NO | 0 |
+| region     |   table    | You only search the result in the specified area. This area is the table type including four values {x, y, width, height}. The four values respectively represent the coordinate x, coordinate y, width, and height of the rectangular area. {100,100,200,200} is an example. If you do not want to specify the area, just input nil.  | NO | nil |
+| debug    |  boolean  | If pass debug=true, it will produce a image ends with "-Debug.PNG" marked the matching areas. | YES | false |
 
 `Return`
 
@@ -670,20 +675,23 @@ function findColor(color, count, region)
 end
 ```
 
-### findColors(colors, count, region)
+### findColors(colors, count, region, debug)
 > Search all rectangular areas matching “specified color and their corresponding location and return the coordinate of the pixel point matching the first color in the rectangular area. This function has the search efficiency and availability far beyond findImage. For example, you need not match the whole key picture, but only match the anchors’ color and their corresponding location on the key. You can specify the number of the results by count parameter. 0 refers to all, 1 refers to the first one, and 2 refers to the first tow. region parameter can specify the search area, which is the table type {x,y,width, height}. You only input nil if no data is specified. 
+
 > This function can use the “auxiliary” tool in the “Extension Function” of the script-editing interface to select the anchors’ colors from the screenshot and get their corresponding location to the function’s parameter automatically.
+
 > The coordinate of the pixel point pointed by the arrow is the coordinate of the return value.
 
 ![IMG_0361.PNG-101.9kB](https://i.imgur.com/ODEtwAz.png)
 
 `Parameters`
 
-| Parameter| Type   |  Specification  |
-| -------- | :-----:| ----  |
-| colors     |   table   |  Include some color and their corresponding location, such as:{ {0x00ddff,0,0}, {0x00eeff,10,10}, {0x0000ff,0,20} }. The small table in the big table includes 3 values: the first is the color value. The second and the third are the corresponding locations of the colors to the first color. The corresponding location of the first color’s table is always (0,0). {0x00ddff,0,0} is an example. The location values of the successive colors are their locations corresponding to the first color. The matched rectangular area can be found on the screen upon these colors and corresponding location relation.  |
-| count     |   Integer    | The number refers to how many matched pixel points is found at most. 0 is default setting, which shows all matching points are found. 1 refers to only the first matching pixel point is found. 2 refers to only the first two pixel points are found. The less the number is, the faster the speed is. |
-| region     |   table    | You only search the result in the specified area. This area is the table type including four values {x, y, width, height}. The four values respectively represent the coordinate x, coordinate y, width, and height of the rectangular area. {100,100,200,200} is an example. If you do not want to specify the area, just input nil.  |
+| Parameter     | Type   |  Specification  | Optional | Default |
+| -------- | :-----:| ----  | :----:  | :----:  |
+| colors     |   table   |  Include some color and their corresponding location, such as:{ {0x00ddff,0,0}, {0x00eeff,10,10}, {0x0000ff,0,20} }. The small table in the big table includes 3 values: the first is the color value. The second and the third are the corresponding locations of the colors to the first color. The corresponding location of the first color’s table is always (0,0). {0x00ddff,0,0} is an example. The location values of the successive colors are their locations corresponding to the first color. The matched rectangular area can be found on the screen upon these colors and corresponding location relation.  | NO | |
+| count     |   Integer    | The number refers to how many matched pixel points is found at most. 0 is default setting, which shows all matching points are found. 1 refers to only the first matching pixel point is found. 2 refers to only the first two pixel points are found. The less the number is, the faster the speed is. | NO | 0 |
+| region     |   table    | You only search the result in the specified area. This area is the table type including four values {x, y, width, height}. The four values respectively represent the coordinate x, coordinate y, width, and height of the rectangular area. {100,100,200,200} is an example. If you do not want to specify the area, just input nil.  | NO | nil |
+| debug    |  boolean  | If pass debug=true, it will produce a image ends with "-Debug.PNG" marked the matching areas. | YES | false |
 
 `Return`
 
@@ -694,14 +702,14 @@ end
 `Examples`
 ```lua
 -- Example 1:
-local result = findColors({ {0x00ddff,0,0}, {0x00eeff,10,10}, {0x0000ff,0,20} }, 2, nil);
+local result = findColors({ {0x00ddff,0,0}, {0x00eeff,10,10}, {0x0000ff,0,20} }, 2, nil, true);
 for i, v in pairs(result) do
     log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
 end
 
 -- Example 2:
 local colors = { {0x00ddff,0,0}, {0x00eeff,10,10}, {0x0000ff,0,20} };
-local result = findColors(colors, 0, nil);
+local result = findColors(colors, 0, nil, true);
 for i, v in pairs(result) do
     log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
 end
@@ -724,7 +732,7 @@ end
 
 | Parameter     | Type   |  Specification  | Optional | Default |
 | -------- | :-----:| ----  | :----:  | :----:  |
-| targetImagePath     |   String   |  Relative path of the target image to match, for example: "Screenshots/gold.PNG". Any valid foramt of images are supported.  | NO | |
+| targetImagePath     |   String   |  Relative path of the target image to match, for example: "images/gold.PNG". Any valid foramt of images are supported.  | NO | |
 | count     |  integer    | How many areas to find. Pass 0 or nil if you don't want to speficy the count. | YES | 0 |
 | threshold |  float    | Searching precision, maximum value is 1 means totally the same, minimum value is -1 means non same, default is 0.9, usually 0.99 is good. Pass nil if you just want to use the default value. | YES | 0.9 |
 | region    |  table    | Do searching in which region. Pass nil if you just want to use the default value. | YES | Whole screen |
@@ -739,19 +747,19 @@ end
 `Examples`
 ```lua
 -- Example 1:
-local result = findImage("Screenshots/Gold.PNG", 5, 0.99, nil, true)
+local result = findImage("images/Gold.PNG", 5, 0.99, nil, true)
 for i, v in pairs(result) do
     log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
 end
 
 -- Example 2:
-local result = findImage("Screenshots/Gold.PNG", nil, nil, nil, true)
+local result = findImage("images/Gold.PNG", nil, nil, nil, true)
 for i, v in pairs(result) do
     log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
 end
 
 -- Example 3:
-local result = findImage("Screenshots/Gold.PNG", 3)
+local result = findImage("images/Gold.PNG", 3)
 for i, v in pairs(result) do
     log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
 end
@@ -772,14 +780,20 @@ end
 ```
 
 ### screenshot(filePath, region)
-> Take a screenshot for the whole screen or specified area and save as BMP format at specified file path.
+> Take a screenshot for the whole screen or specified area.
+
+> It will save the screenshot image as an PNG into "AutoTouch" album of iOS Photo Library if the filePath parameter is nill, and will save the PNG to the speficied path if filePath is not nil.
+
+> If region parameter is nil, it will take shot of the whole screen.
+
+> By Clicking "+" button at top-right of AutoTouch view, then "Copy Image Here", you are able to copy an image from iOS Photo Library to AutoTouch scripts directory.
 
 `Parameters`
 
-| Parameter     | Type   |  Specification  |
-| -------- | :-----:| ----  |
-| filePath     |   string   | The path of screenshot. From AutoTouch v3.1.1, you only input the location subordinated to AutoTouch file directory, namely, the path of “Local Script”. (you can get the path of the file directory by rootDir function). For example, “images/script.bmp” means “/var/mobile/Library/AutoTouch/Scripts/images/spirit.bmp”. You need not input the complete path. |
-| region     |   table    | You make a screenshot of the specified area. This area is the table type including four values {x, y, width, height}. The four values respectively represent the coordinate x, coordinate y, width, and height of the rectangular area. {100,100,200,200} is an example. If you do not want to specify the area, just input nil. |
+| Parameter     | Type   |  Specification  | Optional | Default |
+| -------- | :-----:| ----  | :-----: | :-----: |
+| filePath     |   string   | Where to save the image. | YES | "AutoTouch" album of iOS Photo Library |
+| region     |   table    | You make a screenshot of the specified area. This area is the table type including four values {x, y, width, height}. The four values respectively represent the coordinate x, coordinate y, width, and height of the rectangular area. {100,100,200,200} is an example. If you do not want to specify the area, just input nil. | YES | nil |
 
 `Return`
 
@@ -787,11 +801,17 @@ None
 
 `Examples`
 ```lua
--- Take a screenshot of the whole screen and save in the specified location.
-screenshot ("images/screenshot1.bmp", nil);
+-- Take shot of the whole screen and save into  "AutoTouch" album of iOS Photo Library.
+screenshot();
 
--- Take a screenshot of the specified area and save.        
-screenshot ("images/screenshot2.bmp", {100, 100, 200, 200});
+-- Take a screenshot of the whole screen and save to the specified path, if no PNG as path extension, .PNG will automatically added.
+screenshot ("images/screenshot1");
+
+-- Take a screenshot of the specified area and save.
+screenshot ("images/screenshot2.PNG", {100, 100, 200, 200});
+
+-- Take a screenshot of the specified area and save into  "AutoTouch" album of iOS Photo Library.
+screenshot (nil, {100, 100, 200, 200});
 ```
 
 ### appRun(appIdentifier)
