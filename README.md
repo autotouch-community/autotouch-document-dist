@@ -1,6 +1,6 @@
 # AutoTouch Document
 
-`Applicable to version 5.0.7 or higher`
+`Applicable to version 5.1.0 or higher`
 
 > - AutoTouch is a “Macro” tool used to record and playback human touching and pressing on the mobile device.
 > - It simulates touching and keys pressing.
@@ -70,6 +70,8 @@ Table of Contents
          * [getScreenResolution()](#getscreenresolution)
          * [getSN()](#getsn)
          * [getVersion()](#getversion)
+         * [frontMostAppId()](#frontmostappid)
+         * [frontMostAppOrientation()](#frontmostapporientation)
          * [intToRgb(intColor)](#inttorgbintcolor)
          * [rgbToInt(r, g, b)](#rgbtointr-g-b)
          * [copyText(text)](#copytexttext)
@@ -509,7 +511,7 @@ keyDown(KEY_TYPE.HOME_BUTTON);
 function keyPress(keyType)
     keyDown(keyType);
     usleep(10000);
-    keyDown(keyUp);
+    keyUp(keyType);
 end
 keyPress(KEY_TYPE.HOME_BUTTON);
 
@@ -1103,6 +1105,44 @@ None
 local version = getVersion();
 alert(string.format("Current version of AutoTouch is : %s", version));
 -- Pop up shows current version of AutoTouch: 3.5.3-4
+```
+
+### frontMostAppId()
+> Get identifier of current front most App.
+
+`Parameters`
+
+None
+
+`Return`
+
+| Return     | Type  |  Specification  |
+| -------- | :-----:| ----  |
+| App Identifier     |   string   |  App Identifier of current front most App. |
+
+`Examples`
+```lua
+local appId = frontMostAppId();
+alert(string.format("Current front most App is : %s", appId));
+```
+
+### frontMostAppOrientation()
+> Get orientation of current front most App. See the [Types of orientations](#types-of-screen-orientations)
+
+`Parameters`
+
+None
+
+`Return`
+
+| Return     | Type  |  Specification  |
+| -------- | :-----:| ----  |
+| Orientation     |   integer   |  Orientation of current front most App. |
+
+`Examples`
+```lua
+local orientation = frontMostAppOrientation();
+alert(string.format("Orientation of current front most App is : %d", orientation));
 ```
 
 ### intToRgb(intColor)
