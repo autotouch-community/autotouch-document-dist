@@ -1,6 +1,6 @@
 # AutoTouch Document
 
-`Applicable to version 5.1.0 or higher`
+`Applicable to version 5.1.1-1 or higher`
 
 > - AutoTouch is a “Macro” tool used to record and playback human touching and pressing on the mobile device.
 > - It simulates touching and keys pressing.
@@ -81,6 +81,8 @@ Table of Contents
          * [clearDialogValues(script)](#cleardialogvaluesscript)
          * [openURL(urlString)](#openurlurlstring)
          * [isLicensed()](#islicensed)
+         * [setAutoLanuch(scriptPath, on)](#setautolanuchscriptpath-on)
+         * [listAutoLanuch()](#listautolanuch)
       * [HTTP APIs](#http-apis)
          * [Play a script](#play-a-script)
          * [Stop playing a script](#stop-playing-a-script)
@@ -1340,6 +1342,46 @@ None
 ```lua
 if isLicensed() then
     alert("Your device is licensed by AutoTouch!");
+end
+```
+
+### setAutoLanuch(scriptPath, on)
+> Switch on/off a script as auto launch.
+
+`Parameters`
+
+| Parameter     | Type   |  Specification  |
+| -------- | :-----:| ----  |
+| filePath     |   string   |  Relative path of a script inside script directory of AutoTouch, such as "/Records/test.lua". |
+| on     |   boolean   |  Switch auto lanuch on or off, true means on, false means off. |
+
+`Return`
+
+None
+
+`Examples`
+```lua
+setAutoLanuch("/Records/test.lua", on);
+```
+
+### listAutoLanuch()
+> List all auto lanuch scripts
+
+`Parameters`
+
+None
+
+`Return`
+
+| Return     | Type   |  Specification  |
+| -------- | :-----:| ----  |
+| scripts     |   table   |   Relative path List of auto launch scripts.  |
+
+`Examples`
+```lua
+local scripts = listAutoLaunch()
+for i, v in pairs(scripts) do
+    alert(v);
 end
 ```
 
