@@ -1,0 +1,2 @@
+### Q: How to solve the conflict between AutoTouch and SnapChat?
+> A: .  Install AutoTouch v5.1.2 from beta repo, after installing enter Settings>Options, turn on "Fix App Conflict", then respring, your snapchat will be fixed. The inputText extension function will be disabled.

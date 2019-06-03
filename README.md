@@ -14,6 +14,7 @@ Table of Contents
 
    * [AutoTouch Document](#autotouch-document)
    * [Table of Contents](#table-of-contents)
+   * [QA](#qa)
    * [Usage](#usage)
       * [How to install?](#how-to-install)
       * [How to use Activator?](#how-to-use-activator)
@@ -95,6 +96,9 @@ Table of Contents
          * [Types of physical keys](#types-of-physical-keys)
          * [Types of dialog controls](#types-of-dialog-controls)
          * [Types of screen orientations](#types-of-screen-orientations)
+
+# QA
+[Questions and Answers](/QA)
 
 # Usage
 
