@@ -1,0 +1,997 @@
+﻿<!DOCTYPE html>
+<html class="theme theme-white">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width; minimum-scale=0.5; maximum-scale=0.8; user-scalable=yes"> 
+<title>AutoTouchヘルプドキュメント</title>
+<link href="https://www.zybuluo.com/static/assets/template-theme-white.css" rel="stylesheet" media="screen">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-75239087-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-75239087-2');
+    </script>
+
+</head>
+<body class="theme theme-white">
+<div id="wmd-preview" class="wmd-preview wmd-preview-full-reader"><div class="md-section-divider"></div><div class="md-section-divider"></div><h1 data-anchor-id="eo8m" id="autotouchヘルプドキュメント">AutoTouchヘルプドキュメント</h1><p data-anchor-id="zbmi"><code>v3.5.4-1に適用する</code></p><pre data-anchor-id="e2z2"><code>AutoTouchは、「録音」と「リプレー」移動設備の「タッチ」と「クリック」操作の「マクロ」ツールに用いられるツールで、簡単に言えば、移動設備の「タクトフェアリー」である。Luaスクリプトの運行によって、人の操作を模擬できる。スクリプトは録音で生成し、または手工で編集することによって、産出できる。それは、同時に一連のエクステンション関数を提供し、複雑な自動化操作を実現させる。例えば、自動的にゲームをして、ゴールドコインを取得し、大量的に編集し操作し、プログラムの自動化テストを行う。
+
+AutoTouchはジェイルブレイクしたアップル設備に運行され、Cydiaによってインストールしてください。AutoTouchは録音タッチ、実体ボタンなどの操作を支持し、かつタッチ、スクリーンショット、色調べ、写真マッチング、応用を始動閉まりというエクステンション関数を提供する。同時に、一つのスクリプトモールを提供し、スクリプトをダウンロードし、購入でき、また自分のスクリプトをモールに販売できる。
+</code></pre><hr><p data-anchor-id="rt14"><div class="toc"><div class="toc">
+<ul>
+<li><a href="#autotouchヘルプドキュメント">AutoTouchヘルプドキュメント</a></li>
+<li><a href="#使い方">使い方</a><ul>
+<li><ul>
+<li><a href="#どのようにインストールするか">どのようにインストールするか。</a></li>
+<li><a href="#どのように録音するか">どのように録音するか。</a></li>
+<li><a href="#どのように放送するか">どのように放送するか。</a></li>
+<li><a href="#放送設定をどのようにプリセットするか">放送設定をどのようにプリセットするか。</a></li>
+<li><a href="#どのようにスクリーンショットするか">どのようにスクリーンショットするか。</a></li>
+<li><a href="#どのようにスクリプトを編集するか">どのようにスクリプトを編集するか。</a></li>
+<li><a href="#スクリプトを編集する時に関数助手をどのように使用するか">スクリプトを編集する時に、「関数助手」をどのように使用するか。</a></li>
+<li><a href="#コンピューターにスクリプトをどのように編集し管理するか">コンピューターにスクリプトをどのように編集し、管理するか。</a></li>
+<li><a href="#スクリプトをどのように暗号化にさせるか">スクリプトをどのように暗号化にさせるか。</a></li>
+<li><a href="#スクリプトをモールに発行するか">スクリプトをモールに発行するか。</a></li>
+<li><a href="#モールからどのようにスクリプトをダウンロードし購入するか">モールからどのようにスクリプトをダウンロードし、購入するか。</a></li>
+<li><a href="#授権をどのように購入するか">授権をどのように購入するか。</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#スクリプト">スクリプト</a><ul>
+<li><a href="#基礎">基礎</a></li>
+<li><a href="#develop-tool">Develop Tool</a></li>
+<li><a href="#座標とサイズ体系">座標とサイズ体系</a></li>
+<li><a href="#エクステンション関数">エクステンション関数</a><ul>
+<li><a href="#touchdownid-x-y">touchDown(id, x, y)</a></li>
+<li><a href="#touchmoveid-x-y">touchMove(id, x, y)</a></li>
+<li><a href="#touchupid-x-y">touchUp(id, x, y)</a></li>
+<li><a href="#tapx-y">tap(x, y)</a></li>
+<li><a href="#keydownkeytype">keyDown(keyType)</a></li>
+<li><a href="#keyupkeytype">keyUp(keyType)</a></li>
+<li><a href="#getcolorx-y">getColor(x, y)</a></li>
+<li><a href="#getcolorslocations">getColors(locations)</a></li>
+<li><a href="#findcolorcolor-count-region">findColor(color, count, region)</a></li>
+<li><a href="#findcolorscolors-count-region">findColors(colors, count, region)</a></li>
+<li><a href="#findimageimagepath-count-fuzzy-ignorecolors-region">findImage(imagePath, count, fuzzy, ignoreColors, region)</a></li>
+<li><a href="#screenshotfilepath-region">screenshot(filePath, region)</a></li>
+<li><a href="#apprunappidentifier">appRun(appIdentifier)</a></li>
+<li><a href="#appkillappidentifier">appKill(appIdentifier)</a></li>
+<li><a href="#appstateappidentifier">appState(appIdentifier)</a></li>
+<li><a href="#rootdir">rootDir()</a></li>
+<li><a href="#usleepmicroseconds">usleep(microseconds)</a></li>
+<li><a href="#logcontent">log(content)</a></li>
+<li><a href="#alertmessage">alert(message)</a></li>
+<li><a href="#vibrate">vibrate()</a></li>
+<li><a href="#playaudioaudiofile-times">playAudio(audioFile, times)</a></li>
+<li><a href="#stopaudio">stopAudio()</a></li>
+<li><a href="#getorientation">getOrientation()</a></li>
+<li><a href="#getscreenresolution">getScreenResolution()</a></li>
+<li><a href="#getsn">getSN()</a></li>
+<li><a href="#getversion">getVersion()</a></li>
+<li><a href="#inttorgbintcolor">intToRgb(intColor)</a></li>
+<li><a href="#rgbtointr-g-b">rgbToInt(r, g, b)</a></li>
+<li><a href="#copytexttext">copyText(text)</a></li>
+<li><a href="#cliptext">clipText()</a></li>
+<li><a href="#inputtexttext">inputText(text)</a></li>
+<li><a href="#fakelocationappidentifier-latitude-longitude">fakeLocation(appIdentifier, latitude, longitude)</a></li>
+<li><a href="#clearfakelocationappidentifier">clearFakeLocation(appIdentifier)</a></li>
+<li><a href="#dialogcontrols-enableremember">dialog(controls, enableRemember)</a></li>
+<li><a href="#cleardialogvaluesscript">clearDialogValues(script)</a></li>
+</ul>
+</li>
+<li><a href="#固定値のタイプ">固定値のタイプ</a><ul>
+<li><a href="#実体ボタンのタイプ">実体ボタンのタイプ</a></li>
+<li><a href="#フレームウィジェットのタイプ">フレームウィジェットのタイプ</a></li>
+<li><a href="#スクリーン方向の類型">スクリーン方向の類型</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</p><hr><div class="md-section-divider"></div><h1 data-anchor-id="n6vz" id="使い方">使い方</h1><hr><div class="md-section-divider"></div><h3 data-anchor-id="kaer" id="どのようにインストールするか">どのようにインストールするか。</h3><blockquote data-anchor-id="f4i4" class="white-blockquote">
+  <ul>
+  <li><p>AutoTouchは黙認してCydia持ちのBigBossに発表され、直接的にCydiaに捜索し、取り付けられる。BigBossが通常的に24時間に一回の更新ができるので、もっと速やかな、新しいのを獲得すれば、後をご覧ください。</p></li>
+  <li><p>AutoTouchは同時に<a href="http://autotouch.net/repo" target="_blank">http://autotouch.net/repo</a>をも提供し、速やかな更新を獲得するように、Cydiaに添加できる。</p></li>
+  <li><p>Cydiaを通して取り付けられる時に、自動的にプログラムの依頼したActivatorとAppListプラグインをインストールできる。Activatorはジェスチャーの操作を獲得し、設置し、AppListはアプリケーションのインストールしたリストを獲得する。この二つのプラグインをアンインストールしないでください。そうでなければ、AutoTouchも一緒にアンインストールされる。</p></li>
+  </ul>
+</blockquote><hr><div class="md-section-divider"></div><h3 data-anchor-id="dk7u" id="どのように録音するか">どのように録音するか。</h3><blockquote data-anchor-id="0owh" class="white-blockquote">
+  <ul>
+  <li>いかなる録音した操作のインターフェースに、ボリュームの減少ボタン（または設置したほかのActivator制御動作）を長押し、コントロールパネルがポップアップされ、コントロールパネルに一つの録音ボタンと一つのスクリプトリストが含まれる。 <br>
+  <img src="http://static.zybuluo.com/kentkrantz/6d1dw5wimludwet91pf6njfr/IMG_0356.jpg" alt="IMG_0356.jpg-57.7kB" title=""></li>
+  <li>コントロールパネルの赤「録音」ボタンをクリックし、振動で提示させ、かつ録音しはじめる。</li>
+  <li>次に、録音したい操作をしてください。</li>
+  </ul>
+</blockquote><div class="md-section-divider"></div><div class="sequence-diagram theme theme-white" data-anchor-id="i2sk"><svg height="250" version="1.1" width="556.0625" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.1.2</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock55" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M6,1 1,3.5 6,6" id="raphael-marker-open" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endopen77" markerHeight="7" markerWidth="7" orient="auto" refX="4" refY="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-open" transform="rotate(180 3.5 3.5) scale(1,1)" stroke-width="1.0000" fill="none" stroke="#000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker></defs><rect x="10" y="20" width="135.21875" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="20" y="30" width="115.21875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="77.609375" y="39" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Common state</tspan></text><rect x="10" y="192" width="135.21875" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="20" y="202" width="115.21875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="77.609375" y="211" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Common state</tspan></text><path fill="none" stroke="#000000" d="M77.609375,58L77.609375,192" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="188.4296875" y="20" width="202.421875" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="198.421875" y="30" width="182.421875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="289.640625" y="39" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Popup control panel</tspan></text><rect x="188.4296875" y="192" width="202.421875" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="198.421875" y="202" width="182.421875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="289.640625" y="211" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Popup control panel</tspan></text><path fill="none" stroke="#000000" d="M289.640625,58L289.640625,192" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="419.65625" y="20" width="106.40625" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="429.640625" y="30" width="86.40625" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="472.859375" y="39" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Recording</tspan></text><rect x="419.65625" y="192" width="106.40625" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="429.640625" y="202" width="86.40625" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="472.859375" y="211" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Recording</tspan></text><path fill="none" stroke="#000000" d="M472.859375,58L472.859375,192" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="87.609375" y="74" width="192.03125" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="183.625" y="83" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Hold volume - button</tspan></text><path fill="none" stroke="#000000" d="M77.609375,96C77.609375,96,252.593768985942,96,284.6343684706726,96" stroke-width="2" marker-end="url(#raphael-marker-endblock55)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="299.625" y="112" width="163.21875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="381.25" y="121" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Click on "Record"</tspan></text><path fill="none" stroke="#000000" d="M289.640625,134C289.640625,134,438.4990448653698,134,467.8636940966244,134" stroke-width="2" marker-end="url(#raphael-marker-endblock55)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="150.40625" y="150" width="249.640625" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="275.234375" y="159" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Hold volume - button again</tspan></text><path fill="none" stroke="#000000" d="M472.859375,172C472.859375,172,128.36054611206055,172,82.60679540038109,172" stroke-width="2" marker-end="url(#raphael-marker-endblock55)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path></svg></div><blockquote data-anchor-id="qsrp" class="white-blockquote">
+  <ul>
+  <li>録音をやめようとする時に、ボリュームの減少ボタン（または前述のほかの制御動作）を長押し、振動でき、かつポップアップウィンドウが出て、「録音終了」と提示する。</li>
+  <li>次に、AutoTouchにさっきの録音スクリプトを調べ、管理或いは放送できる。スクリプトが設立時間を黙認の名称として、もっと友好的名称を修正できる。</li>
+  </ul>
+</blockquote><hr><div class="md-section-divider"></div><h3 data-anchor-id="nrw8" id="どのように放送するか">どのように放送するか。</h3><blockquote data-anchor-id="11sj" class="white-blockquote">
+  <ul>
+  <li>放送しようとするインターフェースにボリュームの減少ボタン（または設定したほかの制御動作）を長押し、コントロールパネルを調節する。</li>
+  <li>コントロールパネルに放送しようとするスクリプトをクリックし、選択してください。</li>
+  <li>基本的に、次に（このスクリプトに直接的に放送させるに設置するかぎりに）放送フレームがポップアップされ、循環放送の回数、間隔と速度を聞くことにさせる。 <br>
+  <img src="http://static.zybuluo.com/kentkrantz/5xw6ycguti66uvavt7gstqe9/1.png" alt="1.png-50.9kB" title=""></li>
+  <li>「速やかに運行する」をクリックした後、さっきの設置によって、ただちに放送し、この時に、振動があり、始まりを提示できる。放送が終った後に、自動的にやめ、かつフレームがポップアップされ、終了のことを提示する（設定に、フレームの提示を閉められる）。ボリュームボタン（または前述のほかの動作）を長押すことによって、放送を中断させる。</li>
+  </ul>
+</blockquote><div class="md-section-divider"></div><div class="sequence-diagram theme theme-white" data-anchor-id="agxi"><svg height="288" version="1.1" width="806.4921875" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.1.2</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock55" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M6,1 1,3.5 6,6" id="raphael-marker-open" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endopen77" markerHeight="7" markerWidth="7" orient="auto" refX="4" refY="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-open" transform="rotate(180 3.5 3.5) scale(1,1)" stroke-width="1.0000" fill="none" stroke="#000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker></defs><rect x="10" y="20" width="135.21875" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="20" y="30" width="115.21875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="77.609375" y="39" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Common state</tspan></text><rect x="10" y="230" width="135.21875" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="20" y="240" width="115.21875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="77.609375" y="249" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Common state</tspan></text><path fill="none" stroke="#000000" d="M77.609375,58L77.609375,230" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="188.4296875" y="20" width="202.421875" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="198.421875" y="30" width="182.421875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="289.640625" y="39" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Popup control panel</tspan></text><rect x="188.4296875" y="230" width="202.421875" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="198.421875" y="240" width="182.421875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="289.640625" y="249" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Popup control panel</tspan></text><path fill="none" stroke="#000000" d="M289.640625,58L289.640625,230" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="429.2578125" y="20" width="202.421875" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="439.25" y="30" width="182.421875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="530.46875" y="39" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Popup play settings</tspan></text><rect x="429.2578125" y="230" width="202.421875" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="439.25" y="240" width="182.421875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="530.46875" y="249" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Popup play settings</tspan></text><path fill="none" stroke="#000000" d="M530.46875,58L530.46875,230" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="689.2890625" y="20" width="87.203125" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="699.28125" y="30" width="67.203125" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="732.890625" y="39" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Playing</tspan></text><rect x="689.2890625" y="230" width="87.203125" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="699.28125" y="240" width="67.203125" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="732.890625" y="249" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Playing</tspan></text><path fill="none" stroke="#000000" d="M732.890625,58L732.890625,230" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="87.609375" y="74" width="192.03125" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="183.625" y="83" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Hold volume - button</tspan></text><path fill="none" stroke="#000000" d="M77.609375,96C77.609375,96,252.593768985942,96,284.6343684706726,96" stroke-width="2" marker-end="url(#raphael-marker-endblock55)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="299.625" y="112" width="220.828125" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="410.0546875" y="121" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Select a script to play</tspan></text><path fill="none" stroke="#000000" d="M289.640625,134C289.640625,134,490.96249352861196,134,525.4663879883497,134" stroke-width="2" marker-end="url(#raphael-marker-endblock55)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="540.453125" y="150" width="182.421875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="631.6796875" y="159" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Click on "Play Now"</tspan></text><path fill="none" stroke="#000000" d="M530.46875,172C530.46875,172,696.7156219482422,172,727.8869104385376,172" stroke-width="2" marker-end="url(#raphael-marker-endblock55)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="280.421875" y="188" width="249.640625" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="405.25" y="197" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Hold volume - button again</tspan></text><path fill="none" stroke="#000000" d="M732.890625,210C732.890625,210,143.07885079830885,210,82.60010442020575,210" stroke-width="2" marker-end="url(#raphael-marker-endblock55)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path></svg></div><blockquote data-anchor-id="ssd1" class="white-blockquote">
+  <ul>
+  <li>もし「後に運行する」をクリックした後、それは「運行に準備する」の状態に入り、この状態において、ボリュームの減少ボタン（または設置中に修正したほかの起動動作）をクリック（長押しではない）することによって、繰り返して何回も起動し、または運行を中断でき、かつ問い合わせフレームがお邪魔になれない。再び長押し（または前述のほかの動作）、「準備運行」の状態から退出する。</li>
+  </ul>
+</blockquote><div class="md-section-divider"></div><div class="sequence-diagram theme theme-white" data-anchor-id="cvyq"><svg height="440" version="1.1" width="1105.7265625" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.1.2</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock55" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M6,1 1,3.5 6,6" id="raphael-marker-open" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endopen77" markerHeight="7" markerWidth="7" orient="auto" refX="4" refY="3.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-open" transform="rotate(180 3.5 3.5) scale(1,1)" stroke-width="1.0000" fill="none" stroke="#000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker></defs><rect x="10" y="20" width="135.21875" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="20" y="30" width="115.21875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="77.609375" y="39" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Common state</tspan></text><rect x="10" y="382" width="135.21875" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="20" y="392" width="115.21875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="77.609375" y="401" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Common state</tspan></text><path fill="none" stroke="#000000" d="M77.609375,58L77.609375,382" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="188.4296875" y="20" width="202.421875" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="198.421875" y="30" width="182.421875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="289.640625" y="39" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Popup control panel</tspan></text><rect x="188.4296875" y="382" width="202.421875" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="198.421875" y="392" width="182.421875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="289.640625" y="401" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Popup control panel</tspan></text><path fill="none" stroke="#000000" d="M289.640625,58L289.640625,382" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="429.2578125" y="20" width="202.421875" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="439.25" y="30" width="182.421875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="530.46875" y="39" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Popup play settings</tspan></text><rect x="429.2578125" y="382" width="202.421875" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="439.25" y="392" width="182.421875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="530.46875" y="401" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Popup play settings</tspan></text><path fill="none" stroke="#000000" d="M530.46875,58L530.46875,382" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="651.6796875" y="20" width="202.421875" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="661.671875" y="30" width="182.421875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="752.890625" y="39" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Ready to play state</tspan></text><rect x="651.6796875" y="382" width="202.421875" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="661.671875" y="392" width="182.421875" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="752.890625" y="401" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Ready to play state</tspan></text><path fill="none" stroke="#000000" d="M752.890625,58L752.890625,382" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="988.5234375" y="20" width="87.203125" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="998.515625" y="30" width="67.203125" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="1032.125" y="39" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Playing</tspan></text><rect x="988.5234375" y="382" width="87.203125" height="38" r="0" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="998.515625" y="392" width="67.203125" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="1032.125" y="401" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Playing</tspan></text><path fill="none" stroke="#000000" d="M1032.125,58L1032.125,382" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="87.609375" y="74" width="192.03125" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="183.625" y="83" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Hold volume - button</tspan></text><path fill="none" stroke="#000000" d="M77.609375,96C77.609375,96,252.593768985942,96,284.6343684706726,96" stroke-width="2" marker-end="url(#raphael-marker-endblock55)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="299.625" y="112" width="220.828125" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="410.0546875" y="121" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Select a script to play</tspan></text><path fill="none" stroke="#000000" d="M289.640625,134C289.640625,134,490.96249352861196,134,525.4663879883497,134" stroke-width="2" marker-end="url(#raphael-marker-endblock55)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="540.859375" y="150" width="201.625" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="641.6796875" y="159" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Click on "Play Later"</tspan></text><path fill="none" stroke="#000000" d="M530.46875,172C530.46875,172,714.9667617015075,172,747.8935308796817,172" stroke-width="2" marker-end="url(#raphael-marker-endblock55)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="791.6875" y="188" width="201.625" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="892.5078125" y="197" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Press volume - button</tspan></text><path fill="none" stroke="#000000" d="M752.890625,210C752.890625,210,989.5708915507421,210,1027.1300158813042,210" stroke-width="2" marker-end="url(#raphael-marker-endblock55)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="762.875" y="226" width="259.234375" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="892.5078125" y="235" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Press volume - button again</tspan></text><path fill="none" stroke="#000000" d="M1032.125,248C1032.125,248,795.4447334492579,248,757.8856091186958,248" stroke-width="2" marker-end="url(#raphael-marker-endblock55)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="791.6875" y="264" width="201.625" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="892.5078125" y="273" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Press volume - button</tspan></text><path fill="none" stroke="#000000" d="M752.890625,286C752.890625,286,989.5708915507421,286,1027.1300158813042,286" stroke-width="2" marker-end="url(#raphael-marker-endblock55)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="762.875" y="302" width="259.234375" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="892.5078125" y="311" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Press volume - button again</tspan></text><path fill="none" stroke="#000000" d="M1032.125,324C1032.125,324,795.4447334492579,324,757.8856091186958,324" stroke-width="2" marker-end="url(#raphael-marker-endblock55)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="290.421875" y="340" width="249.640625" height="18" r="0" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="415.25" y="349" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: 'Andale Mono', monospace;" font-size="16px" font-family="Andale Mono, monospace"><tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Hold volume - button again</tspan></text><path fill="none" stroke="#000000" d="M752.890625,362C752.890625,362,144.13823185674846,362,82.60905930760146,362" stroke-width="2" marker-end="url(#raphael-marker-endblock55)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path></svg></div><hr><div class="md-section-divider"></div><h3 data-anchor-id="5uev" id="放送設定をどのようにプリセットするか">放送設定をどのようにプリセットするか。</h3><blockquote data-anchor-id="5dw0" class="white-blockquote">
+  <ul>
+  <li>「運行設置」のインターフェースにスクリプトを「直接的運行」に設定でき、かつそれに黙認の運行設定を設置し、そのようにして、このスクリプトを選択する時に、直接的にこの設定に即して運行でき、運行設定のフレームが出ない。</li>
+  <li>「運行設置」のインターフェースに、スクリプトに対して、Activatorジェスチャーのタッチ、運行を設定でき、そのようにして、指定されたジェスチャーが出る時、スクリプトが運行しはじめる。</li>
+  </ul>
+</blockquote><hr><div class="md-section-divider"></div><h3 data-anchor-id="sbr8" id="どのようにスクリーンショットするか">どのようにスクリーンショットするか。</h3><blockquote data-anchor-id="dbns" class="white-blockquote">
+  <ul>
+  <li>ボリュームの減少ボタンを長押し、コントロールパネルを調節し、コントロールパネルの青「スクリーンショット」ボタンをクリックし、現在のスクリーンをキャプチャでき、かつスクリーンショットの時間をドキュメントの名称として、スクリプトのリストに保存される。</li>
+  <li>スクリーンショットの保存がBMP形式の写真ドキュメントである。AutoTouchはこちらのスクリーンショットを利用して、色の調べ、写真のマッチングなどの操作が需要される。</li>
+  </ul>
+</blockquote><hr><div class="md-section-divider"></div><h3 data-anchor-id="hl8v" id="どのようにスクリプトを編集するか">どのようにスクリプトを編集するか。</h3><blockquote data-anchor-id="eh8q" class="white-blockquote">
+  <ul>
+  <li>スクリプトリスト右上の「＋」ボタンをクリックし、「スクリプト新規作成」を選択し、スクリプトの新規作成ウィンドウを明けられる。</li>
+  <li>スクリプト編集インターフェースにコードを編集する。</li>
+  <li>それに、「保存」ボタンをクリックし、名称を入力し、保存する。</li>
+  </ul>
+</blockquote><hr><div class="md-section-divider"></div><h3 data-anchor-id="e97m" id="スクリプトを編集する時に関数助手をどのように使用するか">スクリプトを編集する時に、「関数助手」をどのように使用するか。</h3><blockquote data-anchor-id="igtc" class="white-blockquote">
+  <ul>
+  <li>スクリプト編集インターフェースのボタン区域の上部に二つのボタンがあり、「エクステンション関数」と「常用文法」で、それを利用して、エクステンション関数とLua常用文法を便利に挿入できる。</li>
+  <li>「エクステンション関数」ボタンをクリックし、関数選択リストが出て、リストの関数をクリックし、エクステンション関数を直接的にスクリプトに挿入でき、次の編集に提供する。</li>
+  <li>前の「エクステンション関数」リストに、一部分の関数の右に「補助」ボタンがあり、便利なパラメーターの取得ツールを開ける。こちらの「補助」ツールが主に以下のタイプがある。スクリーン座標の取得、色の取り、応用標識(Identifier)の取得、実体ボタンの選択などがある。</li>
+  <li>「スクリーン座標取得」ツールに、もうスクリプトのリストに保存されたBMP形式のスクリーンショットを開け、指で写真を画素点の程度まで拡大させ、画素点をクリックし、該画素点がスクリーンにある座標を獲得でき、クリックされた画素点が赤になり、選択されたと表記できる。</li>
+  <li>同じく、「色拾取」ツールに、写真を開け、画素点が見える程度まで拡大させ、画素点をクリックし、画素の色値を取得できる。 <br>
+  <img src="http://static.zybuluo.com/kentkrantz/feg0zwokppqchqj9soly6ccm/2.png" alt="2.png-203.6kB" title=""></li>
+  <li>「応用標識選択」がappRun/appKill/appState/appIsActiveの時に、目標応用を便利的に選択できる。</li>
+  <li>「実体ボタン」がkeyDown/keyUpに用いられる時に、目標ボタンを選択する。</li>
+  <li>「常用文法」をクリックし、Lua言語の常用文法を速やかに挿入できる。</li>
+  </ul>
+</blockquote><hr><div class="md-section-divider"></div><h3 data-anchor-id="7ome" id="コンピューターにスクリプトをどのように編集し管理するか">コンピューターにスクリプトをどのように編集し、管理するか。</h3><blockquote data-anchor-id="qg6t" class="white-blockquote">
+  <ul>
+  <li>設定インターフェースにWeb Serverを始動でき、それに、コンピューターのブラウザを通して、提示のURLに訪問し、それに、その中にスクリプトを編集する。</li>
+  <li>設定インターフェースにWebDAV Serverも始動でき、それにコンピューターにWebDAVクライアント端末ソフトウェアを通して、提示のサイトに接続し、それに、その中にスクリプトを編集する。</li>
+  </ul>
+</blockquote><hr><div class="md-section-divider"></div><h3 data-anchor-id="z541" id="スクリプトをどのように暗号化にさせるか">スクリプトをどのように暗号化にさせるか。</h3><blockquote data-anchor-id="13to" class="white-blockquote">
+  <ul>
+  <li>AutoTouchにスクリプトをクリックし、「暗号化」を選択する。</li>
+  <li>暗号化のパスワードを入力し、パスワードが要らなく、空になるだけいい。</li>
+  <li>確定をクリックすれば、暗号化を完成でき、かつ同名、.lua.e終わりの暗号化ドキュメントを生成する。</li>
+  <li>暗号化のスクリプトを選択し、放送し、パスワードがあるのは、提示によって、パスワードを入力してもいい。</li>
+  </ul>
+</blockquote><hr><div class="md-section-divider"></div><h3 data-anchor-id="qs5x" id="スクリプトをモールに発行するか">スクリプトをモールに発行するか。</h3><blockquote data-anchor-id="wn2j" class="white-blockquote">
+  <ul>
+  <li>自分の素晴らしいスクリプトをショップに発行し、他人にシェアーし、或いは販売する。</li>
+  <li>商店にスクリプトを販売すれば、スクリプトを暗号化にさせ、かつパスワードを設定する。このようにして、あなたのスクリプトを買うユーザーがいれば、事前に留保した連絡先を通して、あなたに連絡し、スクリプトを購入する。</li>
+  <li>もし、スクリプトだけシェアーすれば、直接的に.luaドキュメントをアップロードできる。もし他人に内容を見たくないと、パスワードのない暗号化を行うことができる。</li>
+  </ul>
+</blockquote><hr><div class="md-section-divider"></div><h3 data-anchor-id="08rp" id="モールからどのようにスクリプトをダウンロードし購入するか">モールからどのようにスクリプトをダウンロードし、購入するか。</h3><blockquote data-anchor-id="uycj" class="white-blockquote">
+  <ul>
+  <li>直接的にショップからすべてのスクリプトをダウンロードできる。</li>
+  <li>あるスクリプトはパスワードがあり、作者と連絡して、パスワードを購入する必要がある。</li>
+  <li>スクリプトをダウンロードした後、あなたのスクリプトリストに保存でき、ほかのスクリプトのように、直接的に使用できる。</li>
+  </ul>
+</blockquote><hr><div class="md-section-divider"></div><h3 data-anchor-id="rl5i" id="授権をどのように購入するか">授権をどのように購入するか。</h3><blockquote data-anchor-id="mon0" class="white-blockquote">
+  <ul>
+  <li>「設定」インターフェースの「授権」ボタンをクリックし、授権管理インターフエースを開ける。</li>
+  <li>開けた「AutoTouch授権管理」インターフエースに、「説明」をクリックし、授権協議の細則を調べられる。下記にPayPalまたはタオバオで授権を購入できる。</li>
+  <li>PayPalで購入するのは、支払った後、サーバが自動的に現在の設備（偶然な状況に、成功にアクティブされないが、もし成功になれないと、後ろをご覧ください。あなたのPayPalアカウントメールボックスで授権番号を調べ、また「現在の設備をアクティブする」のことをしてもいい。</li>
+  <li>タオバオで購入するのは、支払った後、システムが「旺旺」を通して授権番号をあなたに送る。授権番号を獲得した後、「私の授権を調べる」ことによって、「授権番号の調べ」で、授権情報を調べた後、それに設備を起動する。</li>
+  <li>成功に授権した後、改めて「授権」インターフエースに進入する必要があり、プログラムでドキュメントをダウンロードし、授権させる。もしあなたのネットが悪ければ、失敗にダウンロードし、もし失敗すれば、ネットの環境（例えば、WIFIを4Gに、チャイナユニコムを電信に）を換えてください。繰り返して授権のインターフェースに入り、またダウンロードを試す。授権が検証された後、無限な放送時間と全部の機能をもらえる）。</li>
+  <li>それぞれに三つの調べボタンを利用して、あなたの授権記録を調べられ、それに他の設備を起動できる。一旦に新しい設備が同一の授権番号に起動されば、前にこの授権番号を利用して起動させる設備が、起動をキャンセルさせる。</li>
+  <li>システムの制限が一日に順番に起動の操作（毎日に一回起動することではない）だけできる。&nbsp;もし需要であれば、24時間後に、またほかの設備を起動させる操作ができる。 <br>
+  <img src="http://static.zybuluo.com/kentkrantz/pjmp2azh800d9iijqzictqdw/IMG_0364.PNG" alt="IMG_0364.PNG-83.6kB" title=""></li>
+  </ul>
+</blockquote><hr><div class="md-section-divider"></div><h1 data-anchor-id="dssp" id="スクリプト">スクリプト</h1><hr><div class="md-section-divider"></div><h2 data-anchor-id="ri0h" id="基礎">基礎</h2><p data-anchor-id="zswi">こちらからLua言語の使用を勉強できる:《<a href="http://www.lua.org/manual/5.3/" target="_blank">Lua Official Reference Manual</a>》</p><div class="md-section-divider"></div><h2 data-anchor-id="26ya" id="develop-tool">Develop Tool</h2><p data-anchor-id="kn5i"><a href="http://luastudio.net/" target="_blank">LuaStudio</a> is aprofessional development environment for debugging Lua script in your applications. It's familiar and fast and you'll wonder how you ever worked without it. </p><hr><div class="md-section-divider"></div><h2 data-anchor-id="ndg2" id="座標とサイズ体系">座標とサイズ体系</h2><p data-anchor-id="f92z">AutoTouch v3.5.2前のバージョンに、座標とサイズ体系が「iOSドットマトリクス体系」を利用する。該バージョンから、全部に「画素点体系」に改正され、即ち実際の画素点に即してサイズと座標を判断する。</p><p data-anchor-id="n4uc">例えば、古い「iOSドットマトリクス体系」に、iPhone 6 Plusスクリーンサイズが414x736である。該体系に、サイズが「画素サイズから網膜スクリーンを除く縮小拡大値」の結果で、即ちiPhone 6 Plusの実際画素解像度が1242x2208で、縮小拡大の因素が3で、それで、「iOSドットマトリクス体系」に、スクリーンサイズが(1242÷3)x(2208÷3)である。それに対して、v3.5.2後に採用した「画素点体系」に、画素点のサイズによって、簡単に直感的に座標を判断する。タッチ座標、色の調べ、写真のマッチングを設置しても、直接的に画素サイズで判断し、網膜スクリーンの縮小拡大因素を考慮しない。</p><p data-anchor-id="n3uo">古いスクリプトにもしヘッドに古いSCREEN_RESOLUTIONの声明があれば、自動的に識別される。例えば、もし前に録音したiPhone 6 Plusのスクリプトがあれば、SCREEN_RESOLUTION=414x736を声明し、サイズ体系の変更に適応させるために、自動的に識別され、処理される。</p><hr><div class="md-section-divider"></div><h2 data-anchor-id="rjrq" id="エクステンション関数">エクステンション関数</h2><p data-anchor-id="qc7h">エクステンション関数はLua言語に使用され、人類の携帯電話を操作することを模擬する能力を備えさせる。またスクリーンショット、色の調べ、写真のマッチングなどの機能を提供する。</p><div class="md-section-divider"></div><hr><div class="md-section-divider"></div><h3 data-anchor-id="1s7o" id="touchdownid-x-y">touchDown(id, x, y)</h3><pre data-anchor-id="x9cj"><code>スクリーンの(x, y)座標に押す。
+</code></pre><p data-anchor-id="qq4e"><code>パラメーター</code></p><table data-anchor-id="v0vn" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>id</td>
+ <td style="text-align:center;">Integer</td>
+ <td>指で番号を編成し、単一点、複数点のタッチ標識の指にさせる。</td>
+</tr>
+<tr>
+ <td>x</td>
+ <td style="text-align:center;">Integer</td>
+ <td>屏幕x坐标</td>
+</tr>
+<tr>
+ <td>y</td>
+ <td style="text-align:center;">Integer</td>
+ <td>屏幕y坐标</td>
+</tr>
+</tbody></table><p data-anchor-id="0xnm"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="3ik6"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="saas"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">座標(</span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">)の所に単一指で押す。</span></code></li><li class="L1"><code class="language-lua"><span class="pln">touchDown</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">);</span><span class="pln"> </span></code></li><li class="L2"><code class="language-lua"></code></li><li class="L3"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">三つの指がスクリーンの三箇所に同時に押す。</span></code></li><li class="L4"><code class="language-lua"><span class="pln">touchDown</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">);</span></code></li><li class="L5"><code class="language-lua"><span class="pln">touchDown</span><span class="pun">(</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">,</span><span class="pln"> </span><span class="lit">300</span><span class="pun">);</span></code></li><li class="L6"><code class="language-lua"><span class="pln">touchDown</span><span class="pun">(</span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">300</span><span class="pun">,</span><span class="pln"> </span><span class="lit">400</span><span class="pun">);</span></code></li></ol></pre><div class="md-section-divider"></div><hr><div class="md-section-divider"></div><h3 data-anchor-id="3lad" id="touchmoveid-x-y">touchMove(id, x, y)</h3><pre data-anchor-id="wp67"><code>指を(x, y)座標に移動させる。
+</code></pre><p data-anchor-id="sg3x"><code>パラメーター</code></p><table data-anchor-id="pfhr" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>id</td>
+ <td style="text-align:center;">Integer</td>
+ <td>指で番号を編成し、単一点、複数点のタッチ標識の指にさせる。</td>
+</tr>
+<tr>
+ <td>x</td>
+ <td style="text-align:center;">Integer</td>
+ <td>屏幕x坐标</td>
+</tr>
+<tr>
+ <td>y</td>
+ <td style="text-align:center;">Integer</td>
+ <td>屏幕y坐标</td>
+</tr>
+</tbody></table><p data-anchor-id="uj5i"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="xn95"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="l57p"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">座標（</span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">)に一つの指で押し、それに指を座標(</span><span class="lit">200</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">)に移動する。</span></code></li><li class="L1"><code class="language-lua"><span class="pln">touchDown</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">);</span></code></li><li class="L2"><code class="language-lua"><span class="pln">usleep</span><span class="pun">(</span><span class="lit">16000</span><span class="pun">);</span></code></li><li class="L3"><code class="language-lua"><span class="pln">touchMove</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">);</span></code></li><li class="L4"><code class="language-lua"></code></li><li class="L5"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">三つの指がスクリーンの三箇所に同時に押し、それに新しい場所に移動する。</span></code></li><li class="L6"><code class="language-lua"><span class="pln">touchDown</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">);</span></code></li><li class="L7"><code class="language-lua"><span class="pln">touchDown</span><span class="pun">(</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">,</span><span class="pln"> </span><span class="lit">300</span><span class="pun">);</span></code></li><li class="L8"><code class="language-lua"><span class="pln">touchDown</span><span class="pun">(</span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">300</span><span class="pun">,</span><span class="pln"> </span><span class="lit">400</span><span class="pun">);</span></code></li><li class="L9"><code class="language-lua"><span class="pln">usleep</span><span class="pun">(</span><span class="lit">16000</span><span class="pun">);</span></code></li><li class="L0"><code class="language-lua"><span class="pln">touchMove</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">150</span><span class="pun">,</span><span class="pln"> </span><span class="lit">250</span><span class="pun">);</span></code></li><li class="L1"><code class="language-lua"><span class="pln">touchMove</span><span class="pun">(</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">250</span><span class="pun">,</span><span class="pln"> </span><span class="lit">350</span><span class="pun">);</span></code></li><li class="L2"><code class="language-lua"><span class="pln">touchMove</span><span class="pun">(</span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">350</span><span class="pun">,</span><span class="pln"> </span><span class="lit">450</span><span class="pun">);</span></code></li></ol></pre><div class="md-section-divider"></div><hr><div class="md-section-divider"></div><h3 data-anchor-id="9idp" id="touchupid-x-y">touchUp(id, x, y)</h3><pre data-anchor-id="q4rg"><code>(x, y)座標から指をあげる。
+</code></pre><p data-anchor-id="tid5"><code>パラメーター</code></p><table data-anchor-id="t0ba" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>id</td>
+ <td style="text-align:center;">Integer</td>
+ <td>指で番号を編成し、単一点、複数点のタッチ標識の指にさせる。</td>
+</tr>
+<tr>
+ <td>x</td>
+ <td style="text-align:center;">Integer</td>
+ <td>屏幕x坐标</td>
+</tr>
+<tr>
+ <td>y</td>
+ <td style="text-align:center;">Integer</td>
+ <td>屏幕y坐标</td>
+</tr>
+</tbody></table><p data-anchor-id="4yuy"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="1w4b"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="6bgp"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">座標(</span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">)にスクリーンを一回にクリックする。</span></code></li><li class="L1"><code class="language-lua"><span class="pln">touchDown</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">);</span></code></li><li class="L2"><code class="language-lua"><span class="pln">usleep</span><span class="pun">(</span><span class="lit">16000</span><span class="pun">);</span></code></li><li class="L3"><code class="language-lua"><span class="pln">touchUp</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">);</span></code></li><li class="L4"><code class="language-lua"></code></li><li class="L5"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">三つの指でスクリーンに同時に押し、それに新しい所に移動し、それにあげる。</span></code></li><li class="L6"><code class="language-lua"><span class="pln">touchDown</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">);</span></code></li><li class="L7"><code class="language-lua"><span class="pln">touchDown</span><span class="pun">(</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">,</span><span class="pln"> </span><span class="lit">300</span><span class="pun">);</span></code></li><li class="L8"><code class="language-lua"><span class="pln">touchDown</span><span class="pun">(</span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">300</span><span class="pun">,</span><span class="pln"> </span><span class="lit">400</span><span class="pun">);</span></code></li><li class="L9"><code class="language-lua"><span class="pln">usleep</span><span class="pun">(</span><span class="lit">16000</span><span class="pun">);</span></code></li><li class="L0"><code class="language-lua"><span class="pln">touchMove</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">150</span><span class="pun">,</span><span class="pln"> </span><span class="lit">250</span><span class="pun">);</span></code></li><li class="L1"><code class="language-lua"><span class="pln">touchMove</span><span class="pun">(</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">250</span><span class="pun">,</span><span class="pln"> </span><span class="lit">350</span><span class="pun">);</span></code></li><li class="L2"><code class="language-lua"><span class="pln">touchMove</span><span class="pun">(</span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">350</span><span class="pun">,</span><span class="pln"> </span><span class="lit">450</span><span class="pun">);</span></code></li><li class="L3"><code class="language-lua"><span class="pln">usleep</span><span class="pun">(</span><span class="lit">16000</span><span class="pun">);</span></code></li><li class="L4"><code class="language-lua"><span class="pln">touchUp</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">150</span><span class="pun">,</span><span class="pln"> </span><span class="lit">250</span><span class="pun">);</span></code></li><li class="L5"><code class="language-lua"><span class="pln">touchUp</span><span class="pun">(</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">250</span><span class="pun">,</span><span class="pln"> </span><span class="lit">350</span><span class="pun">);</span></code></li><li class="L6"><code class="language-lua"><span class="pln">touchUp</span><span class="pun">(</span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">350</span><span class="pun">,</span><span class="pln"> </span><span class="lit">450</span><span class="pun">);</span></code></li></ol></pre><div class="md-section-divider"></div><hr><div class="md-section-divider"></div><h3 data-anchor-id="jnl8" id="tapx-y">tap(x, y)</h3><pre data-anchor-id="62em"><code>スクリーンの座標(x, y)をクリックする。
+</code></pre><p data-anchor-id="b1ug"><code>パラメーター</code></p><table data-anchor-id="jxju" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>x</td>
+ <td style="text-align:center;">Integer</td>
+ <td>屏幕x坐标</td>
+</tr>
+<tr>
+ <td>y</td>
+ <td style="text-align:center;">Integer</td>
+ <td>屏幕y坐标</td>
+</tr>
+</tbody></table><p data-anchor-id="tc13"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="55mx"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="xkdq"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">スクリーンの座標(</span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">)をクリックする。</span></code></li><li class="L1"><code class="language-lua"><span class="pln">tap</span><span class="pun">(</span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">);</span><span class="pln"> </span></code></li></ol></pre><p data-anchor-id="safz"><code>内部実現</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="h3sk"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="kwd">function</span><span class="pln"> tap</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">)</span></code></li><li class="L1"><code class="language-lua"><span class="pln">    touchDown</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">);</span></code></li><li class="L2"><code class="language-lua"><span class="pln">    usleep</span><span class="pun">(</span><span class="lit">16000</span><span class="pun">);</span></code></li><li class="L3"><code class="language-lua"><span class="pln">    touchUp</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">);</span></code></li><li class="L4"><code class="language-lua"><span class="kwd">end</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="uqvr" id="keydownkeytype">keyDown(keyType)</h3><pre data-anchor-id="u83t"><code>実体ボタンの押す動作を模擬する。
+</code></pre><p data-anchor-id="ztk8"><code>パラメーター</code></p><table data-anchor-id="1yth" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>keyType</td>
+ <td style="text-align:center;">Integer</td>
+ <td>実体ボタンの標識で、こちらの実体ボタンを使用できる。 <a href="#%E5%AE%9F%E4%BD%93%E3%83%9C%E3%82%BF%E3%83%B3%E3%81%AE%E3%82%BF%E3%82%A4%E3%83%97">these physical keys</a>。</td>
+</tr>
+</tbody></table><p data-anchor-id="jbuu"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="wd0d"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="8es6"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="typ">Home</span><span class="pun">ボタン押しの動作を模擬する。</span></code></li><li class="L1"><code class="language-lua"><span class="pln">keyDown</span><span class="pun">(</span><span class="pln">KEY_TYPE</span><span class="pun">.</span><span class="pln">HOME_BUTTON</span><span class="pun">);</span></code></li><li class="L2"><code class="language-lua"></code></li><li class="L3"><code class="language-lua"></code></li><li class="L4"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">押し動作をどのように模擬するか。</span></code></li><li class="L5"><code class="language-lua"><span class="kwd">function</span><span class="pln"> keyPress</span><span class="pun">(</span><span class="pln">keyType</span><span class="pun">)</span></code></li><li class="L6"><code class="language-lua"><span class="pln">    keyDown</span><span class="pun">(</span><span class="pln">keyType</span><span class="pun">);</span></code></li><li class="L7"><code class="language-lua"><span class="pln">    usleep</span><span class="pun">(</span><span class="lit">10000</span><span class="pun">);</span></code></li><li class="L8"><code class="language-lua"><span class="pln">    keyDown</span><span class="pun">(</span><span class="pln">keyUp</span><span class="pun">);</span></code></li><li class="L9"><code class="language-lua"><span class="kwd">end</span></code></li><li class="L0"><code class="language-lua"><span class="pln">keyPress</span><span class="pun">(</span><span class="pln">KEY_TYPE</span><span class="pun">.</span><span class="pln">HOME_BUTTON</span><span class="pun">);</span></code></li><li class="L1"><code class="language-lua"></code></li><li class="L2"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="typ">How</span><span class="pln"> to simulate a screen </span><span class="kwd">lock</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">?</span></code></li><li class="L3"><code class="language-lua"><span class="kwd">function</span><span class="pln"> lockScreen</span><span class="pun">()</span></code></li><li class="L4"><code class="language-lua"><span class="pln">    keyDown</span><span class="pun">(</span><span class="pln">KEY_TYPE</span><span class="pun">.</span><span class="pln">POWER_BUTTON</span><span class="pun">);</span></code></li><li class="L5"><code class="language-lua"><span class="pln">    keyUp</span><span class="pun">(</span><span class="pln">KEY_TYPE</span><span class="pun">.</span><span class="pln">POWER_BUTTON</span><span class="pun">);</span></code></li><li class="L6"><code class="language-lua"><span class="kwd">end</span></code></li><li class="L7"><code class="language-lua"></code></li><li class="L8"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="typ">How</span><span class="pln"> to simulate a screen unlock </span><span class="kwd">function</span><span class="pun">?</span></code></li><li class="L9"><code class="language-lua"><span class="kwd">function</span><span class="pln"> unlockScreen</span><span class="pun">()</span></code></li><li class="L0"><code class="language-lua"><span class="pln">    keyDown</span><span class="pun">(</span><span class="pln">KEY_TYPE</span><span class="pun">.</span><span class="pln">POWER_BUTTON</span><span class="pun">);</span></code></li><li class="L1"><code class="language-lua"><span class="pln">    keyUp</span><span class="pun">(</span><span class="pln">KEY_TYPE</span><span class="pun">.</span><span class="pln">POWER_BUTTON</span><span class="pun">);</span></code></li><li class="L2"><code class="language-lua"></code></li><li class="L3"><code class="language-lua"><span class="pln">    usleep</span><span class="pun">(</span><span class="lit">1000000</span><span class="pun">);</span></code></li><li class="L4"><code class="language-lua"></code></li><li class="L5"><code class="language-lua"><span class="pln">    </span><span class="kwd">local</span><span class="pln"> w</span><span class="pun">,</span><span class="pln"> h </span><span class="pun">=</span><span class="pln"> getScreenResolution</span><span class="pun">();</span></code></li><li class="L6"><code class="language-lua"></code></li><li class="L7"><code class="language-lua"><span class="pln">    </span><span class="kwd">local</span><span class="pln"> x </span><span class="pun">=</span><span class="pln"> </span><span class="lit">10</span><span class="pun">;</span></code></li><li class="L8"><code class="language-lua"><span class="pln">    </span><span class="kwd">local</span><span class="pln"> gap </span><span class="pun">=</span><span class="pln"> </span><span class="lit">120</span><span class="pun">;</span></code></li><li class="L9"><code class="language-lua"><span class="pln">    touchDown</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> x</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">);</span></code></li><li class="L0"><code class="language-lua"><span class="pln">    </span><span class="kwd">while</span><span class="pln"> x </span><span class="pun">&lt;</span><span class="pln"> w </span><span class="kwd">do</span></code></li><li class="L1"><code class="language-lua"><span class="pln">        x </span><span class="pun">=</span><span class="pln"> x </span><span class="pun">+</span><span class="pln"> gap</span><span class="pun">;</span></code></li><li class="L2"><code class="language-lua"><span class="pln">        usleep</span><span class="pun">(</span><span class="lit">16000</span><span class="pun">);</span></code></li><li class="L3"><code class="language-lua"><span class="pln">        touchMove</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> x</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">);</span></code></li><li class="L4"><code class="language-lua"><span class="pln">    </span><span class="kwd">end</span></code></li><li class="L5"><code class="language-lua"><span class="pln">    touchUp</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> x</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">);</span></code></li><li class="L6"><code class="language-lua"><span class="kwd">end</span></code></li></ol></pre><div class="md-section-divider"></div><hr><div class="md-section-divider"></div><h3 data-anchor-id="2ir6" id="keyupkeytype">keyUp(keyType)</h3><pre data-anchor-id="ewx4"><code>実体ボタンのあげる動作を模擬する。
+</code></pre><p data-anchor-id="2z82"><code>パラメーター</code></p><table data-anchor-id="pcec" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>keyType</td>
+ <td style="text-align:center;">Integer</td>
+ <td>実体ボタンの標識で、こちらの実体ボタンを使用できる。<a href="#%E5%AE%9F%E4%BD%93%E3%83%9C%E3%82%BF%E3%83%B3%E3%81%AE%E3%82%BF%E3%82%A4%E3%83%97">these physical keys</a>。</td>
+</tr>
+</tbody></table><p data-anchor-id="c0fr"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="2uzc"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="lei3"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="typ">Home</span><span class="pun">ボタンの押し、あげる動作を模擬する。</span></code></li><li class="L1"><code class="language-lua"><span class="pln">keyDown</span><span class="pun">(</span><span class="pln">KEY_TYPE</span><span class="pun">.</span><span class="pln">HOME_BUTTON</span><span class="pun">);</span></code></li><li class="L2"><code class="language-lua"><span class="pln">usleep</span><span class="pun">(</span><span class="lit">10000</span><span class="pun">);</span></code></li><li class="L3"><code class="language-lua"><span class="pln">keyUp</span><span class="pun">(</span><span class="pln">KEY_TYPE</span><span class="pun">.</span><span class="pln">HOME_BUTTON</span><span class="pun">);</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="mi1u" id="getcolorx-y">getColor(x, y)</h3><pre data-anchor-id="cjv2"><code>現在のスクリーンに指定された座標位置の画素点の色値を取得する。
+</code></pre><p data-anchor-id="v2e1"><code>パラメーター</code></p><table data-anchor-id="dafm" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>x</td>
+ <td style="text-align:center;">Integer</td>
+ <td>屏幕x坐标</td>
+</tr>
+<tr>
+ <td>y</td>
+ <td style="text-align:center;">Integer</td>
+ <td>屏幕y坐标</td>
+</tr>
+</tbody></table><p data-anchor-id="m6o2"><code>戻り値</code></p><table data-anchor-id="01kr" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>戻り値</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>color</td>
+ <td style="text-align:center;">Integer</td>
+ <td>画素の整数タイプ色値</td>
+</tr>
+</tbody></table><p data-anchor-id="hlqw"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="b610"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="kwd">local</span><span class="pln"> color </span><span class="pun">=</span><span class="pln"> getColor</span><span class="pun">(</span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">);</span></code></li><li class="L1"><code class="language-lua"><span class="pln">alert</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"Pixel color is :%d"</span><span class="pun">,</span><span class="pln"> color</span><span class="pun">));</span></code></li><li class="L2"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">提示がポップアップされた:</span><span class="pln"> </span><span class="lit">16777215</span></code></li></ol></pre><div class="md-section-divider"></div><hr><div class="md-section-divider"></div><h3 data-anchor-id="caf7" id="getcolorslocations">getColors(locations)</h3><pre data-anchor-id="a731"><code>Get the color values of the pixel points of the specified coordinates on current screen.
+</code></pre><p data-anchor-id="9aw6"><code>Parameters</code></p><table data-anchor-id="ot2w" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>Parameter</th>
+ <th style="text-align:center;">Type</th>
+ <th>Specification</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>locations</td>
+ <td style="text-align:center;">table</td>
+ <td>A grouo of coordinates, just as {{x1,y1},{x2,y2},{x3,y4}}</td>
+</tr>
+</tbody></table><p data-anchor-id="z45l"><code>Return</code></p><table data-anchor-id="n91t" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>Return</th>
+ <th style="text-align:center;">Type</th>
+ <th>Specification</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>colors</td>
+ <td style="text-align:center;">table</td>
+ <td>Colors gotten with corresponding order.</td>
+</tr>
+</tbody></table><p data-anchor-id="swuz"><code>Examples</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="3pej"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="kwd">local</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> getColors</span><span class="pun">({{</span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">},</span><span class="pln"> </span><span class="pun">{</span><span class="lit">200</span><span class="pun">,</span><span class="pln"> </span><span class="lit">300</span><span class="pun">},</span><span class="pln"> </span><span class="pun">{</span><span class="lit">300</span><span class="pun">,</span><span class="pln"> </span><span class="lit">400</span><span class="pun">}});</span></code></li><li class="L1"><code class="language-lua"><span class="kwd">for</span><span class="pln"> i</span><span class="pun">,</span><span class="pln"> v </span><span class="kwd">in</span><span class="pln"> pairs</span><span class="pun">(</span><span class="pln">result</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">do</span></code></li><li class="L2"><code class="language-lua"><span class="pln">    log</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"Gotten color:%d"</span><span class="pun">,</span><span class="pln"> v</span><span class="pun">));</span></code></li><li class="L3"><code class="language-lua"><span class="kwd">end</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="r859" id="findcolorcolor-count-region">findColor(color, count, region)</h3><pre data-anchor-id="w5xx"><code>現在のスクリーンにすべてのマッチング指定色の画素点の座標を調べる。
+</code></pre><p data-anchor-id="iqk8"><code>パラメーター</code></p><table data-anchor-id="j8kb" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>color</td>
+ <td style="text-align:center;">Integer</td>
+ <td>マッチングの色値</td>
+</tr>
+<tr>
+ <td>count</td>
+ <td style="text-align:center;">Integer</td>
+ <td>多くてもいくつのマッチング画素点を探すか、黙認が0で、すべてのマッチング点を探すことを表示する。もし1であれば、第一個を調べてもいいと表示し、もし2であれば、前の二つのを調べてもいいと表示する。調べられた数が少なければ少ないほど、スピードが速い。</td>
+</tr>
+<tr>
+ <td>region</td>
+ <td style="text-align:center;">table</td>
+ <td>指定区域のサッチに限られる。該ォパラメーターに{x, y, width, height}四つの値を含むtable類型で、四つの値がそれぞれに長方形の左上x,y座標で、長方形区域の幅と高さで、例えば{100, 100, 200, 200}である。もし区域を限定したくなければ、nilに導入してもいい。</td>
+</tr>
+</tbody></table><p data-anchor-id="4a5e"><code>戻り値</code></p><table data-anchor-id="omt9" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>戻り値</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>locations</td>
+ <td style="text-align:center;">table</td>
+ <td>マッチングした画素点の座標である。例えば{{x1, y1}, {x2, y2}, ...}</td>
+</tr>
+</tbody></table><p data-anchor-id="olhi"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="1m7s"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">例</span><span class="pln"> </span><span class="lit">1</span><span class="pun">:</span></code></li><li class="L1"><code class="language-lua"><span class="kwd">local</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> findColor</span><span class="pun">(</span><span class="lit">0x0000ff</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">nil</span><span class="pun">);</span></code></li><li class="L2"><code class="language-lua"><span class="kwd">for</span><span class="pln"> i</span><span class="pun">,</span><span class="pln"> v </span><span class="kwd">in</span><span class="pln"> pairs</span><span class="pun">(</span><span class="pln">result</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">do</span></code></li><li class="L3"><code class="language-lua"><span class="pln">    log</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"Found pixel: x:%f, y:%f"</span><span class="pun">,</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">1</span><span class="pun">],</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">2</span><span class="pun">]));</span></code></li><li class="L4"><code class="language-lua"><span class="kwd">end</span></code></li><li class="L5"><code class="language-lua"></code></li><li class="L6"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">例</span><span class="pln"> </span><span class="lit">2</span><span class="pun">:</span></code></li><li class="L7"><code class="language-lua"><span class="kwd">local</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> findColor</span><span class="pun">(</span><span class="lit">0x00ddff</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">50</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">});</span></code></li><li class="L8"><code class="language-lua"><span class="kwd">for</span><span class="pln"> i</span><span class="pun">,</span><span class="pln"> v </span><span class="kwd">in</span><span class="pln"> pairs</span><span class="pun">(</span><span class="pln">result</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">do</span></code></li><li class="L9"><code class="language-lua"><span class="pln">    log</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"Found pixel: x:%f, y:%f"</span><span class="pun">,</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">1</span><span class="pun">],</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">2</span><span class="pun">]));</span></code></li><li class="L0"><code class="language-lua"><span class="kwd">end</span></code></li><li class="L1"><code class="language-lua"></code></li><li class="L2"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">例</span><span class="pln"> </span><span class="lit">3</span><span class="pun">:</span></code></li><li class="L3"><code class="language-lua"><span class="kwd">local</span><span class="pln"> region </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">50</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">};</span></code></li><li class="L4"><code class="language-lua"><span class="kwd">local</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> findColor</span><span class="pun">(</span><span class="lit">0x00ddff</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> region</span><span class="pun">);</span></code></li><li class="L5"><code class="language-lua"><span class="kwd">for</span><span class="pln"> i</span><span class="pun">,</span><span class="pln"> v </span><span class="kwd">in</span><span class="pln"> pairs</span><span class="pun">(</span><span class="pln">result</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">do</span></code></li><li class="L6"><code class="language-lua"><span class="pln">    log</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"Found pixel: x:%f, y:%f"</span><span class="pun">,</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">1</span><span class="pun">],</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">2</span><span class="pun">]));</span></code></li><li class="L7"><code class="language-lua"><span class="kwd">end</span></code></li></ol></pre><p data-anchor-id="loi6"><code>内部実現</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="fwlz"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="kwd">function</span><span class="pln"> findColor</span><span class="pun">(</span><span class="pln">color</span><span class="pun">,</span><span class="pln"> count</span><span class="pun">,</span><span class="pln"> region</span><span class="pun">)</span></code></li><li class="L1"><code class="language-lua"><span class="pln">    </span><span class="kwd">return</span><span class="pln"> findColors</span><span class="pun">({{</span><span class="pln">color</span><span class="pun">,</span><span class="lit">0</span><span class="pun">,</span><span class="lit">0</span><span class="pun">}},</span><span class="pln"> count</span><span class="pun">,</span><span class="pln"> region</span><span class="pun">);</span></code></li><li class="L2"><code class="language-lua"><span class="kwd">end</span></code></li></ol></pre><div class="md-section-divider"></div><hr><div class="md-section-divider"></div><h3 data-anchor-id="wp1j" id="findcolorscolors-count-region">findColors(colors, count, region)</h3><pre data-anchor-id="6jiz"><code>すべてのマッチングした「色の指定及びその相対的位置」の長方形区域を調べ、探した長方形区域にマッチングした第一個の色の画素の座標を戻る。該関数にfindImageより高いサッチ効率と適用度があり、例えば、一つのボタンである。findImageのように、全ボタンの写真にマッチングする必要がなく、ボタンのいくつかの色と相対的位置にマッチングしてもいい。使用できるcountパラメーターが限定され、結果の個数にを制限し、0がすべてを調べることを表示し、1が第一個を探すことを表示し、2が前の二個を探すことを表示する。Regionパラメーターがサッチの区域に限定され、{x, y, width, height}のtableタイプで、nilに導入してもいい。
+
+この関数はスクリプトでインターフェースの「エクステンション関数」の「補助」ツールを編集でき、スクリーンショットから色を速やかに選択し、かつ自動的にその対応的位置を取得し、関数パラメーターの位置に挿入する。
+
+下記の矢印が指した画素点の座標が戻り値の座標である。
+</code></pre><p data-anchor-id="fbc6"><img src="http://static.zybuluo.com/kentkrantz/4vamgj32iw3pkr65tkbjc7xn/IMG_0361.PNG" alt="IMG_0361.PNG-101.9kB" title=""></p><p data-anchor-id="itz3"><code>パラメーター</code></p><table data-anchor-id="xv7m" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>colors</td>
+ <td style="text-align:center;">table</td>
+ <td>ある色及びその相対的位置があり、例えば{{0x00ddff,0,0}, {0x00eeff,10,10}, {0x0000ff,0,20}}で、大きいtableの小さいtableに三つの値が含まれる。一つ目が色値で、第二個と第三個の値は該色が第一色に相対する相対的位置である。その中に、第一の色のtableの相対的位置がいつも(0,0)で、例えば{0x00ddff,0,0}という色で、後の色の位置値が、第一個の色の位置値に相対する。こちらの色と相対的位置関係を利用し、スクリーンから適切な長方形の区域にマッチングできる。</td>
+</tr>
+<tr>
+ <td>count</td>
+ <td style="text-align:center;">Integer</td>
+ <td>多くてもいくつのマッチング画素点を調べられるか。黙認が0で、すべてのマッチング点を調べられることを表示する。もし1であれば、第一個を調べてもいいことを表示し、もし2であれば、前の二つのを調べてもいいことを表示する。探した個数が少なければ少ないほど、スピードが速い。</td>
+</tr>
+<tr>
+ <td>region</td>
+ <td style="text-align:center;">table</td>
+ <td>指定された区域のサッチに限られる。該パラメーターに{x, y, width, height}四つの値が含まれるtableタイプで、四つの値がそれぞれに長方形区域の左上x,y座標と長方形区域の幅と高で、例えば、{100, 100, 200, 200}である。もし区域に限定させたくなければ、nilに導入してもいい。</td>
+</tr>
+</tbody></table><p data-anchor-id="ubd1"><code>戻り値</code></p><table data-anchor-id="ujvc" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>戻り値</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>locations</td>
+ <td style="text-align:center;">table</td>
+ <td>調べられた長方形区域にマッチングした第一個の色の画素点の座標である。例えば{{x1, y1}, {x2, y2}, ...}である。</td>
+</tr>
+</tbody></table><p data-anchor-id="wnow"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="e2wq"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">例</span><span class="pln"> </span><span class="lit">1</span><span class="pun">:</span></code></li><li class="L1"><code class="language-lua"><span class="kwd">local</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> findColors</span><span class="pun">({{</span><span class="lit">0x00ddff</span><span class="pun">,</span><span class="lit">0</span><span class="pun">,</span><span class="lit">0</span><span class="pun">},</span><span class="pln"> </span><span class="pun">{</span><span class="lit">0x00eeff</span><span class="pun">,</span><span class="lit">10</span><span class="pun">,</span><span class="lit">10</span><span class="pun">},</span><span class="pln"> </span><span class="pun">{</span><span class="lit">0x0000ff</span><span class="pun">,</span><span class="lit">0</span><span class="pun">,</span><span class="lit">20</span><span class="pun">}},</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">nil</span><span class="pun">);</span></code></li><li class="L2"><code class="language-lua"><span class="kwd">for</span><span class="pln"> i</span><span class="pun">,</span><span class="pln"> v </span><span class="kwd">in</span><span class="pln"> pairs</span><span class="pun">(</span><span class="pln">result</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">do</span></code></li><li class="L3"><code class="language-lua"><span class="pln">    log</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"Found rect at: x:%f, y:%f"</span><span class="pun">,</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">1</span><span class="pun">],</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">2</span><span class="pun">]));</span></code></li><li class="L4"><code class="language-lua"><span class="kwd">end</span></code></li><li class="L5"><code class="language-lua"></code></li><li class="L6"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">例</span><span class="pln"> </span><span class="lit">2</span><span class="pun">:</span></code></li><li class="L7"><code class="language-lua"><span class="kwd">local</span><span class="pln"> colors </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{{</span><span class="lit">0x00ddff</span><span class="pun">,</span><span class="lit">0</span><span class="pun">,</span><span class="lit">0</span><span class="pun">},</span><span class="pln"> </span><span class="pun">{</span><span class="lit">0x00eeff</span><span class="pun">,</span><span class="lit">10</span><span class="pun">,</span><span class="lit">10</span><span class="pun">},</span><span class="pln"> </span><span class="pun">{</span><span class="lit">0x0000ff</span><span class="pun">,</span><span class="lit">0</span><span class="pun">,</span><span class="lit">20</span><span class="pun">}};</span></code></li><li class="L8"><code class="language-lua"><span class="kwd">local</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> findColors</span><span class="pun">(</span><span class="pln">colors</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">nil</span><span class="pun">);</span></code></li><li class="L9"><code class="language-lua"><span class="kwd">for</span><span class="pln"> i</span><span class="pun">,</span><span class="pln"> v </span><span class="kwd">in</span><span class="pln"> pairs</span><span class="pun">(</span><span class="pln">result</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">do</span></code></li><li class="L0"><code class="language-lua"><span class="pln">    log</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"Found rect at: x:%f, y:%f"</span><span class="pun">,</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">1</span><span class="pun">],</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">2</span><span class="pun">]));</span></code></li><li class="L1"><code class="language-lua"><span class="kwd">end</span></code></li><li class="L2"><code class="language-lua"></code></li><li class="L3"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">例</span><span class="pln"> </span><span class="lit">3</span><span class="pun">:</span></code></li><li class="L4"><code class="language-lua"><span class="kwd">local</span><span class="pln"> colors </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{{</span><span class="lit">0x00ddff</span><span class="pun">,</span><span class="lit">0</span><span class="pun">,</span><span class="lit">0</span><span class="pun">},</span><span class="pln"> </span><span class="pun">{</span><span class="lit">0x00eeff</span><span class="pun">,</span><span class="lit">10</span><span class="pun">,</span><span class="lit">10</span><span class="pun">},</span><span class="pln"> </span><span class="pun">{</span><span class="lit">0x0000ff</span><span class="pun">,</span><span class="lit">0</span><span class="pun">,</span><span class="lit">20</span><span class="pun">}};</span></code></li><li class="L5"><code class="language-lua"><span class="kwd">local</span><span class="pln"> region </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">50</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">};</span></code></li><li class="L6"><code class="language-lua"><span class="kwd">local</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> findColors</span><span class="pun">(</span><span class="pln">colors</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> region</span><span class="pun">);</span></code></li><li class="L7"><code class="language-lua"><span class="kwd">for</span><span class="pln"> i</span><span class="pun">,</span><span class="pln"> v </span><span class="kwd">in</span><span class="pln"> pairs</span><span class="pun">(</span><span class="pln">result</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">do</span></code></li><li class="L8"><code class="language-lua"><span class="pln">    log</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"Found rect at: x:%f, y:%f"</span><span class="pun">,</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">1</span><span class="pun">],</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">2</span><span class="pun">]));</span></code></li><li class="L9"><code class="language-lua"><span class="kwd">end</span></code></li></ol></pre><div class="md-section-divider"></div><hr><div class="md-section-divider"></div><h3 data-anchor-id="89xq" id="findimageimagepath-count-fuzzy-ignorecolors-region">findImage(imagePath, count, fuzzy, ignoreColors, region)</h3><pre data-anchor-id="v2tx"><code>現在のスクリーンサッチマッチングの写真指定区域に、table形式で見つけたすべての区域の左上の座標に戻る。
+</code></pre><p data-anchor-id="7dw0"><code>パラメーター</code></p><table data-anchor-id="opbx" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>imagePath</td>
+ <td style="text-align:center;">String</td>
+ <td>写真のルートを調べる必要がある。AutoTouch v3.1.1バージョンから、こちらに完全ルートに導入する必要がなく、AutoTouchドキュメント目録の位置に導入してもいい。即ち「ローカルスクリプト」位置のルート（rootDir関数がドキュメント目録のルートを取得できる）である。例えば“images/spirit.bmp”が“/var/mobile/Library/AutoTouch/Scripts/images/spirit.bmp”と表示し、完全なルートに導入しないでください。</td>
+</tr>
+<tr>
+ <td>count</td>
+ <td style="text-align:center;">Integer</td>
+ <td>多くてもいくつのマッチング画素点を探すか、黙認が0で、すべてのマッチング点を探すことを表示する。もし1であれば、第一個を調べてもいいと表示し、もし2であれば、前の二つのを調べてもいいと表示する。調べられた数が少なければ少ないほど、スピードが速い。</td>
+</tr>
+<tr>
+ <td>fuzzy</td>
+ <td style="text-align:center;">float</td>
+ <td>T調べられる混同度で、黙認が1で、すっかりにぴったりすることを表示する。0.5が50%の画素点をマッチングしてもいい。</td>
+</tr>
+<tr>
+ <td>ignoreColors</td>
+ <td style="text-align:center;">table</td>
+ <td>調べに無視の色値が必要で、数値形式で提供し、例えば、{0xffffff, 0x2b2b2b}で、nilに導入してもいい。</td>
+</tr>
+<tr>
+ <td>region</td>
+ <td style="text-align:center;">table</td>
+ <td>指定された区域に制限し、調べられる。該パラメーターが、{x, y, width, height}四つの値を含むtableの類型で、四つの値がそれぞれに長方形区域左上のx,yと長方形区域の幅と高で、例えば、{100, 100, 200, 200}である。もし区域を限定したくなければ、nilに導入してもいい。</td>
+</tr>
+</tbody></table><p data-anchor-id="si5a"><code>戻り値</code></p><table data-anchor-id="7sb6" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>戻り値</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>locations</td>
+ <td style="text-align:center;">table</td>
+ <td>マッチング区域左上の座標の数値である。例えば、{{x1, y1}, {x2, y2}, ...}である。</td>
+</tr>
+</tbody></table><p data-anchor-id="euqe"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="jgxx"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">例</span><span class="pln"> </span><span class="lit">1</span><span class="pun">:</span></code></li><li class="L1"><code class="language-lua"><span class="kwd">local</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> findImage</span><span class="pun">(</span><span class="str">"images/spirit.bmp"</span><span class="pun">,</span><span class="pln"> </span><span class="lit">5</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">nil</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">nil</span><span class="pun">);</span></code></li><li class="L2"><code class="language-lua"><span class="kwd">for</span><span class="pln"> i</span><span class="pun">,</span><span class="pln"> v </span><span class="kwd">in</span><span class="pln"> pairs</span><span class="pun">(</span><span class="pln">result</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">do</span></code></li><li class="L3"><code class="language-lua"><span class="pln">    log</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"Found rect at: x:%f, y:%f"</span><span class="pun">,</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">1</span><span class="pun">],</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">2</span><span class="pun">]));</span></code></li><li class="L4"><code class="language-lua"><span class="kwd">end</span></code></li><li class="L5"><code class="language-lua"></code></li><li class="L6"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">例</span><span class="pln"> </span><span class="lit">2</span><span class="pun">:</span></code></li><li class="L7"><code class="language-lua"><span class="kwd">local</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> findImage</span><span class="pun">(</span><span class="str">"images/spirit.bmp"</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.6</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">nil</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">nil</span><span class="pun">};</span></code></li><li class="L8"><code class="language-lua"><span class="kwd">for</span><span class="pln"> i</span><span class="pun">,</span><span class="pln"> v </span><span class="kwd">in</span><span class="pln"> pairs</span><span class="pun">(</span><span class="pln">result</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">do</span></code></li><li class="L9"><code class="language-lua"><span class="pln">    log</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"Found rect at: x:%f, y:%f"</span><span class="pun">,</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">1</span><span class="pun">],</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">2</span><span class="pun">]));</span></code></li><li class="L0"><code class="language-lua"><span class="kwd">end</span></code></li><li class="L1"><code class="language-lua"></code></li><li class="L2"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">例</span><span class="pln"> </span><span class="lit">3</span><span class="pun">:</span></code></li><li class="L3"><code class="language-lua"><span class="kwd">local</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> findImage</span><span class="pun">(</span><span class="str">"images/spirit.bmp"</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="lit">0xffffff</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0x2b2b2b</span><span class="pun">},</span><span class="pln"> </span><span class="kwd">nil</span><span class="pun">};</span></code></li><li class="L4"><code class="language-lua"><span class="kwd">for</span><span class="pln"> i</span><span class="pun">,</span><span class="pln"> v </span><span class="kwd">in</span><span class="pln"> pairs</span><span class="pun">(</span><span class="pln">result</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">do</span></code></li><li class="L5"><code class="language-lua"><span class="pln">    log</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"Found rect at: x:%f, y:%f"</span><span class="pun">,</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">1</span><span class="pun">],</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">2</span><span class="pun">]));</span></code></li><li class="L6"><code class="language-lua"><span class="kwd">end</span></code></li><li class="L7"><code class="language-lua"></code></li><li class="L8"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">例</span><span class="pln"> </span><span class="lit">4</span><span class="pun">:</span></code></li><li class="L9"><code class="language-lua"><span class="kwd">local</span><span class="pln"> imagePath </span><span class="pun">=</span><span class="pln"> </span><span class="str">"images/spirit.bmp"</span><span class="pun">;</span></code></li><li class="L0"><code class="language-lua"><span class="kwd">local</span><span class="pln"> region </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">50</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">};</span></code></li><li class="L1"><code class="language-lua"><span class="kwd">local</span><span class="pln"> ignoreColors </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="lit">0xffffff</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0x2b2b2b</span><span class="pun">};</span></code></li><li class="L2"><code class="language-lua"><span class="kwd">local</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> findImage</span><span class="pun">(</span><span class="pln">imagePath</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.9</span><span class="pun">,</span><span class="pln"> ignoreColors</span><span class="pun">,</span><span class="pln"> region</span><span class="pun">};</span></code></li><li class="L3"><code class="language-lua"><span class="kwd">for</span><span class="pln"> i</span><span class="pun">,</span><span class="pln"> v </span><span class="kwd">in</span><span class="pln"> pairs</span><span class="pun">(</span><span class="pln">result</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">do</span></code></li><li class="L4"><code class="language-lua"><span class="pln">    </span><span class="kwd">local</span><span class="pln"> x </span><span class="pun">=</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">1</span><span class="pun">],</span><span class="pln"> y </span><span class="pun">=</span><span class="pln"> v</span><span class="pun">[</span><span class="lit">2</span><span class="pun">];</span></code></li><li class="L5"><code class="language-lua"></code></li><li class="L6"><code class="language-lua"><span class="pln">    log</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"Found rect at: x:%f, y:%f"</span><span class="pun">,</span><span class="pln"> x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">));</span></code></li><li class="L7"><code class="language-lua"></code></li><li class="L8"><code class="language-lua"><span class="pln">    </span><span class="pun">--</span><span class="pln"> </span><span class="pun">見つけた位置を一回にクリックする。</span></code></li><li class="L9"><code class="language-lua"><span class="pln">    tap</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">);</span></code></li><li class="L0"><code class="language-lua"><span class="pln">    usleep</span><span class="pun">(</span><span class="lit">16000</span><span class="pun">);</span></code></li><li class="L1"><code class="language-lua"><span class="kwd">end</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="xmob" id="screenshotfilepath-region">screenshot(filePath, region)</h3><pre data-anchor-id="ep2u"><code>フルづくリーン、または指定区域にスクリーンショットし、かつBMP形式で指定のアドレスに保存される。
+</code></pre><p data-anchor-id="np9a"><code>パラメーター</code></p><table data-anchor-id="c83z" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>filePath</td>
+ <td style="text-align:center;">string</td>
+ <td>スクリーンショットが保存されるアドレスである。AutoTouch v3.1.1バージョンから、このパラメーターがAutoTouchドキュメント目録（ローカルスクリプト目録）の相対的位置（rootDir関数がドキュメント目録のルートを取得できる）である。例えば、“images/spirit.bmp”が“/var/mobile/Library/AutoTouch/Scripts/images/spirit.bmp”を表示し、完全なルートまで導入しないでください。</td>
+</tr>
+<tr>
+ <td>region</td>
+ <td style="text-align:center;">table</td>
+ <td>スクリーンの指定された区域をスクリーンショットする。該パラメーターが{x, y, width, height}四つの値を含めるtable類型である。四つの値がそれぞれに長方形区域の左上x,y座標と長方形区域の幅と高で、例えば{100, 100, 200, 200}である。もし区域を制限したくなければ、nilに導入してもいい。</td>
+</tr>
+</tbody></table><p data-anchor-id="x35x"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="2fgl"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="i4p1"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">フルスクリーンをキャプチャし、かつ指定の位置に保存する。</span></code></li><li class="L1"><code class="language-lua"><span class="pln">screenshot </span><span class="pun">(</span><span class="str">"images/screenshot1.bmp"</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">nil</span><span class="pun">);</span></code></li><li class="L2"><code class="language-lua"></code></li><li class="L3"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">指定区域をキャプチャし、かつ保存する。</span><span class="pln">       </span></code></li><li class="L4"><code class="language-lua"><span class="pln">screenshot </span><span class="pun">(</span><span class="str">"images/screenshot2.bmp"</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">,</span><span class="pln"> </span><span class="lit">200</span><span class="pun">});</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="67vk" id="apprunappidentifier">appRun(appIdentifier)</h3><pre data-anchor-id="ewgw"><code>指定の応用を起動する。
+</code></pre><p data-anchor-id="j6vf"><code>パラメーター</code></p><table data-anchor-id="98y1" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>appIdentifier</td>
+ <td style="text-align:center;">string</td>
+ <td>応用標識で、例えば、com.apple.mobilesafariである。</td>
+</tr>
+</tbody></table><p data-anchor-id="89tf"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="lydn"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="mgm1"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="typ">Safari</span><span class="pun">を運行する。</span></code></li><li class="L1"><code class="language-lua"><span class="pln">appRun</span><span class="pun">(</span><span class="str">"com.apple.mobilesafari"</span><span class="pun">);</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="69da" id="appkillappidentifier">appKill(appIdentifier)</h3><pre data-anchor-id="20cr"><code>指定の応用を閉める。
+</code></pre><p data-anchor-id="0tpc"><code>パラメーター</code></p><table data-anchor-id="bvu1" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>appIdentifier</td>
+ <td style="text-align:center;">string</td>
+ <td>応用標識で、例えば"com.apple.mobilesafari"である。</td>
+</tr>
+</tbody></table><p data-anchor-id="j2dy"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="ifp9"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="anrc"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">運行している</span><span class="pln">safari</span><span class="pun">を閉める。</span></code></li><li class="L1"><code class="language-lua"><span class="pln">appKill</span><span class="pun">(</span><span class="str">"com.apple.mobilesafari"</span><span class="pun">);</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="tqgc" id="appstateappidentifier">appState(appIdentifier)</h3><pre data-anchor-id="vphm"><code>指定された応用の運行状態を取得する。
+</code></pre><p data-anchor-id="g56b"><code>パラメーター</code></p><table data-anchor-id="xuz3" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>appIdentifier</td>
+ <td style="text-align:center;">string</td>
+ <td>応用標識で、例えば"com.apple.mobilesafari"である。</td>
+</tr>
+</tbody></table><p data-anchor-id="fxhd"><code>戻り値</code></p><table data-anchor-id="vlch" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>戻り値</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>state</td>
+ <td style="text-align:center;">string</td>
+ <td>文字列タイプの状態で、それぞれに"NOT RUNNING"、 "ACTIVATED",、"DEACTIVATED"である。。</td>
+</tr>
+</tbody></table><p data-anchor-id="5re9"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="728g"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="typ">Safari</span><span class="pun">の状態を取得する。</span></code></li><li class="L1"><code class="language-lua"><span class="kwd">local</span><span class="pln"> state </span><span class="pun">=</span><span class="pln"> appState</span><span class="pun">(</span><span class="str">"com.apple.mobilesafari"</span><span class="pun">);</span></code></li><li class="L2"><code class="language-lua"><span class="pln">alert</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"State of Safari: %s"</span><span class="pun">,</span><span class="pln"> state</span><span class="pun">));</span></code></li><li class="L3"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="typ">Safari</span><span class="pun">状態の</span><span class="str">"ACTIVATED"</span><span class="pun">がポップアップされる。</span></code></li></ol></pre><hr><hr><div class="md-section-divider"></div><h3 data-anchor-id="rjl7" id="rootdir">rootDir()</h3><pre data-anchor-id="crvq"><code>スクリプト保存の黙認目録アドレスを取得する。それはスクリプトとキャプチャの保存アドレスで、"/var/mobile/Library/AutoTouch/Scripts/"の位置にある。
+</code></pre><p data-anchor-id="ydey"><code>パラメーター</code> <br>
+なし</p><p data-anchor-id="vm2z"><code>戻り値</code></p><table data-anchor-id="6o2l" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>戻り値</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>dir</td>
+ <td style="text-align:center;">string</td>
+ <td>スクリプト保存の黙認する目録アドレスである。</td>
+</tr>
+</tbody></table><p data-anchor-id="0ln4"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="tagv"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="kwd">local</span><span class="pln"> dirPath </span><span class="pun">=</span><span class="pln"> rootDir</span><span class="pun">();</span></code></li><li class="L1"><code class="language-lua"><span class="pln">alert</span><span class="pun">(</span><span class="pln">dirPath</span><span class="pun">);</span></code></li><li class="L2"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">提示</span><span class="str">"/var/mobile/Library/AutoTouch/Scripts/"</span><span class="pun">がポップアップされた。</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="tgta" id="usleepmicroseconds">usleep(microseconds)</h3><pre data-anchor-id="4dpq"><code>若干の微秒が停頓し、即ち1/1000000秒である。
+</code></pre><p data-anchor-id="eilg"><code>パラメーター</code></p><table data-anchor-id="9pgz" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>microseconds</td>
+ <td style="text-align:center;">Integer</td>
+ <td>何微秒停頓するか。</td>
+</tr>
+</tbody></table><p data-anchor-id="bppf"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="7waf"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="lnl3"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="lit">1</span><span class="pun">秒停頓する。</span></code></li><li class="L1"><code class="language-lua"><span class="pln">usleep</span><span class="pun">(</span><span class="lit">1000000</span><span class="pun">);</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="xmgv" id="logcontent">log(content)</h3><pre data-anchor-id="s6ze"><code>記録日誌が日誌インターフェースに調べられる。
+</code></pre><p data-anchor-id="b0si"><code>パラメーター</code></p><table data-anchor-id="ii6e" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>content</td>
+ <td style="text-align:center;">string</td>
+ <td>記録される日誌内容である。</td>
+</tr>
+</tbody></table><p data-anchor-id="3ser"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="nveq"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="fzlh"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pln">log</span><span class="pun">(</span><span class="str">"play here..."</span><span class="pun">);</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="5sv8" id="alertmessage">alert(message)</h3><pre data-anchor-id="tnro"><code>ポップアップウィンドウに指定の内容が顕示される。
+</code></pre><p data-anchor-id="waas"><code>パラメーター</code></p><table data-anchor-id="wyqv" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>message</td>
+ <td style="text-align:center;">string</td>
+ <td>Content to be showed.</td>
+</tr>
+</tbody></table><p data-anchor-id="yvb6"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="9z56"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="jzl7"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pln">alert</span><span class="pun">(</span><span class="str">"Hello World!"</span><span class="pun">);</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="cd1d" id="vibrate">vibrate()</h3><pre data-anchor-id="ehjt"><code>一回振動する。
+</code></pre><p data-anchor-id="vg0m"><code>パラメーター</code> <br>
+なし</p><p data-anchor-id="tgwc"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="bhou"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="50m4"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="typ">Vibrate</span><span class="pln"> once</span><span class="pun">.</span></code></li><li class="L1"><code class="language-lua"><span class="pln">vibrate</span><span class="pun">();</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="ae7j" id="playaudioaudiofile-times">playAudio(audioFile, times)</h3><pre data-anchor-id="yvh5"><code>指定される位置の音源ドキュメントを放送する。
+</code></pre><p data-anchor-id="zq2a"><code>パラメーター</code></p><table data-anchor-id="gmgk" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>audioFile</td>
+ <td style="text-align:center;">string</td>
+ <td>音源ドキュメント絶対的ルート</td>
+</tr>
+<tr>
+ <td>times</td>
+ <td style="text-align:center;">integer</td>
+ <td>繰り返して放送の回数。0が無限な重複を表示する。</td>
+</tr>
+</tbody></table><p data-anchor-id="7p2e"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="exjx"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="04db"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">音源を放送し、かつ無限的に繰り返す。</span></code></li><li class="L1"><code class="language-lua"><span class="pln">playAudio</span><span class="pun">(</span><span class="str">"/var/audio.mp3"</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">);</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="cz8r" id="stopaudio">stopAudio()</h3><pre data-anchor-id="he13"><code>音源の放送をやめる。
+</code></pre><p data-anchor-id="ejd7"><code>パラメーター</code> <br>
+なし</p><p data-anchor-id="cv78"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="40tl"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="g9ds"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">音源の放送をやめる。</span></code></li><li class="L1"><code class="language-lua"><span class="pln">stopAudio</span><span class="pun">();</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="gk7w" id="getorientation">getOrientation()</h3><pre data-anchor-id="85ec"><code>スクリーンの方向を取得する。全体型値に戻り、具体的対応関係が「スクリーンの方向タイプ」をご覧ください。
+</code></pre><p data-anchor-id="u872"><code>パラメーター</code> <br>
+なし</p><p data-anchor-id="q90t"><code>戻り値</code></p><table data-anchor-id="xzuf" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>戻り値</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>orientation</td>
+ <td style="text-align:center;">Integer</td>
+ <td>スクリーンの方向が、こちら値であるかもしれない <a href="#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E6%96%B9%E5%90%91%E3%81%AE%E9%A1%9E%E5%9E%8B">these values</a></td>
+</tr>
+</tbody></table><p data-anchor-id="aon5"><code>示例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="k3dr"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="kwd">local</span><span class="pln"> o </span><span class="pun">=</span><span class="pln"> getOrientation</span><span class="pun">();</span></code></li><li class="L1"><code class="language-lua"><span class="pln">alert</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"Screen orientation is : %d"</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">))</span></code></li><li class="L2"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">提示スクリーン方向</span><span class="lit">2</span><span class="pun">が出て、標識スクリーンが逆さである。</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="bxzh" id="getscreenresolution">getScreenResolution()</h3><pre data-anchor-id="k6ix"><code>スクリーン画素の解像度を取得する。
+</code></pre><p data-anchor-id="7egi"><code>パラメーター</code> <br>
+なし</p><p data-anchor-id="s1sf"><code>戻り値</code></p><table data-anchor-id="zf6x" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>戻り値</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>width</td>
+ <td style="text-align:center;">Integer</td>
+ <td>スクリーン解像度の幅。</td>
+</tr>
+<tr>
+ <td>height</td>
+ <td style="text-align:center;">Integer</td>
+ <td>スクリーン解像度の高さ。</td>
+</tr>
+</tbody></table><p data-anchor-id="c8r8"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="z1cy"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="kwd">local</span><span class="pln"> w</span><span class="pun">,</span><span class="pln"> h </span><span class="pun">=</span><span class="pln"> getScreenResolution</span><span class="pun">();</span></code></li><li class="L1"><code class="language-lua"><span class="pln">alert</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"Resolution of iPhone 6 Plus: width:%d, height:%d"</span><span class="pun">,</span><span class="pln"> w</span><span class="pun">,</span><span class="pln"> h</span><span class="pun">));</span></code></li><li class="L2"><code class="language-lua"><span class="pun">--</span><span class="pln"> iPhone </span><span class="lit">6</span><span class="pln"> </span><span class="typ">Plus</span><span class="pun">解像度の幅が</span><span class="lit">1242</span><span class="pun">で、解像度の高さが</span><span class="lit">2208</span><span class="pun">である。</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="gmbe" id="getsn">getSN()</h3><pre data-anchor-id="kk9h"><code> 設備序列番号を取得する。
+</code></pre><p data-anchor-id="qzh6"><code>パラメーター</code> <br>
+なし</p><p data-anchor-id="sb3f"><code>戻り値</code></p><table data-anchor-id="u7bs" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>戻り値</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>SN</td>
+ <td style="text-align:center;">string</td>
+ <td>設備の序列番号。</td>
+</tr>
+</tbody></table><p data-anchor-id="rm51"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="i9gz"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="kwd">local</span><span class="pln"> sn </span><span class="pun">=</span><span class="pln"> getSN</span><span class="pun">();</span></code></li><li class="L1"><code class="language-lua"><span class="pln">alert</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"SN is : %s"</span><span class="pun">,</span><span class="pln"> sn</span><span class="pun">));</span></code></li><li class="L2"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">設備の序列番号がポップアップされる:</span><span class="pln"> C15NFK32TWD2</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="84st" id="getversion">getVersion()</h3><pre data-anchor-id="qc3r"><code>AutoTouchバージョン番号を取得する。
+</code></pre><p data-anchor-id="691x"><code>パラメーター</code> <br>
+なし</p><p data-anchor-id="d0vc"><code>戻り値</code></p><table data-anchor-id="j8od" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>戻り値</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>version</td>
+ <td style="text-align:center;">string</td>
+ <td>AutoTouchバージョン番号。</td>
+</tr>
+</tbody></table><p data-anchor-id="komx"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="qq39"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="kwd">local</span><span class="pln"> version </span><span class="pun">=</span><span class="pln"> getVersion</span><span class="pun">();</span></code></li><li class="L1"><code class="language-lua"><span class="pln">alert</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"Current version of AutoTouch is : %s"</span><span class="pun">,</span><span class="pln"> version</span><span class="pun">));</span></code></li><li class="L2"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">現在</span><span class="typ">AutoTouch</span><span class="pun">バージョン番号が</span><span class="lit">3.5</span><span class="pun">.</span><span class="lit">3</span><span class="pun">-</span><span class="lit">4</span><span class="pun">である。</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="6w0i" id="inttorgbintcolor">intToRgb(intColor)</h3><pre data-anchor-id="vgan"><code>全体型色値をR, G, Bの値に転換する。
+</code></pre><p data-anchor-id="ckpa"><code>パラメーター</code></p><table data-anchor-id="d2db" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>intColor</td>
+ <td style="text-align:center;">Integer</td>
+ <td>全体型の色値。</td>
+</tr>
+</tbody></table><p data-anchor-id="81g1"><code>戻り値</code></p><table data-anchor-id="tfoe" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>戻り値</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>R</td>
+ <td style="text-align:center;">Integer</td>
+ <td>Red色値。</td>
+</tr>
+<tr>
+ <td>G</td>
+ <td style="text-align:center;">Integer</td>
+ <td>Green色値。</td>
+</tr>
+<tr>
+ <td>B</td>
+ <td style="text-align:center;">Integer</td>
+ <td>Blue色値。</td>
+</tr>
+</tbody></table><p data-anchor-id="sgbv"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="4vbq"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="kwd">local</span><span class="pln"> r</span><span class="pun">,</span><span class="pln"> g</span><span class="pun">,</span><span class="pln"> b </span><span class="pun">=</span><span class="pln"> intToRgb</span><span class="pun">(</span><span class="lit">0x2b2b2b</span><span class="pun">);</span></code></li><li class="L1"><code class="language-lua"><span class="pln">alert</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"R:%d, G:%d, B:%d"</span><span class="pun">,</span><span class="pln"> r</span><span class="pun">,</span><span class="pln"> g</span><span class="pun">,</span><span class="pln"> b</span><span class="pun">));</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="67am" id="rgbtointr-g-b">rgbToInt(r, g, b)</h3><pre data-anchor-id="gya7"><code>R, G, B色値を全体型色値に転換する。
+</code></pre><p data-anchor-id="te5k"><code>パラメーター</code></p><table data-anchor-id="n161" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>R</td>
+ <td style="text-align:center;">Integer</td>
+ <td>Red色値。</td>
+</tr>
+<tr>
+ <td>G</td>
+ <td style="text-align:center;">Integer</td>
+ <td>Green色値。</td>
+</tr>
+<tr>
+ <td>B</td>
+ <td style="text-align:center;">Integer</td>
+ <td>Blue色値。</td>
+</tr>
+</tbody></table><p data-anchor-id="k6u2"><code>戻り値</code></p><table data-anchor-id="1bku" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>戻り値</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>intColor</td>
+ <td style="text-align:center;">Integer</td>
+ <td>全体型の色値。</td>
+</tr>
+</tbody></table><p data-anchor-id="sflb"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="ttm1"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="kwd">local</span><span class="pln"> intColor </span><span class="pun">=</span><span class="pln"> rgbToInt</span><span class="pun">(</span><span class="lit">200</span><span class="pun">,</span><span class="pln"> </span><span class="lit">255</span><span class="pun">,</span><span class="pln"> </span><span class="lit">100</span><span class="pun">);</span></code></li><li class="L1"><code class="language-lua"><span class="pln">alert</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"Int type color: %d"</span><span class="pun">,</span><span class="pln"> intColor</span><span class="pun">));</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="mawy" id="copytexttext">copyText(text)</h3><pre data-anchor-id="jqjs"><code>指定されたテキストをクリップボードにコピーする。
+</code></pre><p data-anchor-id="s2rs"><code>パラメーター</code></p><table data-anchor-id="oikn" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>text</td>
+ <td style="text-align:center;">string</td>
+ <td>コピーするテキスト。</td>
+</tr>
+</tbody></table><p data-anchor-id="lrgx"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="ot33"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="0xov"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pln">copyText</span><span class="pun">(</span><span class="str">"This is a copied text!"</span><span class="pun">);</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="xslt" id="cliptext">clipText()</h3><pre data-anchor-id="7ik2"><code>クリップボードのテキストを取得する。
+</code></pre><p data-anchor-id="o0hw"><code>パラメーター</code> <br>
+なし</p><p data-anchor-id="xp2m"><code>戻り値</code></p><table data-anchor-id="i3fx" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>戻り値</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>text</td>
+ <td style="text-align:center;">string</td>
+ <td>クリップボードのコピーテキスト。</td>
+</tr>
+</tbody></table><p data-anchor-id="qdtm"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="fc1h"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="kwd">local</span><span class="pln"> text </span><span class="pun">=</span><span class="pln"> clipText</span><span class="pun">();</span></code></li><li class="L1"><code class="language-lua"><span class="pln">alert</span><span class="pun">(</span><span class="pln">text</span><span class="pun">);</span></code></li><li class="L2"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">コピーのテキスト</span><span class="str">"This is a copied text!"</span><span class="pln"> </span><span class="pun">がポップアップされた。</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="jf61" id="inputtexttext">inputText(text)</h3><pre data-anchor-id="6ptl"><code>テキストを現在選択した入力フレームに入力する。inputText("\b")がバックスペースされ、一つの文字を削除できる。
+</code></pre><p data-anchor-id="2beo"><code>パラメーター</code></p><table data-anchor-id="dmdd" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>text</td>
+ <td style="text-align:center;">string</td>
+ <td>入力するテキスト。</td>
+</tr>
+</tbody></table><p data-anchor-id="e4bc"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="jixi"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="sch6"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pln">inputText</span><span class="pun">(</span><span class="str">"Let's input some text automatically without tapping the keyboard!"</span><span class="pun">);</span></code></li><li class="L1"><code class="language-lua"><span class="pun">--</span><span class="pln">  </span><span class="pun">バックスペースして、三つの文字を削除する。</span></code></li><li class="L2"><code class="language-lua"><span class="pln">inputText</span><span class="pun">(</span><span class="str">"\b\b\b"</span><span class="pun">);</span><span class="pln"> </span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="wulq" id="fakelocationappidentifier-latitude-longitude">fakeLocation(appIdentifier, latitude, longitude)</h3><pre data-anchor-id="dmv2"><code>指定の応用にアドレスの偽装をして、偽装がずっと有効的で、clearFakeLocation関数が偽装を削除させるまで、或いはAutoTouch応用位置&gt;偽装位置に偽装を削除する。
+</code></pre><p data-anchor-id="85nf"><code>パラメーター</code></p><table data-anchor-id="hwmc" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>appIdentifier</td>
+ <td style="text-align:center;">string</td>
+ <td>応用標識で、例えばcom.apple.Maps"である。</td>
+</tr>
+<tr>
+ <td>latitude</td>
+ <td style="text-align:center;">double</td>
+ <td>doubleタイプ緯度数。</td>
+</tr>
+<tr>
+ <td>longitude</td>
+ <td style="text-align:center;">double</td>
+ <td>doubleタイプ軽度数。</td>
+</tr>
+</tbody></table><p data-anchor-id="jr3g"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="mf54"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="gira"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">アップル地図への偽装位置が緯度</span><span class="lit">36</span><span class="pun">°で、軽度</span><span class="lit">50</span><span class="pun">°である。</span></code></li><li class="L1"><code class="language-lua"><span class="pln">fakeLocation</span><span class="pun">(</span><span class="str">"com.apple.Maps"</span><span class="pun">,</span><span class="pln"> </span><span class="lit">36</span><span class="pun">,</span><span class="pln"> </span><span class="lit">50</span><span class="pun">);</span><span class="pln"> </span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="8cz1" id="clearfakelocationappidentifier">clearFakeLocation(appIdentifier)</h3><pre data-anchor-id="uxac"><code>指定の応用の位置偽装をキャンセルする。
+</code></pre><p data-anchor-id="5524"><code>パラメーター</code></p><table data-anchor-id="pwsc" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>appIdentifier</td>
+ <td style="text-align:center;">string</td>
+ <td>応用標識で、例えば"com.apple.Maps"である。</td>
+</tr>
+</tbody></table><p data-anchor-id="brse"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="mdkx"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="v4pn"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">アップル地図の位置を偽装する。</span></code></li><li class="L1"><code class="language-lua"><span class="pln">clearFakeLocation</span><span class="pun">(</span><span class="str">"com.apple.Maps"</span><span class="pun">);</span><span class="pln"> </span></code></li></ol></pre><hr><div class="md-section-divider"></div><h3 data-anchor-id="t0nv" id="dialogcontrols-enableremember">dialog(controls, enableRemember)</h3><pre data-anchor-id="4k6x"><code>ユーザ設定ダイアログボックスがポップアップされ、ユーザ入力を引き受ける。具体的使用方法が例を見てください。
+</code></pre><p data-anchor-id="xir8"><code>パラメーター</code></p><table data-anchor-id="egcx" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>パラメーター</th>
+ <th style="text-align:center;">タイプ</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>controls</td>
+ <td style="text-align:center;">table</td>
+ <td>ユーザ設定ウィジェットの配列で、現在に、こちらのダイアログボックスウィジェットのタイプが使われる <a href="#%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%82%A6%E3%82%A3%E3%82%B8%E3%82%A7%E3%83%83%E3%83%88%E3%81%AE%E3%82%BF%E3%82%A4%E3%83%97">dialog box controls</a></td>
+</tr>
+<tr>
+ <td>enableRemember</td>
+ <td style="text-align:center;">boolean</td>
+ <td>「集中ユーザ入力」の機能を使用するかどうか</td>
+</tr>
+</tbody></table><p data-anchor-id="9d20"><code>戻り値</code> <br>
+なし</p><p data-anchor-id="2x32"><code>例</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="ufeb"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="kwd">local</span><span class="pln"> label </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln">type</span><span class="pun">=</span><span class="pln">CONTROLLER_TYPE</span><span class="pun">.</span><span class="pln">LABEL</span><span class="pun">,</span><span class="pln"> text</span><span class="pun">=</span><span class="str">"Would you mind to provide some personal informations?"</span><span class="pun">}</span></code></li><li class="L1"><code class="language-lua"><span class="kwd">local</span><span class="pln"> nameInput </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln">type</span><span class="pun">=</span><span class="pln">CONTROLLER_TYPE</span><span class="pun">.</span><span class="pln">INPUT</span><span class="pun">,</span><span class="pln"> title</span><span class="pun">=</span><span class="str">"Name:"</span><span class="pun">,</span><span class="pln"> key</span><span class="pun">=</span><span class="str">"Name"</span><span class="pun">,</span><span class="pln"> value</span><span class="pun">=</span><span class="str">"Kevin"</span><span class="pun">}</span></code></li><li class="L2"><code class="language-lua"><span class="kwd">local</span><span class="pln"> positionPicker </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln">type</span><span class="pun">=</span><span class="pln">CONTROLLER_TYPE</span><span class="pun">.</span><span class="pln">PICKER</span><span class="pun">,</span><span class="pln"> title</span><span class="pun">=</span><span class="str">"Position:"</span><span class="pun">,</span><span class="pln"> key</span><span class="pun">=</span><span class="str">"Position"</span><span class="pun">,</span><span class="pln"> value</span><span class="pun">=</span><span class="str">"CEO"</span><span class="pun">,</span><span class="pln"> options</span><span class="pun">={</span><span class="str">"CEO"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"CTO"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"CFO"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"CXO"</span><span class="pun">}}</span></code></li><li class="L3"><code class="language-lua"><span class="kwd">local</span><span class="pln"> developerSwitch </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln">type</span><span class="pun">=</span><span class="pln">CONTROLLER_TYPE</span><span class="pun">.</span><span class="pln">SWITCH</span><span class="pun">,</span><span class="pln"> title</span><span class="pun">=</span><span class="str">"A Developer:"</span><span class="pun">,</span><span class="pln"> key</span><span class="pun">=</span><span class="str">"ADeveloper"</span><span class="pun">,</span><span class="pln"> value</span><span class="pun">=</span><span class="lit">1</span><span class="pun">}</span></code></li><li class="L4"><code class="language-lua"></code></li><li class="L5"><code class="language-lua"><span class="kwd">local</span><span class="pln"> controls </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln">label</span><span class="pun">,</span><span class="pln"> nameInput</span><span class="pun">,</span><span class="pln"> positionPicker</span><span class="pun">,</span><span class="pln"> developerSwitch</span><span class="pun">}</span></code></li><li class="L6"><code class="language-lua"><span class="kwd">local</span><span class="pln"> enableRemember </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span></code></li><li class="L7"><code class="language-lua"></code></li><li class="L8"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">ダイアログボックスがポップアップされる。ダイアログボックスがポップアップされた後に、スクリプトがこちらにユーザーの入力をまっていて、ユーザーが確定またはキャンセルをクリックするまで終る。</span></code></li><li class="L9"><code class="language-lua"><span class="pln">dialog</span><span class="pun">(</span><span class="pln">controls</span><span class="pun">,</span><span class="pln"> enableRemember</span><span class="pun">);</span></code></li><li class="L0"><code class="language-lua"></code></li><li class="L1"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="pun">それにユーザーの入力値が取得できる。</span></code></li><li class="L2"><code class="language-lua"><span class="pln">alert</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">"name:%s, birthday:%s, gender:%d"</span><span class="pun">,</span><span class="pln"> nameInput</span><span class="pun">.</span><span class="pln">value</span><span class="pun">,</span><span class="pln"> positionPicker</span><span class="pun">.</span><span class="pln">value</span><span class="pun">,</span><span class="pln"> developerSwitch</span><span class="pun">.</span><span class="pln">value</span><span class="pun">))</span></code></li></ol></pre><p data-anchor-id="fgku"><img src="http://static.zybuluo.com/kentkrantz/8vn5hx58pc63o12no1xhst81/3.png" alt="3.png-115.9kB" title=""></p><hr><div class="md-section-divider"></div><h3 data-anchor-id="i94c" id="cleardialogvaluesscript">clearDialogValues(script)</h3><pre data-anchor-id="5nbd"><code>Clear the remembered values of the dialog created by the function dialog.
+</code></pre><p data-anchor-id="7cil"><code>Parameters</code></p><table data-anchor-id="aozh" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>Parameter</th>
+ <th style="text-align:center;">Type</th>
+ <th>Specification</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>script</td>
+ <td style="text-align:center;">string</td>
+ <td>script path. eg. there is a dialog.lua script in the scripts list, use it like this: clearDialogValues("dialog.lua");</td>
+</tr>
+</tbody></table><p data-anchor-id="y1wz"><code>Return values</code> <br>
+None</p><p data-anchor-id="zn94"><code>Examples</code></p><div class="md-section-divider"></div><pre class="prettyprint linenums prettyprinted" data-anchor-id="kcu5"><ol class="linenums"><li class="L0"><code class="language-lua"><span class="pun">--</span><span class="pln"> </span><span class="typ">There</span><span class="pln"> </span><span class="kwd">is</span><span class="pln"> a dialog</span><span class="pun">.</span><span class="pln">lua script </span><span class="kwd">in</span><span class="pln"> the scripts list</span></code></li><li class="L1"><code class="language-lua"><span class="pln">clearDialogValues</span><span class="pun">(</span><span class="str">"dialog.lua"</span><span class="pun">);</span></code></li></ol></pre><hr><div class="md-section-divider"></div><h2 data-anchor-id="4lq0" id="固定値のタイプ">固定値のタイプ</h2><hr><div class="md-section-divider"></div><h3 data-anchor-id="ayf7" id="実体ボタンのタイプ">実体ボタンのタイプ</h3><table data-anchor-id="0793" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>値</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>KEY_TYPE.HOME_BUTTON</td>
+ <td>Homeキー</td>
+</tr>
+<tr>
+ <td>KEY_TYPE.VOLUME_DOWN_BUTTON</td>
+ <td>ボリュームマイナスキー</td>
+</tr>
+<tr>
+ <td>KEY_TYPE.VOLUME_UP_BUTTON</td>
+ <td>ボリュームプラスキー</td>
+</tr>
+<tr>
+ <td>KEY_TYPE.POWER_BUTTON</td>
+ <td>電源キー</td>
+</tr>
+</tbody></table><hr><div class="md-section-divider"></div><h3 data-anchor-id="ayvv" id="フレームウィジェットのタイプ">フレームウィジェットのタイプ</h3><table data-anchor-id="nfva" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>値</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>CONTROLLER_TYPE.LABEL</td>
+ <td>テキスト表記</td>
+</tr>
+<tr>
+ <td>CONTROLLER_TYPE.INPUT</td>
+ <td>入力フレーム</td>
+</tr>
+<tr>
+ <td>CONTROLLER_TYPE.PICKER</td>
+ <td>選択器</td>
+</tr>
+<tr>
+ <td>CONTROLLER_TYPE.SWITCH</td>
+ <td>スイッチ</td>
+</tr>
+</tbody></table><hr><div class="md-section-divider"></div><h3 data-anchor-id="pr9f" id="スクリーン方向の類型">スクリーン方向の類型</h3><table data-anchor-id="2prj" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>値</th>
+ <th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>ORIENTATION_TYPE.UNKNOWN</td>
+ <td>方向が不明で、実際値が0である。</td>
+</tr>
+<tr>
+ <td>ORIENTATION_TYPE.PORTRAIT</td>
+ <td>縦スクリーン、Homeボタンが下にあり、実際値が1である。</td>
+</tr>
+<tr>
+ <td>ORIENTATION_TYPE.PORTRAIT_UPSIDE_DOWN</td>
+ <td>逆スクリーン、Homeボタンが上にあり、実際値が２である。</td>
+</tr>
+<tr>
+ <td>ORIENTATION_TYPE.LANDSCAPE_LEFT</td>
+ <td>左に横スクリーン、Homeボタンが右にあり、実際値が３である。</td>
+</tr>
+<tr>
+ <td>ORIENTATION_TYPE.LANDSCAPE_RIGHT</td>
+ <td>右に横スクリーン、Homeボタンが左にあり、実際値が４である。</td>
+</tr>
+</tbody></table></div>
+</body>
+</html>

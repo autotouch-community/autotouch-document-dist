@@ -2,25 +2,25 @@
 
 `Applicable to version 5.1.1-1 or higher`
 
-> - AutoTouch is a “Macro” tool used to record and playback human touching and pressing on the mobile device.
+> - AutoTouch is a "Macro" tool used to record and playback human touching and pressing on the mobile device.
 > - It simulates touching and keys pressing.
 > - It runs Lua scripts.
 > - It provides several extended functions to achieve automation.
 > - It needs Jailbreak environment.
 > - It provides a Script Store to sell and buy scripts.
 
+### [中文文档](/zh-Hans/doc)
+
+### [QA](/QA)
+
 Table of Contents
 =================
 
-   * [AutoTouch Document](#autotouch-document)
-   * [Table of Contents](#table-of-contents)
-   * [QA](#qa)
    * [Usage](#usage)
       * [How to install?](#how-to-install)
       * [How to use Activator?](#how-to-use-activator)
       * [How to record?](#how-to-record)
       * [How to play script?](#how-to-play-script)
-      * [How to set play settings for script?](#how-to-set-play-settings-for-script)
       * [How to take screenshot?](#how-to-take-screenshot)
       * [How to write a script?](#how-to-write-a-script)
       * [How to use the "Function Helper" while script coding?](#how-to-use-the-function-helper-while-script-coding)
@@ -54,7 +54,7 @@ Table of Contents
          * [getColors(locations)](#getcolorslocations)
          * [findColor(color, count, region, debug)](#findcolorcolor-count-region-debug)
          * [findColors(colors, count, region, debug)](#findcolorscolors-count-region-debug)
-         * [findImage(targetImagePath, count, threshold, region, debug)](#findimagetargetimagepath-count-threshold-region-debug)
+         * [findImage(targetImagePath, count, threshold, region, debug, method)](#findimagetargetimagepath-count-threshold-region-debug-method)
          * [screenshot(filePath, region)](#screenshotfilepath-region)
          * [appRun(appIdentifier)](#apprunappidentifier)
          * [appKill(appIdentifier)](#appkillappidentifier)
@@ -82,8 +82,8 @@ Table of Contents
          * [clearDialogValues(script)](#cleardialogvaluesscript)
          * [openURL(urlString)](#openurlurlstring)
          * [isLicensed()](#islicensed)
-         * [setAutoLanuch(scriptPath, on)](#setautolanuchscriptpath-on)
-         * [listAutoLanuch()](#listautolanuch)
+         * [setAutoLaunch(scriptPath, on)](#setautolaunchscriptpath-on)
+         * [listAutoLaunch()](#listautolaunch)
       * [HTTP APIs](#http-apis)
          * [Play a script](#play-a-script)
          * [Stop playing a script](#stop-playing-a-script)
@@ -97,15 +97,12 @@ Table of Contents
          * [Types of dialog controls](#types-of-dialog-controls)
          * [Types of screen orientations](#types-of-screen-orientations)
 
-# QA
-[Questions and Answers](/QA)
-
 # Usage
 
 ## How to install?
 > - You can search and install AutoTouch in Cydia diredctly, it is released in BigBoss.
-> - You can also add the official repo: http://apt.autotouch.net to Cydia and install AutoTouch there.
-> - There is also a beta repo: http://beta.autotouch.net which contains more fresh but not so stable packages.
+> - You can also add the official repo: [https://apt.autotouch.net](https://apt.autotouch.net) to Cydia and install AutoTouch there.
+> - There is also a beta repo: [https://beta.autotouch.net](https://beta.autotouch.net) which contains more fresh but not so stable packages.
 
 ## How to use Activator?
 > - By default AutoTouch uses volume decrease button holding or pressing to control everything, untill you install Activator by hand.
@@ -116,7 +113,7 @@ Table of Contents
 
 ## How to record?
 > - At the interface where you want to start recording , hold volume decrease button (or other main control action set with Activator by youself, this point will not be repeated below) to call out the control panel.
-![Control Panel](https://i.imgur.com/Rjx5f1b.png)
+> ![Control Panel](https://i.imgur.com/ELcGi3A.png)
 > - Press the "Record" button on the control panel to start recording.
 > - It will record all your touching and key pressing to a script until you stop it.
 > - Hold on volume decrease button (or other Activator action) again to stop the recording.
@@ -125,15 +122,10 @@ Table of Contents
 ## How to play script?
 > - Hold on volume decrease button to call out the control panel.
 > - Click the script you want to run.
-> - Generally, a dialog for play setting will pop up to determine the repeat times, interval, and speed, unless you've ever set "play diretly" in the play settings for this script  before.
-![Play Settings](https://i.imgur.com/Bq0b4PY.png)
-> - Press the "Play" button on play settings dialog to play immediately.
-> - If you press the "Hold" button, it will enter the "Ready to play" status, in which every time you short press the volume decrease button it will play the script a time. 
-> - Hold volume decrease button to forcedly stop the playing, or quit the "Ready to play" status.
-
-## How to set play settings for script?
-> - You can set an Activator action to trigger a script diretly.
-> - Set "play diretly" to skip the play settings dialog while playing.
+> - There is a play options button on the control panel, it will ask for options if you turn on it.
+> - There is a H button means hold mode, it will enter hold mode if you turn on it. In hold mode, every time your tap the volume down button(or action you set in Activator) it will start playing.
+> - Hold volume decrease button to forcedly stop the playing, or quit the `Hold mode` status.
+> - Long pressing volume down button will stop the playing forcely.
 
 ## How to take screenshot?
 > - Press "Snap" button on the control panel to take screenshot, or just use iOS's screenshot method with which you are able to edit it directly.
@@ -686,7 +678,7 @@ end
 ### findColors(colors, count, region, debug)
 > Search all rectangular areas matching “specified color and their corresponding location and return the coordinate of the pixel point matching the first color in the rectangular area. This function has the search efficiency and availability far beyond findImage. For example, you need not match the whole key picture, but only match the anchors’ color and their corresponding location on the key. You can specify the number of the results by count parameter. 0 refers to all, 1 refers to the first one, and 2 refers to the first tow. region parameter can specify the search area, which is the table type {x,y,width, height}. You only input nil if no data is specified. 
 
-> This function can use the “auxiliary” tool in the “Extension Function” of the script-editing interface to select the anchors’ colors from the screenshot and get their corresponding location to the function’s parameter automatically.
+> This function can use the "HELPER" tool in the “Extension Function” of the script-editing interface to select the anchors’ colors from the screenshot and get their corresponding location to the function’s parameter automatically.
 
 > The coordinate of the pixel point pointed by the arrow is the coordinate of the return value.
 
@@ -731,7 +723,7 @@ for i, v in pairs(result) do
 end
 ```
 
-### findImage(targetImagePath, count, threshold, region, debug)
+### findImage(targetImagePath, count, threshold, region, debug, method)
 > Search areas matching the specified image on current screen and return the center coordinates. It supports any format of target images. It also provides a debug mode which will produce an image marked the matching areas.
 
 ![Imgur](https://i.imgur.com/9eyFOu7.png)
@@ -745,6 +737,7 @@ end
 | threshold |  float    | Searching precision, maximum value is 1 means totally the same, minimum value is -1 means non same, default is 0.9, usually 0.99 is good. Pass nil if you just want to use the default value. | YES | 0.9 |
 | region    |  table    | Do searching in which region. Pass nil if you just want to use the default value. | YES | Whole screen |
 | debug    |  boolean  | If pass debug=true, it will produce a image ends with "-Debug.PNG" marked the matching areas. | YES | false |
+| method    |  integer  | Searching method, default is 1, pass 2 if you want to use the more intelligent method which is able to cover size scale, orientation, color changed, it will be a little slower than method 1. | YES | 1 |
 
 `Return`
 
@@ -785,6 +778,12 @@ for i, v in pairs(result) do
     tap(x, y);
     usleep(16000);
 end
+
+-- Example 5:
+local imagePath = "images/spirit.PNG";
+local region = {100, 100, 300, 300};
+-- Use method 2 to find image
+local result = findImage(imagePath, 2, 0.98, region, true, 2)
 ```
 
 ### screenshot(filePath, region)
@@ -829,7 +828,7 @@ screenshot (nil, {100, 100, 200, 200});
 
 | Parameter     | Type   |  Specification  |
 | -------- | :-----:| ----  |
-| appIdentifier     |   string   |  Application identifier, including "com.apple.mobilesafari". |
+| appIdentifier     |   string   |  Application identifier, including "com.apple.mobilesafari". You can find the identifier from [this service](https://offcornerdev.com/bundleid.html) |
 
 `Return`
 
@@ -848,7 +847,7 @@ appRun("com.apple.mobilesafari");
 
 | Parameter     | Type   |  Specification  |
 | -------- | :-----:| ----  |
-| appIdentifier     |   string   |  Application identifier, including "com.apple.mobilesafari". |
+| appIdentifier     |   string   |  Application identifier, including "com.apple.mobilesafari". You can find the identifier from [this service](https://offcornerdev.com/bundleid.html) |
 
 `Return`
 
@@ -867,7 +866,7 @@ appKill("com.apple.mobilesafari");
 
 | Parameter     | Type   |  Specification  |
 | -------- | :-----:| ----  |
-| appIdentifier     |   string   |  Application identifier, including "com.apple.mobilesafari". |
+| appIdentifier     |   string   |  Application identifier, including "com.apple.mobilesafari". You can find the identifier from [this service](https://offcornerdev.com/bundleid.html) |
 
 `Return`
 
@@ -904,7 +903,7 @@ alert(dirPath);
 ```
 
 ### usleep(microseconds)
-> Sleep several microseconds (1/1000000)
+> Sleep several microseconds (1/1000000 second)
 
 `Parameters`
 
@@ -979,7 +978,7 @@ toast("Hello again!"); -- Show message for 2 seconds.
 ```
 
 ### vibrate()
-> Vibrate once.。
+> Vibrate once。
 
 `Parameters`
 
@@ -1272,7 +1271,7 @@ None
 `Examples`
 ```lua
 local label = {type=CONTROLLER_TYPE.LABEL, text="Would you mind to provide some personal informations?"}
-local nameInput = {type=CONTROLLER_TYPE.INPUT, title="Name:", key="Name", value="Kevin"}
+local nameInput = {type=CONTROLLER_TYPE.INPUT, title="Name:", key="Name", value="Bob"}
 local positionPicker = {type=CONTROLLER_TYPE.PICKER, title="Position:", key="Position", value="CEO", options={"CEO", "CTO", "CFO", "CXO"}}
 local developerSwitch = {type=CONTROLLER_TYPE.SWITCH, title="A Developer:", key="ADeveloper", value=1}
 
@@ -1349,7 +1348,7 @@ if isLicensed() then
 end
 ```
 
-### setAutoLanuch(scriptPath, on)
+### setAutoLaunch(scriptPath, on)
 > Switch on/off a script as auto launch.
 
 `Parameters`
@@ -1357,7 +1356,7 @@ end
 | Parameter     | Type   |  Specification  |
 | -------- | :-----:| ----  |
 | filePath     |   string   |  Relative path of a script inside script directory of AutoTouch, such as "/Records/test.lua". |
-| on     |   boolean   |  Switch auto lanuch on or off, true means on, false means off. |
+| on     |   boolean   |  Switch auto launch on or off, true means on, false means off. |
 
 `Return`
 
@@ -1365,11 +1364,11 @@ None
 
 `Examples`
 ```lua
-setAutoLanuch("/Records/test.lua", on);
+setAutoLaunch("/Records/test.lua", on);
 ```
 
-### listAutoLanuch()
-> List all auto lanuch scripts
+### listAutoLaunch()
+> List all auto launch scripts
 
 `Parameters`
 
