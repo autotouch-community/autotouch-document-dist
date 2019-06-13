@@ -60,6 +60,7 @@ Table of Contents
          * [appKill(appIdentifier)](#appkillappidentifier)
          * [appState(appIdentifier)](#appstateappidentifier)
          * [rootDir()](#rootdir)
+         * [currentPath()](#currentpath)
          * [usleep(microseconds)](#usleepmicroseconds)
          * [log(content)](#logcontent)
          * [alert(message)](#alertmessage)
@@ -84,6 +85,7 @@ Table of Contents
          * [isLicensed()](#islicensed)
          * [setAutoLaunch(scriptPath, on)](#setautolaunchscriptpath-on)
          * [listAutoLaunch()](#listautolaunch)
+         * [exit()](#exit)
       * [HTTP APIs](#http-apis)
          * [Play a script](#play-a-script)
          * [Stop playing a script](#stop-playing-a-script)
@@ -902,6 +904,26 @@ alert(dirPath);
 -- Popup "/var/mobile/Library/AutoTouch/Scripts/"
 ```
 
+### currentPath()
+> Get full path of current executing script.
+
+`Parameters`
+
+None
+
+`Return`
+
+| Return     | Type  |  Specification  |
+| -------- | :-----:| ----  |
+| path     |   string   |  Full path of current script. |
+
+`Examples`
+```lua
+local path = currentPath();
+alert(path);
+-- Popup "/var/mobile/Library/AutoTouch/Scripts/test.lua"
+```
+
 ### usleep(microseconds)
 > Sleep several microseconds (1/1000000 second)
 
@@ -1044,7 +1066,7 @@ None
 | -------- | :-----:| ----  |
 | orientation     |   Integer   |  Screen orientation may be [these values](#types-of-screen-orientations) |
 
-`示例`
+`Examples`
 ```lua
 local o = getOrientation();
 alert(string.format("Screen orientation is : %d", 0))
@@ -1386,6 +1408,23 @@ local scripts = listAutoLaunch()
 for i, v in pairs(scripts) do
     alert(v);
 end
+```
+
+### exit()
+> Exit the current script execution.
+
+`Parameters`
+
+None
+
+`Return`
+
+None
+
+`Examples`
+```lua
+-- Exit execution
+exit();
 ```
 
 ## HTTP APIs

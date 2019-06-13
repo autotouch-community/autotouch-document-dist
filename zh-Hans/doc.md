@@ -60,6 +60,7 @@
          * [appKill(appIdentifier)](#appkillappidentifier)
          * [appState(appIdentifier)](#appstateappidentifier)
          * [rootDir()](#rootdir)
+         * [currentPath()](#currentpath)
          * [usleep(microseconds)](#usleepmicroseconds)
          * [log(content)](#logcontent)
          * [alert(message)](#alertmessage)
@@ -84,6 +85,7 @@
          * [isLicensed()](#islicensed)
          * [setAutoLaunch(scriptPath, on)](#setautolaunchscriptpath-on)
          * [listAutoLaunch()](#listautolaunch)
+         * [exit()](#exit)
       * [HTTP APIs](#http-apis)
          * [运行一个脚本](#运行一个脚本)
          * [停止运行一个脚本](#停止运行一个脚本)
@@ -906,6 +908,26 @@ alert(dirPath);
 -- Popup "/var/mobile/Library/AutoTouch/Scripts/"
 ```
 
+### currentPath()
+> 获得当前运行脚本的全路径。
+
+`参数`
+
+无
+
+`返回值`
+
+| 参数     | 类型   |  说明  |
+| -------- | :-----:| ----  |
+| path     |   字符串   |  当前运行脚本的全路径。 |
+
+`示例`
+```lua
+local path = currentPath();
+alert(path);
+-- Popup "/var/mobile/Library/AutoTouch/Scripts/test.lua"
+```
+
 ### usleep(microseconds)
 > 停顿若干个微秒，即1/1000000秒
 
@@ -1390,6 +1412,23 @@ local scripts = listAutoLaunch()
 for i, v in pairs(scripts) do
     alert(v);
 end
+```
+
+### exit()
+> 停止当前脚本的执行
+
+`Parameters`
+
+无
+
+`Return`
+
+无
+
+`Examples`
+```lua
+-- 退出当前脚本执行
+exit();
 ```
 
 ## HTTP APIs
