@@ -1,6 +1,6 @@
 # AutoTouch 文档
 
-`该文档适用于5.1.1-1或以上版本`
+`该文档适用于5.1.2-6或以上版本`
 
 > - AutoTouch是一个用来录制和回放触摸操作的“宏”工具。
 > - 它可以模拟手指在屏幕上的触摸操作，和按键操作。
@@ -79,7 +79,7 @@
          * [copyText(text)](#copytexttext)
          * [clipText()](#cliptext)
          * [inputText(text)](#inputtexttext)
-         * [dialog(controls, enableRemember)](#dialogcontrols-enableremember)
+         * [dialog(controls, enableRemember, orientations)](#dialogcontrols-enableremember-orientations)
          * [clearDialogValues(script)](#cleardialogvaluesscript)
          * [openURL(urlString)](#openurlurlstring)
          * [isLicensed()](#islicensed)
@@ -1280,19 +1280,23 @@ inputText("Let's input some text automatically without tapping the keyboard!");
 inputText("\b\b\b"); 
 ```
 
-### dialog(controls, enableRemember)
+### dialog(controls, enableRemember, orientations)
 > 显示一个自定义的对话框，用法请见下面的示例。
 
 `参数`
 
-| 参数     | 类型   |  说明  |
-| -------- | :-----:| ----  |
-| controls     |  表  | 控件列表. 可以使用这些控件 [these dialog box controls](#types-of-dialog-controls)  |
-| enableRemember     |  布尔  | 是否“记住”用户的输入，如果记住，下次运行不会再弹出对话框，而是直接读取之前记住的值。 |
+| 参数     | 类型   |  说明  | 可选 | 默认值 |
+| -------- | :-----:| ----  | :----:  | :----:  |
+| controls     |  表  | 控件列表. 可以使用这些控件 [these dialog box controls](#types-of-dialog-controls)  | 否 | |
+| enableRemember     |  布尔  | 是否“记住”用户的输入，如果记住，下次运行不会再弹出对话框，而是直接读取之前记住的值。 | 否 | |
+| orientations |  表    | 对话框限定的方向 [方向值](#types-of-screen-orientations). | 是 | 自动 |
 
 `返回值`
 
-无
+| 返回值     | 类型   |  说明  |
+| -------- | :-----:| ----  |
+| 确认了还是取消了    |   整型  | 取消了返回0， 确认了返回1。  |
+
 
 `示例`
 ```lua
@@ -1305,10 +1309,19 @@ local controls = {label, nameInput, positionPicker, developerSwitch}
 local enableRemember = true;
 
 -- Pop up the dialog box. After the popup, the script will suspend for user input until the user click “confirm” or “cancel”.
-dialog(controls, enableRemember);
+
+local limitOrientations = { ORIENTATION_TYPE.LANDSCAPE_LEFT, ORIENTATION_TYPE.LANDSCAPE_RIGHT };
+-- Parameter limitOrientation is optional.
+local result = dialog(controls, enableRemember, limitOrientations);
 
 -- Then get the input value of user.
 alert(string.format("name:%s, birthday:%s, gender:%d", nameInput.value, positionPicker.value, developerSwitch.value))
+
+if (result == 1) then
+    alert('Confirmed');
+else
+    alert('Canceled');
+end
 ```
 ![3.png-115.9kB](http://static.zybuluo.com/kentkrantz/8vn5hx58pc63o12no1xhst81/3.png)
 

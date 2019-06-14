@@ -1,6 +1,6 @@
 # AutoTouch Document
 
-`Applicable to version 5.1.1-1 or higher`
+`Applicable to version 5.1.2-6 or higher`
 
 > - AutoTouch is a "Macro" tool used to record and playback human touching and pressing on the mobile device.
 > - It simulates touching and keys pressing.
@@ -79,7 +79,7 @@ Table of Contents
          * [copyText(text)](#copytexttext)
          * [clipText()](#cliptext)
          * [inputText(text)](#inputtexttext)
-         * [dialog(controls, enableRemember)](#dialogcontrols-enableremember)
+         * [dialog(controls, enableRemember, orientations)](#dialogcontrols-enableremember-orientations)
          * [clearDialogValues(script)](#cleardialogvaluesscript)
          * [openURL(urlString)](#openurlurlstring)
          * [isLicensed()](#islicensed)
@@ -1276,35 +1276,47 @@ inputText("Let's input some text automatically without tapping the keyboard!");
 inputText("\b\b\b"); 
 ```
 
-### dialog(controls, enableRemember)
+### dialog(controls, enableRemember, orientations)
 > Pop up self-defined dialog box to accept the user input. Please refer to the example for specific usage.
 
 `Parameters`
 
-| Parameter     | Type   |  Specification  |
-| -------- | :-----:| ----  |
-| controls     |   table   | Array of self-defined controls. You can now use [these dialog box controls](#types-of-dialog-controls)  |
-| enableRemember     |   boolean | Whether to use the "remember user's input" function. |
+| Parameter     | Type   |  Specification  | Optional | Default |
+| -------- | :-----:| ----  | :----:  | :----:  |
+| controls     |   table   |  Array of self-defined controls. You can now use [these dialog box controls](#types-of-dialog-controls).  | NO | |
+| enableRemember     |  boolean    | Whether to use the "remember user's input" function. | NO | |
+| orientations |  table    | Orientations that dialog can be, see [Types of orientations](#types-of-screen-orientations). | YES | auto |
 
 `Return`
 
-None
+| Return     | Type  |  Specification  |
+| -------- | :-----:| ----  |
+| canceled or confirmed    |   integer  |  Return 0 if canceled, 1 if confirmed.  |
 
 `Examples`
 ```lua
 local label = {type=CONTROLLER_TYPE.LABEL, text="Would you mind to provide some personal informations?"}
 local nameInput = {type=CONTROLLER_TYPE.INPUT, title="Name:", key="Name", value="Bob"}
-local positionPicker = {type=CONTROLLER_TYPE.PICKER, title="Position:", key="Position", value="CEO", options={"CEO", "CTO", "CFO", "CXO"}}
+local positionPicker = {type=CONTROLLER_TYPE.PICKER, title="Position:", key="Position", value="CEO", options={"CEO", "CTO", "CFO", "CXO"} }
 local developerSwitch = {type=CONTROLLER_TYPE.SWITCH, title="A Developer:", key="ADeveloper", value=1}
 
 local controls = {label, nameInput, positionPicker, developerSwitch}
 local enableRemember = true;
 
 -- Pop up the dialog box. After the popup, the script will suspend for user input until the user click “confirm” or “cancel”.
-dialog(controls, enableRemember);
+
+local limitOrientations = { ORIENTATION_TYPE.LANDSCAPE_LEFT, ORIENTATION_TYPE.LANDSCAPE_RIGHT };
+-- Parameter limitOrientation is optional.
+local result = dialog(controls, enableRemember, limitOrientations);
 
 -- Then get the input value of user.
 alert(string.format("name:%s, birthday:%s, gender:%d", nameInput.value, positionPicker.value, developerSwitch.value))
+
+if (result == 1) then
+    alert('Confirmed');
+else
+    alert('Canceled');
+end
 ```
 ![3.png-115.9kB](http://static.zybuluo.com/kentkrantz/8vn5hx58pc63o12no1xhst81/3.png)
 
