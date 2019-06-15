@@ -1,6 +1,6 @@
 # AutoTouch Document
 
-`Applicable to version 5.1.2-6 or higher`
+`Applicable to version 5.1.2-7 or higher`
 
 > - AutoTouch is a "Macro" tool used to record and playback human touching and pressing on the mobile device.
 > - It simulates touching and keys pressing.
@@ -79,13 +79,13 @@ Table of Contents
          * [copyText(text)](#copytexttext)
          * [clipText()](#cliptext)
          * [inputText(text)](#inputtexttext)
-         * [dialog(controls, enableRemember, orientations)](#dialogcontrols-enableremember-orientations)
+         * [dialog(controls, orientations)](#dialogcontrols-orientations)
          * [clearDialogValues(script)](#cleardialogvaluesscript)
          * [openURL(urlString)](#openurlurlstring)
          * [isLicensed()](#islicensed)
          * [setAutoLaunch(scriptPath, on)](#setautolaunchscriptpath-on)
          * [listAutoLaunch()](#listautolaunch)
-         * [exit()](#exit)
+         * [stop()](#stop)
       * [HTTP APIs](#http-apis)
          * [Play a script](#play-a-script)
          * [Stop playing a script](#stop-playing-a-script)
@@ -1276,7 +1276,7 @@ inputText("Let's input some text automatically without tapping the keyboard!");
 inputText("\b\b\b"); 
 ```
 
-### dialog(controls, enableRemember, orientations)
+### dialog(controls, orientations)
 > Pop up self-defined dialog box to accept the user input. Please refer to the example for specific usage.
 
 `Parameters`
@@ -1284,14 +1284,13 @@ inputText("\b\b\b");
 | Parameter     | Type   |  Specification  | Optional | Default |
 | -------- | :-----:| ----  | :----:  | :----:  |
 | controls     |   table   |  Array of self-defined controls. You can now use [these dialog box controls](#types-of-dialog-controls).  | NO | |
-| enableRemember     |  boolean    | Whether to use the "remember user's input" function. | NO | |
 | orientations |  table    | Orientations that dialog can be, see [Types of orientations](#types-of-screen-orientations). | YES | auto |
 
 `Return`
 
 | Return     | Type  |  Specification  |
 | -------- | :-----:| ----  |
-| canceled or confirmed    |   integer  |  Return 0 if canceled, 1 if confirmed.  |
+| Flag of tapped button    |   integer  |  |
 
 `Examples`
 ```lua
@@ -1300,25 +1299,37 @@ local nameInput = {type=CONTROLLER_TYPE.INPUT, title="Name:", key="Name", value=
 local positionPicker = {type=CONTROLLER_TYPE.PICKER, title="Position:", key="Position", value="CEO", options={"CEO", "CTO", "CFO", "CXO"} }
 local developerSwitch = {type=CONTROLLER_TYPE.SWITCH, title="A Developer:", key="ADeveloper", value=1}
 
-local controls = {label, nameInput, positionPicker, developerSwitch}
-local enableRemember = true;
+-- It's an option for users to determine weather the inputs should be remembered, if you use this control in the dialog.
+local remember = {type=CONTROLLER_TYPE.REMEMBER, on=false}
 
--- Pop up the dialog box. After the popup, the script will suspend for user input until the user click “confirm” or “cancel”.
+--[[ Define buttons:
+type = CONTROLLER_TYPE.BUTTON
+title = Button text
+color = Button background color, it's optional, the default value is 0x428BCA
+width = Button width upon percentage of the dialog width, it's optional, the default value is 0.5, max value is 1.0.
+flag = Integer type of button flag for identifying which button is tapped.
+collectInputs = Boolean type specifying wheather the dialog should collect the inputs while this button is tapped. ]]--
+local btn1 = {type=CONTROLLER_TYPE.BUTTON, title="Button 1", color=0x71C69E, width=0.8, flag=1, collectInputs=false}
+local btn2 = {type=CONTROLLER_TYPE.BUTTON, title="Button 2", color=0xFF5733, flag=2, collectInputs=true}
+local btn3 = {type=CONTROLLER_TYPE.BUTTON, title="Button 3", color=0xFFB7D0, width=1.0, flag=3, collectInputs=false}
+local btn4 = {type=CONTROLLER_TYPE.BUTTON, title="Button 4", width=1.0, flag=4, collectInputs=true}
 
-local limitOrientations = { ORIENTATION_TYPE.LANDSCAPE_LEFT, ORIENTATION_TYPE.LANDSCAPE_RIGHT };
--- Parameter limitOrientation is optional.
-local result = dialog(controls, enableRemember, limitOrientations);
+local controls = {label, nameInput, positionPicker, developerSwitch, btn1, btn2, remember, btn3, btn4}
 
--- Then get the input value of user.
-alert(string.format("name:%s, birthday:%s, gender:%d", nameInput.value, positionPicker.value, developerSwitch.value))
+-- Pop up the dialog. After popping, the script will suspend waiting for user input until any button is tapped, then returns the flag of tapped button.
+
+-- What orientations the dialog could be, it's optional
+local orientations = { ORIENTATION_TYPE.LANDSCAPE_LEFT, ORIENTATION_TYPE.LANDSCAPE_RIGHT };
+
+local result = dialog(controls, orientations);
 
 if (result == 1) then
-    alert('Confirmed');
+    alert(string.format("name:%s, birthday:%s, gender:%d", nameInput.value, positionPicker.value, developerSwitch.value))
 else
-    alert('Canceled');
+    alert(string.format("Dialog returned: %s", result))
 end
 ```
-![3.png-115.9kB](http://static.zybuluo.com/kentkrantz/8vn5hx58pc63o12no1xhst81/3.png)
+![dialog](https://i.imgur.com/GN9wji7.png)
 
 ### clearDialogValues(script)
 > Clear the remembered values of the dialog created by the function dialog.
@@ -1398,7 +1409,7 @@ None
 
 `Examples`
 ```lua
-setAutoLaunch("/Records/test.lua", on);
+setAutoLaunch("/Records/test.lua", true);
 ```
 
 ### listAutoLaunch()
@@ -1422,8 +1433,8 @@ for i, v in pairs(scripts) do
 end
 ```
 
-### exit()
-> Exit the current script execution.
+### stop()
+> SStop the current script execution.
 
 `Parameters`
 
@@ -1436,7 +1447,7 @@ None
 `Examples`
 ```lua
 -- Exit execution
-exit();
+stop();
 ```
 
 ## HTTP APIs
@@ -1738,6 +1749,8 @@ HTTP GET http://192.168.1.99:8080/file/rename?path=/oldFilePath&newPath=newFileP
 | CONTROLLER_TYPE.INPUT | Input box |
 | CONTROLLER_TYPE.PICKER | Picker |
 | CONTROLLER_TYPE.SWITCH | Switch |
+| CONTROLLER_TYPE.BUTTON | Button |
+| CONTROLLER_TYPE.REMEMBER | Switch for remember user inputs |
 
 ### Types of screen orientations
 
