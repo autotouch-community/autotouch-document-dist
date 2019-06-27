@@ -1,6 +1,6 @@
 # AutoTouch Document
 
-`Applicable to version 5.1.2-7 or higher`
+`Applicable to version 5.1.2-8 or higher`
 
 > - AutoTouch is a "Macro" tool used to record and playback human touching and pressing on the mobile device.
 > - It simulates touching and keys pressing.
@@ -52,8 +52,8 @@ Table of Contents
          * [keyUp(keyType)](#keyupkeytype)
          * [getColor(x, y)](#getcolorx-y)
          * [getColors(locations)](#getcolorslocations)
-         * [findColor(color, count, region, debug)](#findcolorcolor-count-region-debug)
-         * [findColors(colors, count, region, debug)](#findcolorscolors-count-region-debug)
+         * [findColor(color, count, region, debug, rightToLeft, bottomToTop)](#findcolorcolor-count-region-debug-righttoleft-bottomtotop)
+         * [findColors(colors, count, region, debug, rightToLeft, bottomToTop)](#findcolorscolors-count-region-debug-righttoleft-bottomtotop)
          * [findImage(targetImagePath, count, threshold, region, debug, method)](#findimagetargetimagepath-count-threshold-region-debug-method)
          * [screenshot(filePath, region)](#screenshotfilepath-region)
          * [appRun(appIdentifier)](#apprunappidentifier)
@@ -618,7 +618,7 @@ for i, v in pairs(result) do
 end
 ```
 
-### findColor(color, count, region, debug)
+### findColor(color, count, region, debug, rightToLeft, bottomToTop)
 > Search the coordinates of the pixel points matching the specified color on current screen.
 
 `Parameters`
@@ -629,6 +629,8 @@ end
 | count     |   Integer    | The number refers to how many matched pixel points is found at most. 0 is default setting, which shows all matching points are found. 1 refers to only the first matching pixel point is found. 2 refers to only the first two pixel points are found. The less the number is, the faster the speed is.  | NO | 0 |
 | region     |   table    | You only search the result in the specified area. This area is the table type including four values {x, y, width, height}. The four values respectively represent the coordinate x, coordinate y, width, and height of the rectangular area. {100,100,200,200} is an example. If you do not want to specify the area, just input nil.  | NO | nil |
 | debug    |  boolean  | If pass debug=true, it will produce a image ends with "-Debug.PNG" marked the matching areas. | YES | false |
+| rightToLeft    |  boolean  | Search direction, default is left to right. | YES | false |
+| bottomToTop    |  boolean  | Search direction, default is top to buttom. | YES | false |
 
 `Return`
 
@@ -638,26 +640,32 @@ end
 
 `Example`
 ```lua
--- Example 1:
+-- Example:
 local result = findColor(0x0000ff, 2, nil);
 for i, v in pairs(result) do
     log(string.format("Found pixel: x:%f, y:%f", v[1], v[2]));
 end
 
--- Example 2:
+-- Example: Search from right to left, from bottom to top
+local result = findColor(0x0000ff, 2, nil, nil, true, true);
+for i, v in pairs(result) do
+    log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
+end
+
+-- Example:
 local result = findColor(0x00ddff, 0, {100, 50, 200, 200});
 for i, v in pairs(result) do
     log(string.format("Found pixel: x:%f, y:%f", v[1], v[2]));
 end
 
--- Example 3:
+-- Example:
 local region = {100, 50, 200, 200};
 local result = findColor(0x00ddff, 0, region);
 for i, v in pairs(result) do
     log(string.format("Found pixel: x:%f, y:%f", v[1], v[2]));
 end
 
--- Example 4:
+-- Example:
 -- Keep finding a speficied color until it's found.
 local locations
 repeat
@@ -672,12 +680,12 @@ end
 
 `Internal Implementation`
 ```lua
-function findColor(color, count, region)
-    return findColors({ {color,0,0} }, count, region);
+function findColor(color, count, region, debug, rightToLeft, bottomToTop)
+    return findColors({{color,0,0}}, count, region, debug, rightToLeft, bottomToTop);
 end
 ```
 
-### findColors(colors, count, region, debug)
+### findColors(colors, count, region, debug, rightToLeft, bottomToTop)
 > Search all rectangular areas matching “specified color and their corresponding location and return the coordinate of the pixel point matching the first color in the rectangular area. This function has the search efficiency and availability far beyond findImage. For example, you need not match the whole key picture, but only match the anchors’ color and their corresponding location on the key. You can specify the number of the results by count parameter. 0 refers to all, 1 refers to the first one, and 2 refers to the first tow. region parameter can specify the search area, which is the table type {x,y,width, height}. You only input nil if no data is specified. 
 
 > This function can use the "HELPER" tool in the “Extension Function” of the script-editing interface to select the anchors’ colors from the screenshot and get their corresponding location to the function’s parameter automatically.
@@ -694,6 +702,8 @@ end
 | count     |   Integer    | The number refers to how many matched pixel points is found at most. 0 is default setting, which shows all matching points are found. 1 refers to only the first matching pixel point is found. 2 refers to only the first two pixel points are found. The less the number is, the faster the speed is. | NO | 0 |
 | region     |   table    | You only search the result in the specified area. This area is the table type including four values {x, y, width, height}. The four values respectively represent the coordinate x, coordinate y, width, and height of the rectangular area. {100,100,200,200} is an example. If you do not want to specify the area, just input nil.  | NO | nil |
 | debug    |  boolean  | If pass debug=true, it will produce a image ends with "-Debug.PNG" marked the matching areas. | YES | false |
+| rightToLeft    |  boolean  | Search direction, default is left to right. | YES | false |
+| bottomToTop    |  boolean  | Search direction, default is top to buttom. | YES | false |
 
 `Return`
 
@@ -703,20 +713,26 @@ end
 
 `Examples`
 ```lua
--- Example 1:
+-- Example:
 local result = findColors({ {0x00ddff,0,0}, {0x00eeff,10,10}, {0x0000ff,0,20} }, 2, nil, true);
 for i, v in pairs(result) do
     log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
 end
 
--- Example 2:
+-- Example: Search from right to left, from bottom to top
+local result = findColors({ {0x00ddff,0,0}, {0x00eeff,10,10}, {0x0000ff,0,20} }, 2, nil, true, true);
+for i, v in pairs(result) do
+    log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
+end
+
+-- Example:
 local colors = { {0x00ddff,0,0}, {0x00eeff,10,10}, {0x0000ff,0,20} };
 local result = findColors(colors, 0, nil, true);
 for i, v in pairs(result) do
     log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
 end
 
--- Example 3:
+-- Example:
 local colors = { {0x00ddff,0,0}, {0x00eeff,10,10}, {0x0000ff,0,20} };
 local region = {100, 50, 200, 200};
 local result = findColors(colors, 0, region);
@@ -749,25 +765,25 @@ end
 
 `Examples`
 ```lua
--- Example 1:
+-- Example:
 local result = findImage("images/Gold.PNG", 5, 0.99, nil, true)
 for i, v in pairs(result) do
     log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
 end
 
--- Example 2:
+-- Example:
 local result = findImage("images/Gold.PNG", nil, nil, nil, true)
 for i, v in pairs(result) do
     log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
 end
 
--- Example 3:
+-- Example:
 local result = findImage("images/Gold.PNG", 3)
 for i, v in pairs(result) do
     log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
 end
 
--- Example 4:
+-- Example:
 local imagePath = "images/spirit.PNG";
 local region = {100, 100, 300, 300};
 local result = findImage(imagePath, 2, 0.98, region, true)
@@ -781,7 +797,7 @@ for i, v in pairs(result) do
     usleep(16000);
 end
 
--- Example 5:
+-- Example:
 local imagePath = "images/spirit.PNG";
 local region = {100, 100, 300, 300};
 -- Use method 2 to find image

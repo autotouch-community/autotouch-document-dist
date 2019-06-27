@@ -1,6 +1,6 @@
 # AutoTouch 文档
 
-`该文档适用于5.1.2-7或以上版本`
+`该文档适用于5.1.2-8或以上版本`
 
 > - AutoTouch是一个用来录制和回放触摸操作的“宏”工具。
 > - 它可以模拟手指在屏幕上的触摸操作，和按键操作。
@@ -52,8 +52,8 @@
          * [keyUp(keyType)](#keyupkeytype)
          * [getColor(x, y)](#getcolorx-y)
          * [getColors(locations)](#getcolorslocations)
-         * [findColor(color, count, region, debug)](#findcolorcolor-count-region-debug)
-         * [findColors(colors, count, region, debug)](#findcolorscolors-count-region-debug)
+         * [findColor(color, count, region, debug, rightToLeft, bottomToTop)](#findcolorcolor-count-region-debug-righttoleft-bottomtotop)
+         * [findColors(colors, count, region, debug, rightToLeft, bottomToTop)](#findcolorscolors-count-region-debug-righttoleft-bottomtotop)
          * [findImage(targetImagePath, count, threshold, region, debug, method)](#findimagetargetimagepath-count-threshold-region-debug-method)
          * [screenshot(filePath, region)](#screenshotfilepath-region)
          * [appRun(appIdentifier)](#apprunappidentifier)
@@ -621,7 +621,7 @@ for i, v in pairs(result) do
 end
 ```
 
-### findColor(color, count, region, debug)
+### findColor(color, count, region, debug, rightToLeft, bottomToTop)
 > 在当前屏幕查找所有匹配指定颜色的像素点坐标。
 
 `参数`
@@ -630,8 +630,10 @@ end
 | -------- | :-----:| ----  | :----:  | :----:  |
 | color     |  整型  |   匹配的颜色值。   | 否 | |
 | count     |  整型  | 最多查找多少个匹配的像素点，默认是0，表示查找所有匹配点。如果是1，表示查出第一个即可，若是2表示查出前两个即可。查找的个数越少速度越快。 | 否 | 0 |
-| region     |  表  | You only search the result in the specified area. This area is the table type including four values {x, y, width, height}. The four values respectively represent the coordinate x, coordinate y, width, and height of the rectangular area. {100,100,200,200} is an example. If you do not want to specify the area, just input nil.  | 否 | nil |
-| debug    |  布尔  | If pass debug=true, it will produce a image ends with "-Debug.PNG" marked the matching areas. |  是  | false |
+| region     |  表  | 限定在指定区域进行查找。该参数是包含{x, y, width, height}四个值的一个table类型，四个值分别是矩形区域的左上x,y坐标，和矩形区域的宽和高，比如{100, 100, 200, 200}。如果不想限定区域，传入nil即可。 | 否 | nil |
+| debug    |  布尔  | 如果传入true, 在查找的同时将会产生一个文件名以"-Debug.PNG"结尾的图片文件来标示查找的区域。 |  是  | false |
+| rightToLeft    |  布尔  | 是否从右向左查找，默认是从左向右. | 是 | false |
+| bottomToTop    |  布尔  | 是否从下向上查找，默认是从左向右. | 是 | false |
 
 `返回值`
 
@@ -641,26 +643,32 @@ end
 
 `示例`
 ```lua
--- Example 1:
+-- Example:
 local result = findColor(0x0000ff, 2, nil);
 for i, v in pairs(result) do
     log(string.format("Found pixel: x:%f, y:%f", v[1], v[2]));
 end
 
--- Example 2:
+-- Example: 从右向左，从下向上查找
+local result = findColor(0x0000ff, 2, nil, nil, true, true);
+for i, v in pairs(result) do
+    log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
+end
+
+-- Example:
 local result = findColor(0x00ddff, 0, {100, 50, 200, 200});
 for i, v in pairs(result) do
     log(string.format("Found pixel: x:%f, y:%f", v[1], v[2]));
 end
 
--- Example 3:
+-- Example:
 local region = {100, 50, 200, 200};
 local result = findColor(0x00ddff, 0, region);
 for i, v in pairs(result) do
     log(string.format("Found pixel: x:%f, y:%f", v[1], v[2]));
 end
 
--- Example 4:
+-- Example:
 -- Keep finding a speficied color until it's found.
 local locations
 repeat
@@ -675,12 +683,12 @@ end
 
 `内部实现`
 ```lua
-function findColor(color, count, region)
-    return findColors({ {color,0,0} }, count, region);
+function findColor(color, count, region, debug, rightToLeft, bottomToTop)
+    return findColors({{color,0,0}}, count, region, debug, rightToLeft, bottomToTop);
 end
 ```
 
-### findColors(colors, count, region, debug)
+### findColors(colors, count, region, debug, rightToLeft, bottomToTop)
 > 查找所有匹配“指定颜色及它们的相对位置”的矩形区域，返回找到的矩形区域中匹配第一个颜色的像素的坐标。该函数具有比findImage高得多的查找效率和可用度，比如查找一个按钮，不用像findImage一样去匹配整个按钮图片，只用匹配按钮中的几个锚点的颜色和它们的相对位置即可。可以使用count参数限定希望查找结果的个数，0表示查找所有，1标识查找第1个，2表示查找前两个。region参数可以用来限定查找的区域，为{x, y, width, height}的table类型，不限定时传入nil即可。
 
 > 这个函数可以使用脚本编辑界面“扩展函数”中的“辅助”工具，快速地从屏幕截图中选择几个锚点颜色，并自动获取它们的相对位置来插入到函数参数位置。
@@ -694,9 +702,10 @@ end
 | -------- | :-----:| ----  | :----:  | :----:  |
 | colors     |  表  |  包含一些颜色以及它们的相对位置，比如{ {0x00ddff,0,0}, {0x00eeff,10,10}, {0x0000ff,0,20} }，大table中的小table包含三个值，第一个是颜色值，第二个和第三个值是该颜色相对于第一个颜色的相对位置，其中第一个颜色的table的相对位置总是(0,0)，比如{0x00ddff,0,0}这个颜色，而后续的几个颜色的位置值，是它们相对于第一个颜色的位置。用这些颜色和相对位置关系，可以从屏幕中匹配到符合的矩形区域。 | 否 | |
 | count     |  整型  | 最多查找多少个匹配的像素点，默认是0，表示查找所有匹配点。如果是1，表示查出第一个即可，若是2表示查出前两个即可。查找的个数越少速度越快。 | 否 | 0 |
-| region     |  表  | 限定在指定区域进行查找。该参数是包含{x, y, width, height}四个值的一个table类型，四个值分别是矩形区域的左上x,y坐标，和矩形区域的宽和高，比如{100, 100, 200,
-        200}。如果不想限定区域，传入nil即可。 | 否 | nil |
+| region     |  表  | 限定在指定区域进行查找。该参数是包含{x, y, width, height}四个值的一个table类型，四个值分别是矩形区域的左上x,y坐标，和矩形区域的宽和高，比如{100, 100, 200, 200}。如果不想限定区域，传入nil即可。 | 否 | nil |
 | debug    |  布尔  | 如果传入true, 在查找的同时将会产生一个文件名以"-Debug.PNG"结尾的图片文件来标示查找的区域。 |  是  | false |
+| rightToLeft    |  布尔  | 是否从右向左查找，默认是从左向右. | 是 | false |
+| bottomToTop    |  布尔  | 是否从下向上查找，默认是从左向右. | 是 | false |
 
 `返回值`
 
@@ -706,20 +715,26 @@ end
 
 `示例`
 ```lua
--- Example 1:
+-- Example:
 local result = findColors({ {0x00ddff,0,0}, {0x00eeff,10,10}, {0x0000ff,0,20} }, 2, nil, true);
 for i, v in pairs(result) do
     log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
 end
 
--- Example 2:
+-- Example: 从右向左，从下向上查找
+local result = findColors({ {0x00ddff,0,0}, {0x00eeff,10,10}, {0x0000ff,0,20} }, 2, nil, true, true);
+for i, v in pairs(result) do
+    log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
+end
+
+-- Example:
 local colors = { {0x00ddff,0,0}, {0x00eeff,10,10}, {0x0000ff,0,20} };
 local result = findColors(colors, 0, nil, true);
 for i, v in pairs(result) do
     log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
 end
 
--- Example 3:
+-- Example:
 local colors = { {0x00ddff,0,0}, {0x00eeff,10,10}, {0x0000ff,0,20} };
 local region = {100, 50, 200, 200};
 local result = findColors(colors, 0, region);
@@ -753,25 +768,25 @@ end
 
 `示例`
 ```lua
--- Example 1:
+-- Example:
 local result = findImage("images/Gold.PNG", 5, 0.99, nil, true)
 for i, v in pairs(result) do
     log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
 end
 
--- Example 2:
+-- Example:
 local result = findImage("images/Gold.PNG", nil, nil, nil, true)
 for i, v in pairs(result) do
     log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
 end
 
--- Example 3:
+-- Example:
 local result = findImage("images/Gold.PNG", 3)
 for i, v in pairs(result) do
     log(string.format("Found rect at: x:%f, y:%f", v[1], v[2]));
 end
 
--- Example 4:
+-- Example:
 local imagePath = "images/spirit.PNG";
 local region = {100, 100, 300, 300};
 local result = findImage(imagePath, 2, 0.98, region, true)
@@ -785,7 +800,7 @@ for i, v in pairs(result) do
     usleep(16000);
 end
 
--- Example 5:
+-- Example:
 local imagePath = "images/spirit.PNG";
 local region = {100, 100, 300, 300};
 -- Use method 2 to find image
