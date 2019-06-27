@@ -160,7 +160,7 @@ Table of Contents
 > - You can play the encrypted scripts, or release them to Script Store.
 
 ## How to sell your script in Script Store?
-> - Visit https://autotouch.net/server/login.php from browser on computer.
+> - Visit https://m.autotouch.net from browser on computer.
 > - Complete the details required to create a new script. 
 > - Do provide a detailed and beautify html page for that script as the details page, a YouTube video will be much better.
 > - Upload a encrypted script or package as a new version to this script.
@@ -750,7 +750,7 @@ end
 
 | Parameter     | Type   |  Specification  | Optional | Default |
 | -------- | :-----:| ----  | :----:  | :----:  |
-| targetImagePath     |   String   |  Relative path of the target image to match, for example: "images/gold.PNG". Any valid foramt of images are supported.  | NO | |
+| targetImagePath     |   String   |  Path of the target image to match, for example: "images/gold.PNG". Any image with valid format are supported. If the path starts with character "/", it will be treated as absolute path, if not, it will be treated as relative path. Most of the time we use relative path, speficially for .ate package.    | NO | |
 | count     |  integer    | How many areas to find. Pass 0 or nil if you don't want to speficy the count. | YES | 0 |
 | threshold |  float    | Searching precision, maximum value is 1 means totally the same, minimum value is -1 means non same, default is 0.9, usually 0.99 is good. Pass nil if you just want to use the default value. | YES | 0.9 |
 | region    |  table    | Do searching in which region. Pass nil if you just want to use the default value. | YES | Whole screen |
