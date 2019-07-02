@@ -1,6 +1,6 @@
 # AutoTouch Document
 
-`Applicable to version 5.1.2-8 or higher`
+`Applicable to version 5.1.3 or higher`
 
 > - AutoTouch is a "Macro" tool used to record and playback human touching and pressing on the mobile device.
 > - It simulates touching and keys pressing.
@@ -86,6 +86,7 @@ Table of Contents
          * [setAutoLaunch(scriptPath, on)](#setautolaunchscriptpath-on)
          * [listAutoLaunch()](#listautolaunch)
          * [stop()](#stop)
+         * [ocr(region, languages, threshold, whitelist, blacklist, timeout, tessdataParentDir, debug)](#ocrregion-languages-threshold-whitelist-blacklist-timeout-tessdataparentdir-debug)
       * [HTTP APIs](#http-apis)
          * [Play a script](#play-a-script)
          * [Stop playing a script](#stop-playing-a-script)
@@ -1464,6 +1465,37 @@ None
 ```lua
 -- Exit execution
 stop();
+```
+
+### ocr(region, languages, threshold, whitelist, blacklist, timeout, tessdataParentDir, debug)
+> Text recognition from the screen with library `tesseract ocr`
+
+`Parameters`
+
+| Parameter     | Type   |  Specification  | Optional | Default |
+| -------- | :-----:| ----  | :----:  | :----:  |
+| region    |  table    | What region you want to recognize text at the screen. | YES | Whole screen |
+| languages    |  String  | Languages you want to recognize, by default AutoTouch has included `eng.traineddata` at `/var/mobile/Library/AutoTouch/Library/tessadata`, you may download other languages you needed to the same dir from [https://github.com/tesseract-ocr/tessdata/tree/3.04.00](https://github.com/tesseract-ocr/tessdata/tree/3.04.00). Somewhat you may even train your own data for `tesseract orc` and put it at `tessadata` dir. | YES | "eng" |
+| threshold    |  Integer  | Threshold the image, Adjust this value to improve the accurancy. Value range is from 0 to 255.  | YES | 100 |
+| whitelist    |  String  | What characters you want to recognize in the region, such as "0123456789" will find numbers only. | YES | NULL |
+| blacklist    |  String  | What characters you do not want to recognize from the region. | YES | NULL |
+| timeout    |  Integer  | Timeout in seconds. | YES | 3 |
+| tessdataParentDir    |  String  | Parent directory path of the `tessdata` directory, google to know more about `tessdata` of `tesseract ocr`. If this parameter starts with "/", it will be treated as an absolute path, otherwise it will be treated as a relative path. The real `traineddata` files will be at `tessdata` dir inside `tessdataParentDir`. **ATTENSION** this parameter is the **parent dir** of the `tessdata` folder!!! And the folder containers traineddata files must be named `tessdata`.  | YES | `/var/mobile/Library/AutoTouch/Library/` |
+| debug    |  boolean  | If pass debug=true, it will produce a image ends with "-Debug.PNG" marked the matching areas. | YES | false |
+
+`Return`
+
+| Return     | Type  |  Specification  |
+| -------- | :-----:| ----  |
+| Recognized Text     |   String   |  Recognized Text.  |
+
+`Examples`
+```lua
+-- Example:
+local result = ocr({100, 100, 300, 300}, 'eng', 220)
+
+-- Example:
+local result = ocr({100, 100, 300, 300}, 'eng+fra', 220,'0123456789 ', '..........', 5, nil, true)
 ```
 
 ## HTTP APIs

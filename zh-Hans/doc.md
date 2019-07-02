@@ -2,7 +2,7 @@
 
 ### [用户许可协议](/zh-Hans/agreement)
 
-`该文档适用于5.1.2-8或以上版本`
+`该文档适用于5.1.3或以上版本`
 
 > - AutoTouch是一个用来录制和回放触摸操作的“宏”工具。
 > - 它可以模拟手指在屏幕上的触摸操作，和按键操作。
@@ -88,6 +88,7 @@
          * [setAutoLaunch(scriptPath, on)](#setautolaunchscriptpath-on)
          * [listAutoLaunch()](#listautolaunch)
          * [stop()](#stop)
+         * [ocr(region, languages, threshold, whitelist, blacklist, timeout, tessdataParentDir, debug)](#ocrregion-languages-threshold-whitelist-blacklist-timeout-tessdataparentdir-debug)
       * [HTTP APIs](#http-apis)
          * [运行一个脚本](#运行一个脚本)
          * [停止运行一个脚本](#停止运行一个脚本)
@@ -1458,11 +1459,11 @@ end
 ### stop()
 > 停止当前脚本的执行
 
-`Parameters`
+`参数`
 
 无
 
-`Return`
+`返回值`
 
 无
 
@@ -1470,6 +1471,37 @@ end
 ```lua
 -- 退出当前脚本执行
 stop();
+```
+
+### ocr(region, languages, threshold, whitelist, blacklist, timeout, tessdataParentDir, debug)
+> 基于`tesseract ocr`实现的文字识别。
+
+`参数`
+
+| 参数     | 类型   |  说明  | 可选 | 默认值 |
+| -------- | :-----:| ----  | :----:  | :----:  |
+| region    |  表   | 在屏幕的哪个区域识别. | 是 | 全屏幕 |
+| languages    |  字符串  | 识别的语言。默认AutoTouch已经自带训练数据集 `eng.traineddata` 在 `/var/mobile/Library/AutoTouch/Library/tessadata`目录下, 你也可以从这里下载其它所需语言[https://github.com/tesseract-ocr/tessdata/tree/3.04.00](https://github.com/tesseract-ocr/tessdata/tree/3.04.00). 甚至你可能需要自己训练识别数据集，只要放在`tessadata`目录下就可以调用. | 是 | "eng" |
+| threshold    |  整型  | 调节此值来提高准确度，取值范围是0-255  | 是 | 100 |
+| whitelist    |  字符串  | 希望识别出哪些字符，如"0123456789"就会只识别出数字. | 是 | NULL |
+| blacklist    |  字符串  | 哪些字符是不可能存在的 | 是 | NULL |
+| timeout    |  整型 | 识别超时时间，单位秒 | 是 | 3 |
+| tessdataParentDir    |  字符串  | 训练集`tessdata`文件夹的父文件夹, 搜索一下`tesseract ocr`的`tessdata`来了解更多. 如果此参数以"/"开头，将被视为绝对地址，否则是相对地址。AutoTouch将在此目录下寻找`tessdata`文件夹，而真正的`traineddata`将处在`tessdata`目录中。那个目录必须名为`tessdata` | 是 | `/var/mobile/Library/AutoTouch/Library/` |
+| debug    |  布尔  | 如果传入true, 在查找的同时将会产生一个文件名以"ocr-Debug.PNG"结尾的图片文件来标示查找的区域。 |  是  | false |
+
+`返回值`
+
+| 返回值     | 类型   |  说明  |
+| -------- | :-----:| ----  |
+| 识别出的文字    |   字符串  |  识别出的文字.  |
+
+`示例`
+```lua
+-- Example:
+local result = ocr({100, 100, 300, 300}, 'eng', 220)
+
+-- Example:
+local result = ocr({100, 100, 300, 300}, 'eng+fra', 220,'0123456789 ', '..........', 5, nil, true)
 ```
 
 ## HTTP APIs
