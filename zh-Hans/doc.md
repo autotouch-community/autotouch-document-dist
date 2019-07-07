@@ -2,7 +2,7 @@
 
 ### [用户许可协议](/zh-Hans/agreement)
 
-`该文档适用于5.1.3或以上版本`
+`该文档适用于5.1.5或以上版本`
 
 > - AutoTouch是一个用来录制和回放触摸操作的“宏”工具。
 > - 它可以模拟手指在屏幕上的触摸操作，和按键操作。
@@ -1280,6 +1280,7 @@ alert(text);
 
 ### inputText(text)
 > 输入文本到当前选中的输入框中。inputText("\b")可以退格删除一个字符。
+> **注意:** 在AutoTouch设置 > 功能中启用此项功能。
 
 `参数`
 
@@ -1501,7 +1502,21 @@ stop();
 local result = ocr({100, 100, 300, 300}, 'eng', 220)
 
 -- Example:
-local result = ocr({100, 100, 300, 300}, 'eng+fra', 220,'0123456789 ', '..........', 5, nil, true)
+local result = ocr({100, 100, 300, 300}, 'eng+fra', 220, '0123456789 ', '..........', 5, nil, true)
+
+-- Example:
+-- Find English+France at the specified region with threshold 220, using the traindata in `tessdata` folder at the current directory.
+-- Like this example, you can put the traindata inside your package project, so you can encrypt and pack them to a single bot.
+
+--+TestOrcProject.at
+--+----tesseract
+--+--------eng.traindata
+--+--------fra.traindata
+--+----main.lua
+--+----worker.lua
+
+-- `./` means under current directory, it will find `tessdata` folder in current directory.
+local result = ocr({100, 100, 300, 300}, 'eng+fra', 220, nil, nil, 5, './', true)
 ```
 
 ## HTTP APIs

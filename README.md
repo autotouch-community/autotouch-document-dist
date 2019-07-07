@@ -1,6 +1,6 @@
 # AutoTouch Document
 
-`Applicable to version 5.1.3 or higher`
+`Applicable to version 5.1.5 or higher`
 
 > - AutoTouch is a "Macro" tool used to record and playback human touching and pressing on the mobile device.
 > - It simulates touching and keys pressing.
@@ -1275,6 +1275,7 @@ alert(text);
 
 ### inputText(text)
 > Input text to the input box selected now. You can delete a character backspace by inputText("\b").
+> **ATTENSION:** Enable inoutText function at AutoTouch Settings > Features before using it.
 
 `Parameters`
 
@@ -1495,7 +1496,21 @@ stop();
 local result = ocr({100, 100, 300, 300}, 'eng', 220)
 
 -- Example:
-local result = ocr({100, 100, 300, 300}, 'eng+fra', 220,'0123456789 ', '..........', 5, nil, true)
+local result = ocr({100, 100, 300, 300}, 'eng+fra', 220, '0123456789 ', '..........', 5, nil, true)
+
+-- Example:
+-- Find English+France at the specified region with threshold 220, using the traindata in `tessdata` folder at the current directory.
+-- Like this example, you can put the traindata inside your package project, so you can encrypt and pack them to a single bot.
+
+--+TestOrcProject.at
+--+----tesseract
+--+--------eng.traindata
+--+--------fra.traindata
+--+----main.lua
+--+----worker.lua
+
+-- `./` means under current directory, it will find `tessdata` folder in current directory.
+local result = ocr({100, 100, 300, 300}, 'eng+fra', 220, nil, nil, 5, './', true)
 ```
 
 ## HTTP APIs
